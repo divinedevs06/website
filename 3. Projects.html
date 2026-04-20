@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" style="color-scheme: dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Projects – Divine Devs</title>
+  <link rel="shortcut icon" href="logo/white logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    :root {
+      --primary:  hsl(38 95% 52%);
+      --accent:   hsl(38 95% 60%);
+      --accent2:  hsl(18 90% 55%);
+      --background: hsl(222 84% 5%);
+      --foreground: hsl(210 40% 98%);
+      --muted-foreground: hsl(215 20% 65%);
+      --gradient-iot:  linear-gradient(135deg, hsl(38 95% 52%), hsl(18 90% 55%));
+      --gradient-iot2: linear-gradient(135deg, hsl(38 95% 52%), hsl(217 91% 60%));
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background-color: var(--background); color: var(--foreground); font-family: ui-sans-serif, system-ui, sans-serif; overflow-x: hidden; }
+
+    /* BG GRID */
+    .bg-grid {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: linear-gradient(rgba(245,158,11,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(245,158,11,.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* ORBS */
+    .orb { position: fixed; border-radius: 50%; filter: blur(90px); opacity: .17; pointer-events: none; animation: orbFloat 13s ease-in-out infinite alternate; }
+    .orb-1 { width: 560px; height: 560px; background: radial-gradient(circle, hsl(38 95% 52%), transparent 70%); top: -140px; left: -100px; }
+    .orb-2 { width: 440px; height: 440px; background: radial-gradient(circle, hsl(18 90% 55%), transparent 70%); bottom: -120px; right: -70px; animation-delay: -6s; }
+    .orb-3 { width: 320px; height: 320px; background: radial-gradient(circle, hsl(217 91% 60%), transparent 70%); top: 42%; left: 52%; animation-delay: -10s; opacity: .09; }
+    @keyframes orbFloat { 0%{transform:translateY(0) scale(1)} 100%{transform:translateY(30px) scale(1.07)} }
+
+    /* UTILITIES */
+    .glass-card { background: rgba(18,14,6,.78); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,.07); border-radius: 1rem; }
+    .gradient-text { background: var(--gradient-iot); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    /* NAVBAR */
+    header { position: sticky; top: 0; z-index: 50; background: rgba(14,11,4,.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,.07); }
+    .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-logo { display: flex; align-items: center; gap: .5rem; text-decoration: none; }
+    .nav-logo-text { font-size: 1.25rem; font-weight: 700; background: linear-gradient(135deg, hsl(217 91% 60%), hsl(270 91% 65%)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--foreground); text-decoration: none; font-weight: 500; font-size: .95rem; position: relative; padding-bottom: 2px; transition: color .2s; }
+    .nav-links a::after { content: ''; position: absolute; inset-x: 0; bottom: 0; height: 2px; background: var(--gradient-iot); transform: scaleX(0); transition: transform .3s; transform-origin: left; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-cta { display: inline-flex; align-items: center; gap: .5rem; padding: .5rem 1.25rem; border-radius: .75rem; border: none; cursor: pointer; background: var(--gradient-iot); color: #fff; font-size: .875rem; font-weight: 600; text-decoration: none; transition: box-shadow .3s, transform .2s; }
+    .nav-cta:hover { box-shadow: 0 0 22px rgba(245,158,11,.45); transform: translateY(-1px); }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--foreground); font-size: 1.5rem; }
+    .mobile-menu { display: none; flex-direction: column; gap: 1rem; padding: 1rem 1.5rem; background: rgba(14,11,4,.95); border-top: 1px solid rgba(255,255,255,.07); }
+    .mobile-menu a { color: var(--foreground); text-decoration: none; font-weight: 500; }
+    .mobile-menu.open { display: flex; }
+
+    /* HERO */
+    .hero { position: relative; z-index: 1; min-height: 74vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 6rem 1.5rem 4rem; overflow: hidden; }
+    .hero-badge { display: inline-flex; align-items: center; gap: .5rem; background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.28); color: var(--accent); padding: .375rem 1rem; border-radius: 9999px; font-size: .8rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 1.5rem; animation: fadeSlideUp .7s ease both; }
+    .hero-title { font-size: clamp(2.4rem,6.5vw,4.8rem); font-weight: 800; line-height: 1.1; letter-spacing: -.02em; margin-bottom: 1.5rem; animation: fadeSlideUp .7s .15s ease both; }
+    .hero-subtitle { max-width: 680px; margin: 0 auto 2.5rem; color: var(--muted-foreground); font-size: 1.1rem; line-height: 1.75; animation: fadeSlideUp .7s .3s ease both; }
+    .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeSlideUp .7s .45s ease both; }
+    .btn-primary { display: inline-flex; align-items: center; gap: .5rem; background: var(--gradient-iot); color: #fff; padding: .75rem 2rem; border-radius: .875rem; font-weight: 600; text-decoration: none; border: none; cursor: pointer; transition: box-shadow .3s, transform .2s; font-size: 1rem; }
+    .btn-primary:hover { box-shadow: 0 0 30px rgba(245,158,11,.5); transform: translateY(-2px); }
+    .btn-outline { display: inline-flex; align-items: center; gap: .5rem; background: transparent; color: var(--foreground); padding: .75rem 2rem; border-radius: .875rem; font-weight: 600; text-decoration: none; border: 1px solid rgba(255,255,255,.15); cursor: pointer; transition: border-color .3s, background .3s; font-size: 1rem; }
+    .btn-outline:hover { border-color: var(--accent); background: rgba(245,158,11,.07); }
+
+    /* Floating IoT sensor cards */
+    .sensor-float { position: absolute; background: rgba(18,14,6,.9); border: 1px solid rgba(245,158,11,.18); border-radius: .875rem; padding: .85rem 1.15rem; backdrop-filter: blur(12px); animation: floatSensor 5s ease-in-out infinite alternate; }
+    .sensor-float .sf-val { font-size: 1.05rem; font-weight: 800; background: var(--gradient-iot); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .sensor-float .sf-lbl { font-size: .7rem; color: var(--muted-foreground); margin-top: .1rem; }
+    .sensor-float .sf-live { display: inline-flex; align-items: center; gap: .3rem; font-size: .65rem; font-weight: 700; color: #4ade80; margin-top: .2rem; }
+    .sf-live-dot { width: 5px; height: 5px; border-radius: 50%; background: #4ade80; animation: livePulse 1.4s ease-in-out infinite; }
+    .sf-a { top: 14%; left: 3%;  animation-delay: 0s; }
+    .sf-b { bottom: 18%; right: 5%; animation-delay: -2.5s; }
+    .sf-c { top: 56%; left: 2%;  animation-delay: -4s; }
+    @keyframes floatSensor { 0%{transform:translateY(0)} 100%{transform:translateY(-10px)} }
+    @keyframes livePulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.6)} }
+    @media(max-width:900px){ .sensor-float{ display:none; } .circuit-wrap{ display:none; } }
+
+    /* Circuit board SVG decoration */
+    .circuit-wrap { position: absolute; right: 4%; top: 50%; transform: translateY(-50%); width: 260px; height: 260px; pointer-events: none; opacity: .55; }
+
+    /* SECTIONS */
+    .section { position: relative; z-index: 1; padding: 5rem 1.5rem; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .section-label { display: inline-flex; align-items: center; gap: .5rem; background: rgba(245,158,11,.09); border: 1px solid rgba(245,158,11,.2); color: var(--accent); padding: .3rem .9rem; border-radius: 9999px; font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 1rem; }
+    .section-title { font-size: clamp(1.8rem,4vw,2.75rem); font-weight: 800; letter-spacing: -.02em; margin-bottom: 1rem; line-height: 1.2; }
+    .section-subtitle { color: var(--muted-foreground); font-size: 1.05rem; max-width: 620px; line-height: 1.7; }
+    .section-header { margin-bottom: 3.5rem; }
+
+    /* SERVICE CARDS */
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 1.5rem; }
+    .service-card { padding: 2rem; border-radius: 1.25rem; background: rgba(18,14,6,.78); border: 1px solid rgba(255,255,255,.07); transition: transform .3s, border-color .3s, box-shadow .3s; cursor: default; position: relative; overflow: hidden; }
+    .service-card::before { content:''; position:absolute; inset:0; background:var(--gradient-iot); opacity:0; transition:opacity .4s; border-radius:inherit; }
+    .service-card:hover { transform:translateY(-6px); border-color:rgba(245,158,11,.35); box-shadow:0 20px 50px rgba(245,158,11,.1); }
+    .service-card:hover::before { opacity:.04; }
+    .service-icon { width:52px;height:52px;border-radius:.875rem;background:rgba(245,158,11,.1);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--accent);margin-bottom:1.25rem;transition:background .3s,transform .3s; }
+    .service-card:hover .service-icon { background:rgba(245,158,11,.2);transform:scale(1.1) rotate(-5deg); }
+    .service-card h3 { font-size:1.15rem;font-weight:700;margin-bottom:.6rem; }
+    .service-card p { color:var(--muted-foreground);font-size:.9rem;line-height:1.65; }
+    .service-tag { display:inline-block;margin-top:1rem;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);color:var(--accent);padding:.2rem .65rem;border-radius:9999px;font-size:.72rem;font-weight:600; }
+
+    /* STATS */
+    .stats-strip { display:flex;flex-wrap:wrap;justify-content:center;gap:3rem;padding:3rem 1.5rem;background:rgba(14,11,4,.6);border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06); }
+    .stat { text-align:center; }
+    .stat-num { font-size:2.5rem;font-weight:800;background:var(--gradient-iot);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1; }
+    .stat-label { color:var(--muted-foreground);font-size:.85rem;margin-top:.3rem; }
+
+    /* LIVE SENSOR DEMO */
+    .sensor-panel { border-radius:1.25rem;overflow:hidden;border:1px solid rgba(245,158,11,.12);background:rgba(18,14,6,.88); }
+    .panel-bar { display:flex;align-items:center;gap:.5rem;padding:.65rem 1rem;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.06); }
+    .pb-dot { width:10px;height:10px;border-radius:50%; }
+    .pb-title { font-size:.75rem;color:var(--muted-foreground);margin-left:.25rem; }
+    .live-badge { display:inline-flex;align-items:center;gap:.35rem;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.2);color:#4ade80;padding:.2rem .6rem;border-radius:9999px;font-size:.7rem;font-weight:700; }
+    .live-dot { width:6px;height:6px;border-radius:50%;background:#4ade80;animation:livePulse2 1.4s ease-in-out infinite; }
+    @keyframes livePulse2 { 0%,100%{opacity:1} 50%{opacity:.3} }
+    .sensor-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;padding:1.5rem; }
+    .s-card { background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.12);border-radius:.75rem;padding:.9rem;text-align:center; }
+    .s-card .sc-icon { font-size:1.5rem;margin-bottom:.4rem; }
+    .s-card .sc-val { font-size:1.3rem;font-weight:800;background:var(--gradient-iot);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+    .s-card .sc-lbl { font-size:.68rem;color:var(--muted-foreground);margin-top:.15rem; }
+    .s-card .sc-status { font-size:.65rem;font-weight:700;color:#4ade80;margin-top:.2rem; }
+    .sensor-chart-row { padding:0 1.5rem 1.5rem;display:grid;grid-template-columns:2fr 1fr;gap:1rem; }
+    .s-chart { background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.1);border-radius:.75rem;padding:1rem; }
+    .s-chart-title { font-size:.72rem;color:var(--muted-foreground);font-weight:600;margin-bottom:.75rem; }
+    .wave-bars { display:flex;align-items:flex-end;gap:3px;height:52px; }
+    .wb { border-radius:2px 2px 0 0;background:var(--gradient-iot);animation:waveAnim 1.5s ease-in-out infinite alternate; }
+    @keyframes waveAnim { 0%{opacity:.4} 100%{opacity:1} }
+    .node-grid { display:flex;flex-direction:column;gap:.5rem; }
+    .node-row { display:flex;align-items:center;justify-content:space-between;font-size:.75rem;padding:.4rem .6rem;background:rgba(245,158,11,.05);border-radius:.4rem; }
+    .node-dot { width:7px;height:7px;border-radius:50%; }
+    .node-online { background:#4ade80; }
+    .node-busy   { background:#facc15; }
+    .node-offline{ background:#f87171; }
+
+    /* PROCESS */
+    .timeline { position:relative;padding-left:2.5rem; }
+    .timeline::before { content:'';position:absolute;left:.75rem;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,hsl(38 95% 52%),hsl(18 90% 55%),transparent);border-radius:2px; }
+    .timeline-item { position:relative;margin-bottom:2.5rem; }
+    .timeline-dot { position:absolute;left:-2.5rem;top:.25rem;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--gradient-iot);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:#fff;flex-shrink:0;box-shadow:0 0 14px rgba(245,158,11,.45); }
+    .timeline-item h4 { font-size:1.05rem;font-weight:700;margin-bottom:.35rem; }
+    .timeline-item p { color:var(--muted-foreground);font-size:.9rem;line-height:1.6; }
+
+    /* DOMAIN CARDS */
+    .domains-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:1rem; }
+    .domain-card { padding:1.5rem 1.25rem;border-radius:1rem;background:rgba(18,14,6,.78);border:1px solid rgba(255,255,255,.07);text-align:center;transition:transform .3s,border-color .3s; }
+    .domain-card:hover { transform:translateY(-4px);border-color:rgba(245,158,11,.3); }
+    .domain-icon { font-size:2rem;margin-bottom:.75rem;display:block; }
+    .domain-card h4 { font-size:.9rem;font-weight:700;margin-bottom:.25rem; }
+    .domain-card p { font-size:.78rem;color:var(--muted-foreground);line-height:1.5; }
+
+    /* TOOLS */
+    .tools-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:1rem; }
+    .tool-chip { display:flex;flex-direction:column;align-items:center;gap:.6rem;padding:1.25rem .75rem;border-radius:1rem;background:rgba(18,14,6,.78);border:1px solid rgba(255,255,255,.07);transition:transform .25s,border-color .25s,box-shadow .25s;cursor:default; }
+    .tool-chip:hover { transform:translateY(-4px);border-color:rgba(245,158,11,.35);box-shadow:0 10px 30px rgba(245,158,11,.1); }
+    .tool-chip span { font-size:.78rem;font-weight:600;color:var(--muted-foreground);text-align:center; }
+    .tool-category { margin-bottom:.75rem;font-size:.82rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.07em; }
+    .tools-category-block { margin-bottom:2.5rem; }
+
+    /* FAQ */
+    .faq-list { display:flex;flex-direction:column;gap:1rem;max-width:800px;margin:0 auto; }
+    .faq-item { background:rgba(18,14,6,.78);border:1px solid rgba(255,255,255,.07);border-radius:1rem;overflow:hidden;transition:border-color .3s; }
+    .faq-item.open { border-color:rgba(245,158,11,.3); }
+    .faq-question { width:100%;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 1.5rem;background:none;border:none;cursor:pointer;color:var(--foreground);font-size:1rem;font-weight:600;text-align:left;gap:1rem; }
+    .faq-icon { flex-shrink:0;width:28px;height:28px;border-radius:50%;background:rgba(245,158,11,.1);display:flex;align-items:center;justify-content:center;transition:background .3s,transform .4s;color:var(--accent);font-size:.85rem; }
+    .faq-item.open .faq-icon { background:rgba(245,158,11,.22);transform:rotate(45deg); }
+    .faq-answer { max-height:0;overflow:hidden;transition:max-height .45s ease,padding .3s;color:var(--muted-foreground);font-size:.925rem;line-height:1.7;padding:0 1.5rem; }
+    .faq-item.open .faq-answer { max-height:320px;padding-bottom:1.5rem; }
+
+    /* CTA */
+    .cta-section { position:relative;z-index:1;background:var(--gradient-iot);padding:5rem 1.5rem;text-align:center;overflow:hidden; }
+    .cta-section::before { content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+    .cta-section h2 { font-size:clamp(1.8rem,4vw,2.75rem);font-weight:800;color:#fff;margin-bottom:1rem;position:relative; }
+    .cta-section p { color:rgba(255,255,255,.85);font-size:1.1rem;max-width:540px;margin:0 auto 2rem;line-height:1.6;position:relative; }
+    .btn-white { display:inline-flex;align-items:center;gap:.5rem;background:#fff;color:#3d1a00;padding:.8rem 2.25rem;border-radius:.875rem;font-weight:700;font-size:1rem;text-decoration:none;border:none;cursor:pointer;transition:transform .2s,box-shadow .3s;position:relative; }
+    .btn-white:hover { transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.25); }
+
+    /* FOOTER */
+    footer { position:relative;z-index:1;background:rgba(14,11,4,.9);border-top:1px solid rgba(255,255,255,.07);padding:4rem 1.5rem 2rem; }
+    .footer-grid { display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;max-width:1200px;margin:0 auto 2rem; }
+    .footer-brand p { color:var(--muted-foreground);font-size:.875rem;line-height:1.7;margin:1rem 0 1.5rem; }
+    .footer-contact-item { display:flex;align-items:flex-start;gap:.75rem;font-size:.875rem;color:var(--muted-foreground);margin-bottom:.75rem; }
+    .footer-contact-item svg { color:var(--accent);flex-shrink:0;margin-top:2px; }
+    .footer-col h3 { font-size:.95rem;font-weight:700;margin-bottom:1.25rem; }
+    .footer-col ul { list-style:none; }
+    .footer-col li { margin-bottom:.75rem; }
+    .footer-col a { color:var(--muted-foreground);text-decoration:none;font-size:.875rem;transition:color .2s; }
+    .footer-col a:hover { color:var(--accent); }
+    .footer-bottom { max-width:1200px;margin:0 auto;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem; }
+    .footer-bottom p { color:var(--muted-foreground);font-size:.8rem; }
+    .footer-legal { display:flex;gap:1.5rem; }
+    .footer-legal a { color:var(--muted-foreground);font-size:.8rem;text-decoration:none;transition:color .2s; }
+    .footer-legal a:hover { color:var(--accent); }
+
+    /* FLOATING */
+    .floating-btns { position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:999; }
+    .float-btn { width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.1rem;transition:transform .2s; }
+    .float-btn:hover { transform:scale(1.1); }
+
+    /* REVEAL */
+    .reveal { opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease; }
+    .reveal.visible { opacity:1;transform:translateY(0); }
+
+    @keyframes fadeSlideUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes chartUp { from{transform:scaleY(0)} to{transform:scaleY(1)} }
+    @media(max-width:768px){ .nav-links,.nav-cta-wrap{display:none;} .hamburger{display:block;} .footer-grid{grid-template-columns:1fr 1fr;} .sensor-grid{grid-template-columns:1fr 1fr;} .sensor-chart-row{grid-template-columns:1fr;} }
+    @media(max-width:480px){ .footer-grid{grid-template-columns:1fr;} }
+
+    #typed-text { color:var(--accent); }
+    .cursor { animation:blink 1s step-end infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  
+    /* ══════════════════════════════════════════════
+       RESPONSIVE OVERHAUL — iOS / Android / Mobile
+       ══════════════════════════════════════════════ */
+
+    /* 1. Fix CSS bug: inset-x-0 is Tailwind, not native CSS */
+    .nav-links a::after { left:0; right:0; }
+
+    /* 2. iOS momentum scrolling & tap-delay fix */
+    html { -webkit-text-size-adjust:100%; }
+    body { -webkit-overflow-scrolling: touch; }
+    a, button, [role="button"] { touch-action: manipulation; }
+
+    /* 3. Prevent horizontal overflow on all screen sizes */
+    html, body { max-width:100%; overflow-x:hidden; }
+
+    /* 4. Safe-area insets for iPhone notch / home bar */
+    header { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+    .floating-btns { bottom: calc(20px + env(safe-area-inset-bottom)); right: calc(20px + env(safe-area-inset-right)); }
+
+    /* 5. Split-grid — process/timeline+visual sections */
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    /* 6. Spec grid (2-col info cards) */
+    .spec-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem;
+    }
+
+    /* 7. Triple stat grid */
+    .triple-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: .75rem;
+      text-align: center;
+    }
+
+    /* 8. results-section 2-col on reveal */
+    .results-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* ── TABLET (≤1024px) ── */
+    @media (max-width: 1024px) {
+      .split-grid { gap: 2.5rem; }
+      .services-grid { grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); }
+      .tools-grid   { grid-template-columns: repeat(auto-fill, minmax(105px,1fr)); }
+      .viewport-grid, .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+      .industries-grid, .domains-grid, .deliverables-grid, .values-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* ── MOBILE LARGE (≤768px) ── */
+    @media (max-width: 768px) {
+      /* Nav */
+      .nav-links, .nav-cta-wrap { display: none; }
+      .hamburger { display: block; }
+
+      /* Hero — reduce padding */
+      .hero { padding: 4rem 1.25rem 2.5rem; min-height: auto; }
+      .hero-title { font-size: clamp(1.9rem, 7vw, 3rem); }
+      .hero-subtitle { font-size: 1rem; }
+      .hero-ring, .cube-wrap, .pulse-ring, .circuit-wrap { display: none; }
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .hero-ctas .btn-primary,
+      .hero-ctas .btn-outline { width: 100%; justify-content: center; }
+
+      /* Sections */
+      .section { padding: 3rem 1.25rem; }
+      .section-header { margin-bottom: 2rem; }
+      .cta-section { padding: 3.5rem 1.25rem; }
+      footer { padding: 3rem 1.25rem 1.5rem; }
+
+      /* Split grids → single column */
+      .split-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+      .results-two-col { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+      .spec-grid-2 { grid-template-columns: 1fr 1fr; gap: .5rem; }
+      .triple-grid { grid-template-columns: 1fr 1fr 1fr; gap: .5rem; }
+
+      /* Inline split grids (override inline styles) */
+      .container > div[style*="grid-template-columns:1fr 1fr"][style*="gap:4rem"],
+      .container > div[style*="grid-template-columns: 1fr 1fr"] {
+        display: block !important;
+      }
+      .container > div[style*="grid-template-columns:1fr 1fr"][style*="gap:4rem"] > div,
+      .container > div[style*="grid-template-columns: 1fr 1fr"] > div {
+        margin-bottom: 2rem;
+      }
+
+      /* Stats strip */
+      .stats-strip { gap: 1.5rem; padding: 2rem 1rem; }
+      .stat-num { font-size: 2rem; }
+
+      /* Service cards */
+      .services-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .service-card { padding: 1.5rem; }
+
+      /* Tools */
+      .tools-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: .75rem; }
+      .tool-chip { padding: 1rem .5rem; }
+      .tool-chip span { font-size: .72rem; }
+
+      /* Viewport / portfolio grids */
+      .viewport-grid { grid-template-columns: 1fr 1fr; gap: .75rem; }
+      .portfolio-grid { grid-template-columns: 1fr 1fr; }
+      .port-card.tall { grid-row: span 1; }
+
+      /* Industries / domains / deliverables */
+      .industries-grid, .domains-grid, .deliverables-grid, .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: .75rem;
+      }
+
+      /* Results section */
+      .results-grid { grid-template-columns: 1fr; }
+      .chart-row { grid-template-columns: 1fr !important; grid-column: span 1 !important; }
+      .dashboard-body { grid-template-columns: 1fr 1fr; }
+
+      /* Sensor / IoT panels */
+      .sensor-grid { grid-template-columns: 1fr 1fr; gap: .75rem; }
+      .sensor-chart-row { grid-template-columns: 1fr !important; gap: 1rem !important; }
+
+      /* Footer */
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .footer-brand { grid-column: span 2; }
+
+      /* FAQ */
+      .faq-question { font-size: .95rem; padding: 1rem 1.25rem; }
+      .faq-answer { padding: 0 1.25rem; }
+      .faq-item.open .faq-answer { max-height: 500px; }
+
+      /* Funnel steps full width */
+      .funnel-step { width: 100% !important; }
+
+      /* Floating btns */
+      .floating-btns { gap: 8px; }
+      .float-btn { width: 44px; height: 44px; font-size: 1rem; }
+
+      /* CTA btn */
+      .btn-white { padding: .75rem 1.5rem; font-size: .95rem; }
+    }
+
+    /* ── MOBILE SMALL (≤480px) ── */
+    @media (max-width: 480px) {
+      .hero { padding: 3.5rem 1rem 2rem; }
+      .hero-title { font-size: clamp(1.75rem, 8vw, 2.5rem); }
+      .section { padding: 2.5rem 1rem; }
+      .cta-section { padding: 3rem 1rem; }
+      footer { padding: 2.5rem 1rem 1.25rem; }
+
+      .services-grid { grid-template-columns: 1fr; }
+      .tools-grid { grid-template-columns: repeat(3, 1fr); gap: .6rem; }
+      .tool-chip { padding: .9rem .4rem; }
+      .tool-chip span { font-size: .68rem; }
+
+      .viewport-grid { grid-template-columns: 1fr; }
+      .portfolio-grid { grid-template-columns: 1fr !important; }
+      .industries-grid, .domains-grid, .deliverables-grid, .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .spec-grid-2 { grid-template-columns: 1fr; }
+      .triple-grid { grid-template-columns: 1fr 1fr; }
+
+      .dashboard-body { grid-template-columns: 1fr; }
+      .sensor-grid { grid-template-columns: 1fr 1fr; }
+      .kpi-card, .s-card { padding: .75rem; }
+
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-brand { grid-column: span 1; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: .5rem; }
+
+      .stat-num { font-size: 1.75rem; }
+      .stats-strip { gap: 1.25rem; }
+
+      .faq-question { font-size: .9rem; padding: .9rem 1rem; }
+      .faq-answer { padding: 0 1rem; }
+      .faq-item.open .faq-answer { max-height: 600px; }
+
+      .glass-card, .chart-wrap, .mini-chart { padding: 1rem; }
+
+      .btn-primary, .btn-outline { padding: .65rem 1.4rem; font-size: .9rem; }
+      .nav-container { padding: 0 1rem; }
+    }
+
+    /* ── EXTRA SMALL (≤375px / iPhone SE) ── */
+    @media (max-width: 375px) {
+      .hero-title { font-size: 1.65rem; }
+      .section-title { font-size: 1.5rem; }
+      .tools-grid { grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+      .tool-chip { padding: .75rem .35rem; }
+      .floating-btns { right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); gap: 6px; }
+      .float-btn { width: 40px; height: 40px; font-size: .9rem; }
+    }
+
+    /* ── HOVER: disable on touch devices (iOS/Android) ── */
+    @media (hover: none) {
+      .service-card:hover,
+      .tool-chip:hover,
+      .result-card:hover,
+      .industry-card:hover,
+      .domain-card:hover,
+      .deliv-card:hover,
+      .perk:hover,
+      .val-card:hover,
+      .port-card:hover,
+      .viewport-card:hover,
+      .job-card:hover { transform: none; box-shadow: none; border-color: rgba(255,255,255,.07); }
+      .service-card:hover::before { opacity: 0; }
+      .btn-primary:hover,
+      .btn-outline:hover,
+      .btn-white:hover,
+      .nav-cta:hover { transform: none; box-shadow: none; }
+      .service-card:hover .service-icon { transform: none; }
+    }
+
+    /* ── REDUCED MOTION (accessibility) ── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .orb, .orb-1, .orb-2, .orb-3 { animation: none; }
+    }
+
+    /* ── PERFORMANCE: reduce orb blur on small screens ── */
+    @media (max-width: 768px) {
+      .orb-1 { width: 280px; height: 280px; filter: blur(60px); opacity: .12; }
+      .orb-2 { width: 220px; height: 220px; filter: blur(50px); opacity: .12; }
+      .orb-3 { display: none; }
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- ═══════════════ NAVBAR ═══════════════ -->
+<header>
+  <div class="nav-container">
+    <a class="nav-logo" href="index.html">
+      <div style="width:32px;height:32px;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+        <img src="logo/white logo.png" alt="Divine Devs Logo" style="width:32px;height:32px;object-fit:contain;" />
+      </div>
+      <span class="nav-logo-text, text colour:white, " style="color: white; font-weight: bold; font-size: 20px;">Divine Devs</span>
+    </a>
+    <nav><ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="Portfolio.html">Portfolio</a></li>
+      <li><a href="service.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul></nav>
+    <div class="nav-cta-wrap"><a href="contact.html" class="nav-cta">Request Quote <i class="fa-solid fa-arrow-right"></i></a></div>
+    <button class="hamburger" id="hamburger"><i class="fa-solid fa-bars" id="ham-icon"></i></button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Home</a><a href="about.html">About</a>
+    <a href="Portfolio.html">Portfolio</a><a href="service.html">Services</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="btn-primary" style="width:fit-content">Request Quote <i class="fa-solid fa-arrow-right"></i></a>
+  </div>
+</header>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+
+  <!-- Floating sensor cards -->
+  <div class="sensor-float sf-a">
+    <div class="sf-val">24°C / 68% RH</div>
+    <div class="sf-lbl">Live Sensor Feed</div>
+    <div class="sf-live"><span class="sf-live-dot"></span> Connected</div>
+  </div>
+  <div class="sensor-float sf-b">
+    <div class="sf-val">ESP32 + MQTT</div>
+    <div class="sf-lbl">Wireless Protocol</div>
+    <div class="sf-live"><span class="sf-live-dot"></span> Online</div>
+  </div>
+  <div class="sensor-float sf-c">
+    <div class="sf-val">99.7% Uptime</div>
+    <div class="sf-lbl">System Availability</div>
+    <div class="sf-live"><span class="sf-live-dot"></span> Monitoring</div>
+  </div>
+
+  <!-- Circuit board decoration -->
+  <div class="circuit-wrap" aria-hidden="true">
+    <svg viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
+      <!-- PCB trace lines -->
+      <g stroke="rgba(245,158,11,.25)" stroke-width="1.5" fill="none">
+        <path d="M30,130 H80 V80 H160 V50"/>
+        <path d="M80,130 V180 H200 V210"/>
+        <path d="M160,80 H210 V130 H230"/>
+        <path d="M130,130 H130 V200 H80"/>
+        <path d="M30,130 V200 H130"/>
+        <path d="M210,130 V80"/>
+        <path d="M160,130 H130"/>
+        <path d="M30,80 H80"/>
+      </g>
+      <!-- component pads -->
+      <g fill="rgba(245,158,11,.6)">
+        <rect x="77" y="77" width="6" height="6" rx="1"/>
+        <rect x="157" y="47" width="6" height="6" rx="1"/>
+        <rect x="157" y="127" width="6" height="6" rx="1"/>
+        <rect x="207" y="127" width="6" height="6" rx="1"/>
+        <rect x="207" y="77" width="6" height="6" rx="1"/>
+        <rect x="77" y="177" width="6" height="6" rx="1"/>
+        <rect x="197" y="207" width="6" height="6" rx="1"/>
+        <rect x="127" y="197" width="6" height="6" rx="1"/>
+        <rect x="27" y="127" width="6" height="6" rx="1"/>
+        <rect x="27" y="77" width="6" height="6" rx="1"/>
+      </g>
+      <!-- IC chip centre -->
+      <rect x="105" y="105" width="50" height="50" rx="4" fill="rgba(245,158,11,.08)" stroke="rgba(245,158,11,.4)" stroke-width="1.5"/>
+      <text x="130" y="128" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(245,158,11,.7)">MCU</text>
+      <text x="130" y="140" text-anchor="middle" font-size="7" fill="rgba(245,158,11,.5)">ESP32</text>
+      <!-- Pulsing dot -->
+      <circle cx="130" cy="130" r="3" fill="hsl(38,95%,60%)">
+        <animate attributeName="r" values="3;6;3" dur="2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="1;0.2;1" dur="2s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+  </div>
+
+  <div style="position:relative;z-index:2;max-width:840px;">
+    <br>
+    <h1 class="hero-title">
+      Smart <span class="gradient-text"><span id="typed-text">IoT Projects</span><span class="cursor">|</span></span><br>From Concept to Deployment
+    </h1>
+    <p class="hero-subtitle">
+      We design and build intelligent IoT and engineering projects across all domains — from embedded systems and sensor networks to cloud-connected automation platforms that solve real-world problems.
+    </p>
+    <div class="hero-ctas">
+      <a href="contact.html" class="btn-primary">Start Your Project <i class="fa-solid fa-microchip"></i></a>
+      <a href="Portfolio.html" class="btn-primary">View Our Work <i class="fa-solid fa-folder-open"></i></a>
+      <a href="#what-we-do" class="btn-outline">Explore Services <i class="fa-solid fa-chevron-down"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ STATS ═══════════════ -->
+ <!--
+<div class="stats-strip reveal">
+  <div class="stat"><div class="stat-num" data-target="120">0</div><div class="stat-label">Projects Deployed</div></div>
+  <div class="stat"><div class="stat-num" data-target="99">0</div><div class="stat-label">Uptime Reliability %</div></div>
+  <div class="stat"><div class="stat-num" data-target="25">0</div><div class="stat-label">Engineering Domains</div></div>
+  <div class="stat"><div class="stat-num" data-target="48">0</div><div class="stat-label">Avg. Delivery (hrs)</div></div>
+</div> -->
+
+<!-- ═══════════════ WHAT WE DO ═══════════════ -->
+<section class="section" id="what-we-do">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label"><i class="fa-solid fa-layer-group"></i> What We Do</div>
+      <h2 class="section-title">End-to-End <span class="gradient-text">IoT & Engineering Projects</span></h2>
+      <p class="section-subtitle">From hardware design to cloud deployment — we cover the full project lifecycle for students, startups, and enterprises alike.</p>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card reveal" style="transition-delay:.3s">
+        <div class="service-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <h3>All Engineering Projects</h3>
+        <p>Fully documented engineering projects across ECE, EEE, Mechanical, Civil, and Computer Science — from final-year thesis projects to innovation contest entries, built with working prototypes.</p>
+        <span class="service-tag">ECE · EEE · CSE · Mech · Civil</span>
+      </div>
+
+      <div class="service-card reveal" style="transition-delay:.05s">
+        <div class="service-icon"><i class="fa-solid fa-microchip"></i></div>
+        <h3>IoT System Design & Development</h3>
+        <p>Complete end-to-end IoT solutions — sensor selection, microcontroller programming, wireless communication, and cloud backend integration for smart, connected devices.</p>
+        <span class="service-tag">ESP32 · Arduino · Raspberry Pi</span>
+      </div>
+
+      <div class="service-card reveal" style="transition-delay:.45s">
+        <div class="service-icon"><i class="fa-solid fa-file-lines"></i></div>
+        <h3>Project Documentation & Reporting</h3>
+        <p>Professional project reports, IEEE-format papers, circuit diagrams, flow charts, block diagrams, PPTs, and working video demonstrations — everything your submission needs.</p>
+        <span class="service-tag">IEEE · Report · PPT · Demo Video</span>
+      </div>
+
+      <div class="service-card reveal" style="transition-delay:.1s">
+        <div class="service-icon"><i class="fa-solid fa-memory"></i></div>
+        <h3>Embedded Systems & Hardware Interfacing</h3>
+        <p>Low-level firmware development in C/C++ and MicroPython. Peripheral interfacing — I2C, SPI, UART, PWM — for sensors, actuators, displays, and communication modules.</p>
+        <span class="service-tag">C/C++ · MicroPython · RTOS</span>
+      </div>
+
+      <div class="service-card reveal" style="transition-delay:.15s">
+        <div class="service-icon"><i class="fa-solid fa-wave-square"></i></div>
+        <h3>Real-Time Data Monitoring</h3>
+        <p>Live sensor dashboards with MQTT/WebSocket data streaming, threshold alerting, time-series storage, and mobile/web visualisation for industrial and environmental monitoring.</p>
+        <span class="service-tag">MQTT · Node-RED · InfluxDB</span>
+      </div>
+
+      <div class="service-card reveal" style="transition-delay:.2s">
+        <div class="service-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+        <h3>Cloud Integration & Analytics</h3>
+        <p>Connect field devices to AWS IoT, Google Cloud IoT, Firebase, or Blynk. Store, analyse, and act on telemetry data with automated rules, triggers, and OTA firmware updates.</p>
+        <span class="service-tag">AWS IoT · Firebase · Blynk</span>
+      </div>
+
+      <div class="service-card reveal" style="transition-delay:.25s">
+        <div class="service-icon"><i class="fa-solid fa-robot"></i></div>
+        <h3>Smart Automation Solutions</h3>
+        <p>Home automation, industrial control systems, and process automation using PLCs, relay modules, servo/stepper motor control, and custom logic with relay-ladder or Python scripting.</p>
+        <span class="service-tag">PLC · Home Automation · SCADA</span>
+      </div>
+
+      <div class="service-card reveal" style="transition-delay:.35s">
+        <div class="service-icon"><i class="fa-solid fa-wifi"></i></div>
+        <h3>Wireless Sensor Networks</h3>
+        <p>Multi-node sensor networks using LoRaWAN, Zigbee, Bluetooth BLE, and Wi-Fi mesh protocols for agricultural monitoring, smart cities, asset tracking, and industrial IoT.</p>
+        <span class="service-tag">LoRaWAN · BLE · Zigbee · Wi-Fi</span>
+      </div>
+
+      <div class="service-card reveal" style="transition-delay:.4s">
+        <div class="service-icon"><i class="fa-solid fa-eye"></i></div>
+        <h3>Computer Vision & AI Edge</h3>
+        <p>Embedded ML on Raspberry Pi, Jetson Nano, and OpenMV — object detection, face recognition, gesture control, and defect inspection systems for smart surveillance and manufacturing.</p>
+        <span class="service-tag">OpenCV · TensorFlow Lite · Jetson</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ LIVE IoT DASHBOARD ═══════════════ -->
+<section class="section" style="background:rgba(14,11,4,.45);">
+  <div class="container">
+    <div class="section-header reveal" style="text-align:center;">
+      <div class="section-label" style="margin:0 auto 1rem;"><i class="fa-solid fa-display"></i> Live Demo</div>
+      <h2 class="section-title">What a <span class="gradient-text">Smart IoT Dashboard Looks Like</span></h2>
+      <p class="section-subtitle" style="margin:0 auto;">Real-time sensor data flowing from hardware devices to a live monitoring panel — this is what we build for you.</p>
+    </div>
+
+    <div class="sensor-panel reveal">
+      <div class="panel-bar">
+        <div class="pb-dot" style="background:#ff5f57;"></div>
+        <div class="pb-dot" style="background:#ffbd2e;"></div>
+        <div class="pb-dot" style="background:#28c840;"></div>
+        <span class="pb-title">⚡ IoT Project Monitor — Smart Environment System</span>
+        <span class="live-badge" style="margin-left:auto;"><span class="live-dot"></span> Live Feed</span>
+      </div>
+
+      <div class="sensor-grid">
+        <div class="s-card">
+          <div class="sc-icon">🌡️</div>
+          <div class="sc-val" id="s-temp">—</div>
+          <div class="sc-lbl">Temperature</div>
+          <div class="sc-status">● Normal</div>
+        </div>
+        <div class="s-card">
+          <div class="sc-icon">💧</div>
+          <div class="sc-val" id="s-hum">—</div>
+          <div class="sc-lbl">Humidity</div>
+          <div class="sc-status">● Normal</div>
+        </div>
+        <div class="s-card">
+          <div class="sc-icon">💡</div>
+          <div class="sc-val" id="s-lux">—</div>
+          <div class="sc-lbl">Light (lux)</div>
+          <div class="sc-status">● Active</div>
+        </div>
+        <div class="s-card">
+          <div class="sc-icon">🔋</div>
+          <div class="sc-val" id="s-volt">—</div>
+          <div class="sc-lbl">Supply Voltage</div>
+          <div class="sc-status">● Stable</div>
+        </div>
+      </div>
+
+      <div class="sensor-chart-row">
+        <!-- Wave chart -->
+        <div class="s-chart">
+          <div class="s-chart-title">📈 Temperature Trend (last 11 readings)</div>
+          <div class="wave-bars" id="wave-bars">
+            <div class="wb" style="flex:1;height:55%;animation-delay:.0s"></div>
+            <div class="wb" style="flex:1;height:62%;animation-delay:.1s"></div>
+            <div class="wb" style="flex:1;height:58%;animation-delay:.2s"></div>
+            <div class="wb" style="flex:1;height:70%;animation-delay:.3s"></div>
+            <div class="wb" style="flex:1;height:65%;animation-delay:.4s"></div>
+            <div class="wb" style="flex:1;height:72%;animation-delay:.5s"></div>
+            <div class="wb" style="flex:1;height:68%;animation-delay:.6s"></div>
+            <div class="wb" style="flex:1;height:75%;animation-delay:.7s"></div>
+            <div class="wb" style="flex:1;height:80%;animation-delay:.8s"></div>
+            <div class="wb" style="flex:1;height:78%;animation-delay:.9s"></div>
+            <div class="wb" style="flex:1;height:100%;animation-delay:1.0s;opacity:.5;background:rgba(245,158,11,.2);border:1px dashed rgba(245,158,11,.4);animation:none"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:.4rem;font-size:.6rem;color:var(--muted-foreground);">
+            <span>T-10</span><span>T-9</span><span>T-8</span><span>T-7</span><span>T-6</span><span>T-5</span><span>T-4</span><span>T-3</span><span>T-2</span><span>T-1</span><span>Now▶</span>
+          </div>
+        </div>
+
+        <!-- Node status -->
+        <div class="s-chart">
+          <div class="s-chart-title">🔌 Node Status</div>
+          <div class="node-grid">
+            <div class="node-row"><span>Node_01 — Temp/Hum</span><span class="node-dot node-online"></span></div>
+            <div class="node-row"><span>Node_02 — Light/PIR</span><span class="node-dot node-online"></span></div>
+            <div class="node-row"><span>Node_03 — Gas/Smoke</span><span class="node-dot node-busy"></span></div>
+            <div class="node-row"><span>Node_04 — Soil/Water</span><span class="node-dot node-offline"></span></div>
+            <div class="node-row"><span>Gateway — MQTT</span><span class="node-dot node-online"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ PROCESS ═══════════════ -->
+<section class="section">
+  <div class="container" class="split-grid">
+    <div class="reveal">
+      <div class="section-label"><i class="fa-solid fa-road"></i> Project Workflow</div>
+      <h2 class="section-title">From Brief to <span class="gradient-text">Working Prototype</span></h2>
+      <p class="section-subtitle" style="margin-bottom:2rem;">A structured build process that takes your idea from whiteboard to deployed, tested, and documented system.</p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot">1</div>
+          <h4>Requirement Analysis</h4>
+          <p>We define the project scope, components list, power budget, communication protocol, and target platform before touching any hardware or code.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">2</div>
+          <h4>Circuit & System Design</h4>
+          <p>Schematic design, PCB layout planning, block diagram, and system architecture are drawn up and shared for review before procurement begins.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">3</div>
+          <h4>Hardware Build & Firmware</h4>
+          <p>Components are assembled on breadboard or PCB, firmware is flashed and tested, sensors are calibrated, and communication protocols are verified.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">4</div>
+          <h4>Cloud Integration & Dashboard</h4>
+          <p>Device connects to cloud platform, data pipelines are set up, and a real-time monitoring dashboard is configured and tested end-to-end.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">5</div>
+          <h4>Testing, Documentation & Handoff</h4>
+          <p>Full functional testing under real-world conditions, followed by a complete project report, circuit diagrams, code comments, and demo video handover.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project spec card -->
+    <div class="reveal" style="transition-delay:.2s;display:flex;flex-direction:column;gap:1.25rem;">
+      <div class="glass-card" style="padding:1.6rem;">
+        <div style="font-size:.8rem;color:var(--muted-foreground);font-weight:600;margin-bottom:1.2rem;">📋 Sample Project Spec — Smart Home System</div>
+        <div class="spec-grid-2" style="font-size:.85rem;">
+          <div style="background:rgba(245,158,11,.07);border-radius:.6rem;padding:.75rem;">
+            <div style="color:var(--muted-foreground);font-size:.7rem;margin-bottom:.25rem;">PLATFORM</div>
+            <div style="font-weight:700;">ESP32 + Raspberry Pi</div>
+          </div>
+          <div style="background:rgba(245,158,11,.07);border-radius:.6rem;padding:.75rem;">
+            <div style="color:var(--muted-foreground);font-size:.7rem;margin-bottom:.25rem;">PROTOCOL</div>
+            <div style="font-weight:700;">MQTT over Wi-Fi</div>
+          </div>
+          <div style="background:rgba(245,158,11,.07);border-radius:.6rem;padding:.75rem;">
+            <div style="color:var(--muted-foreground);font-size:.7rem;margin-bottom:.25rem;">CLOUD</div>
+            <div style="font-weight:700;background:var(--gradient-iot);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Firebase + Node-RED</div>
+          </div>
+          <div style="background:rgba(245,158,11,.07);border-radius:.6rem;padding:.75rem;">
+            <div style="color:var(--muted-foreground);font-size:.7rem;margin-bottom:.25rem;">POWER</div>
+            <div style="font-weight:700;">5V / 2A USB-C</div>
+          </div>
+          <div style="background:rgba(245,158,11,.07);border-radius:.6rem;padding:.75rem;">
+            <div style="color:var(--muted-foreground);font-size:.7rem;margin-bottom:.25rem;">TIMELINE</div>
+            <div style="font-weight:700;">7 Days</div>
+          </div>
+          <div style="background:rgba(245,158,11,.07);border-radius:.6rem;padding:.75rem;">
+            <div style="color:var(--muted-foreground);font-size:.7rem;margin-bottom:.25rem;">UPTIME</div>
+            <div style="font-weight:700;background:var(--gradient-iot);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">99.7% Verified</div>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card" style="padding:1.4rem;">
+        <div style="font-size:.8rem;color:var(--muted-foreground);font-weight:600;margin-bottom:1rem;">✅ Every Project Includes</div>
+        <div style="display:flex;flex-direction:column;gap:.55rem;">
+          <div style="display:flex;align-items:center;gap:.6rem;font-size:.85rem;"><i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> Fully working hardware prototype</div>
+          <div style="display:flex;align-items:center;gap:.6rem;font-size:.85rem;"><i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> Commented & clean source code</div>
+          <div style="display:flex;align-items:center;gap:.6rem;font-size:.85rem;"><i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> Circuit diagram + block diagram</div>
+          <div style="display:flex;align-items:center;gap:.6rem;font-size:.85rem;"><i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> Full project report (IEEE format available)</div>
+          <div style="display:flex;align-items:center;gap:.6rem;font-size:.85rem;"><i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> Demo video + presentation slides</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ DOMAINS ═══════════════ -->
+<section class="section" style="background:rgba(14,11,4,.45);">
+  <div class="container">
+    <div class="section-header reveal" style="text-align:center;">
+      <div class="section-label" style="margin:0 auto 1rem;"><i class="fa-solid fa-industry"></i> Engineering Domains</div>
+      <h2 class="section-title">Projects Across <span class="gradient-text">All Engineering Fields</span></h2>
+      <p class="section-subtitle" style="margin:0 auto;">Whether you're a final-year student or a startup building a product, we bring domain expertise across every branch of engineering.</p>
+    </div>
+    <div class="domains-grid reveal">
+      <div class="domain-card"><span class="domain-icon">🔌</span><h4>Electronics (ECE/EEE)</h4><p>Sensor circuits, PCB design, power electronics, signal processing</p></div>
+      <div class="domain-card"><span class="domain-icon">💻</span><h4>Computer Science</h4><p>Embedded software, IoT apps, ML edge models, web dashboards</p></div>
+      <div class="domain-card"><span class="domain-icon">⚙️</span><h4>Mechanical Engineering</h4><p>Mechatronics, servo control, pneumatics, CNC & robotic arms</p></div>
+      <div class="domain-card"><span class="domain-icon">🌾</span><h4>Agriculture & Smart Farming</h4><p>Soil monitoring, automated irrigation, greenhouse control</p></div>
+      <div class="domain-card"><span class="domain-icon">🏥</span><h4>Biomedical Engineering</h4><p>Health monitoring, ECG/SpO2 systems, patient alert devices</p></div>
+      <div class="domain-card"><span class="domain-icon">🏙️</span><h4>Smart Cities & Civil</h4><p>Traffic control, structural monitoring, waste management IoT</p></div>
+      <div class="domain-card"><span class="domain-icon">⚡</span><h4>Renewable Energy</h4><p>Solar MPPT, battery BMS, wind monitoring, energy dashboards</p></div>
+      <div class="domain-card"><span class="domain-icon">🔒</span><h4>Security & Surveillance</h4><p>Face recognition, RFID access, intruder detection, smart locks</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TOOLS ═══════════════ -->
+<section class="section" id="tools">
+  <div class="container">
+    <div class="section-header reveal" style="text-align:center;">
+      <div class="section-label" style="margin:0 auto 1rem;"><i class="fa-solid fa-screwdriver-wrench"></i> Tech Stack</div>
+      <h2 class="section-title">Tools & <span class="gradient-text">Technologies We Use</span></h2>
+      <p class="section-subtitle" style="margin:0 auto;">From microcontrollers to cloud platforms, we use the industry's most trusted IoT and embedded engineering tools.</p>
+    </div>
+
+    <div class="tools-category-block reveal">
+      <div class="tool-category"><i class="fa-solid fa-microchip" style="margin-right:.4rem;"></i>Microcontrollers & SBCs</div>
+      <div class="tools-grid">
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#00979D"/><text x="4" y="22" font-size="9" font-weight="800" fill="#fff">Ardu</text><text x="4" y="31" font-size="7" fill="#fff" opacity=".8">ino</text></svg>
+          <span>Arduino</span>
+        </div>
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#C51A4A"/><text x="4" y="22" font-size="8" font-weight="800" fill="#fff">Raspb</text><text x="4" y="31" font-size="7" fill="#fff" opacity=".8">Pi</text></svg>
+          <span>Raspberry Pi</span>
+        </div>
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#e67e22"/><text x="4" y="22" font-size="9" font-weight="800" fill="#fff">ESP</text><text x="4" y="31" font-size="7" fill="#fff" opacity=".8">32/8266</text></svg>
+          <span>ESP32 / ESP8266</span>
+        </div>
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#0057A6"/><text x="4" y="22" font-size="9" font-weight="800" fill="#fff">STM</text><text x="4" y="31" font-size="7" fill="#fff" opacity=".8">32</text></svg>
+          <span>STM32</span>
+        </div>
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#76B900"/><text x="4" y="22" font-size="8" font-weight="800" fill="#fff">Jetson</text></svg>
+          <span>Jetson Nano</span>
+        </div>
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#4285f4"/><text x="4" y="22" font-size="8" font-weight="800" fill="#fff">NodeMCU</text></svg>
+          <span>NodeMCU</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tools-category-block reveal" style="transition-delay:.1s;">
+      <div class="tool-category"><i class="fa-solid fa-wifi" style="margin-right:.4rem;"></i>Communication & Protocols</div>
+      <div class="tools-grid">
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#3C5A9A"/><text x="4" y="22" font-size="9" font-weight="800" fill="#fff">MQTT</text></svg>
+          <span>MQTT</span>
+        </div>
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#8B2252"/><text x="3" y="22" font-size="8" font-weight="800" fill="#fff">Node-RED</text></svg>
+          <span>Node-RED</span>
+        </div>
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#0d6efd"/><text x="4" y="22" font-size="9" font-weight="800" fill="#fff">BLE</text></svg>
+          <span>Bluetooth BLE</span>
+        </div>
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#16a34a"/><text x="3" y="22" font-size="8" font-weight="800" fill="#fff">LoRa</text><text x="3" y="31" font-size="7" fill="#fff" opacity=".8">WAN</text></svg>
+          <span>LoRaWAN</span>
+        </div>
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#7c3aed"/><text x="3" y="22" font-size="8" font-weight="800" fill="#fff">Zigbee</text></svg>
+          <span>Zigbee</span>
+        </div>
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#0891b2"/><text x="4" y="22" font-size="9" font-weight="800" fill="#fff">HTTP</text></svg>
+          <span>HTTP / REST</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tools-category-block reveal" style="transition-delay:.2s;">
+      <div class="tool-category"><i class="fa-solid fa-cloud" style="margin-right:.4rem;"></i>Cloud & Dashboard Platforms</div>
+      <div class="tools-grid">
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#f97316"/><text x="4" y="22" font-size="8" font-weight="800" fill="#fff">Fire</text><text x="4" y="31" font-size="7" fill="#fff" opacity=".8">base</text></svg>
+          <span>Firebase</span>
+        </div>
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#FF9900"/><text x="4" y="22" font-size="8" font-weight="800" fill="#fff">AWS IoT</text></svg>
+          <span>AWS IoT Core</span>
+        </div>
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#4285F4"/><text x="4" y="22" font-size="7" font-weight="800" fill="#fff">Google</text><text x="4" y="31" font-size="7" fill="#fff" opacity=".8">Cloud IoT</text></svg>
+          <span>GCP IoT</span>
+        </div>
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#00979D"/><text x="4" y="22" font-size="8" font-weight="800" fill="#fff">Blynk</text></svg>
+          <span>Blynk IoT</span>
+        </div>
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#1A1A2E"/><text x="4" y="22" font-size="8" font-weight="800" fill="#f97316">Grafana</text></svg>
+          <span>Grafana</span>
+        </div>
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#189AB4"/><text x="3" y="22" font-size="8" font-weight="800" fill="#fff">Influx</text></svg>
+          <span>InfluxDB</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tools-category-block reveal" style="transition-delay:.3s;">
+      <div class="tool-category"><i class="fa-solid fa-code" style="margin-right:.4rem;"></i>Programming & Development</div>
+      <div class="tools-grid">
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#3776AB"/><text x="5" y="22" font-size="11" font-weight="800" fill="#FFD43B">Py</text></svg>
+          <span>Python</span>
+        </div>
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#004482"/><text x="4" y="22" font-size="9" font-weight="800" fill="#fff">C / C++</text></svg>
+          <span>C / C++</span>
+        </div>
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#e44d26"/><text x="4" y="22" font-size="8" font-weight="800" fill="#fff">MicroPy</text></svg>
+          <span>MicroPython</span>
+        </div>
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#00979D"/><text x="4" y="22" font-size="8" font-weight="800" fill="#fff">Arduino</text><text x="4" y="31" font-size="7" fill="#fff" opacity=".8">IDE</text></svg>
+          <span>Arduino IDE</span>
+        </div>
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#007ACC"/><text x="5" y="22" font-size="10" font-weight="800" fill="#fff">VS</text></svg>
+          <span>VS Code + PlatformIO</span>
+        </div>
+        <div class="tool-chip">
+          <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#f59e0b"/><text x="4" y="22" font-size="8" font-weight="800" fill="#fff">Proteus</text></svg>
+          <span>Proteus Sim</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FAQ ═══════════════ -->
+<section class="section" id="faq" style="background:rgba(14,11,4,.4);">
+  <div class="container">
+    <div class="section-header reveal" style="text-align:center;">
+      <div class="section-label" style="margin:0 auto 1rem;"><i class="fa-solid fa-circle-question"></i> FAQ</div>
+      <h2 class="section-title">Frequently Asked <span class="gradient-text">Questions</span></h2>
+      <p class="section-subtitle" style="margin:0 auto;">Common questions from students, startups, and businesses before starting an IoT or engineering project with us.</p>
+    </div>
+    <div class="faq-list reveal">
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Can you help with final-year engineering college projects?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          Absolutely — this is one of our most popular services. We support students from all branches (ECE, EEE, CSE, Mechanical, Civil, Biomedical) with complete final-year projects: hardware build, firmware, cloud setup, project report in IEEE format, circuit diagrams, and a demo video. We also offer guidance on topic selection and project novelty to help you stand out.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Do you supply the hardware components as well?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          We can work either way. If you already have components, we'll design around them. If you need us to source everything, we'll provide a complete bill of materials (BOM), procure the components, assemble the circuit, flash the firmware, and deliver a fully working prototype — either physically or as a remote-guided build with video support.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          How long does a typical IoT project take?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          Simple sensor projects (temperature monitor, door alarm, etc.) are typically completed in 2–5 days. Mid-complexity projects with cloud integration and a dashboard take 1–2 weeks. Complex multi-node systems, industrial automation, or AI-edge projects typically take 3–6 weeks. Rush delivery is available for urgent college deadlines.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Will you provide the source code and circuit diagrams?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          Yes — always. Every project delivery includes fully commented source code, schematic/circuit diagrams (in Proteus or Fritzing format), a wiring diagram, block diagram, and project documentation. You receive complete ownership of everything — no locked files, no black boxes.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Can you build a product-grade IoT device for my startup?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          Yes. Beyond academic projects, we also work with startups and SMEs on production-ready IoT products — from custom PCB design and firmware optimisation to cloud infrastructure setup, mobile app integration, and manufacturing-ready design files. We can take your idea from proof-of-concept all the way to a scalable product.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Do you provide remote support if something goes wrong after delivery?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          Yes. Every project includes 30 days of post-delivery support via WhatsApp, email, and video call. If a hardware issue arises, we'll guide you through it step-by-step. For ongoing maintenance or feature additions, we offer monthly retainer support packages as well.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Can you simulate the project virtually before hardware build?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          Yes. For many projects we first build and validate a simulation in Proteus, Tinkercad, or Wokwi before procuring physical components. This saves cost, identifies issues early, and gives you a virtual demo to review before committing to hardware. Simulation files are included in the deliverables.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CTA ═══════════════ -->
+<section class="cta-section">
+  <div style="position:relative;z-index:1;">
+    <h2>Have a Project Idea?<br>Let's Build It Together.</h2>
+    <p>Whether it's a college final-year project or a startup IoT product — share your idea and we'll make it real, fast, and production-ready.</p>
+    <a href="contact.html" class="btn-white">Start Your Project Now <i class="fa-solid fa-arrow-right"></i></a>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" style="display:flex;align-items:center;gap:.5rem;text-decoration:none;margin-bottom:.5rem;">
+        <img src="logo/white logo.png" alt="Divine Devs" style="height:28px;object-fit:contain;" />
+        <span style="font-size:1.1rem;font-weight:700;background:linear-gradient(white);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Divine Devs</span>
+      </a>
+      <p>We are a creative startup delivering innovative digital and design solutions for modern businesses. We help transform ideas into powerful digital experiences.</p>
+      <div>
+        <div class="footer-contact-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+          <span>divinedevs06@gmail.com</span>
+        </div>
+        <div class="footer-contact-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <span>+91 9498063395</span>
+        </div>
+        <div class="footer-contact-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <span>Iyyappanthangal, Chennai, Tamil Nadu, India – 600056</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h3>Services</h3>
+      <ul>
+        <li><a href="1. Web Development.html">Web Development</a></li>
+        <li><a href="2. Digital Marketing.html">Digital Marketing</a></li>
+        <li><a href="3. Projects.html">Projects</a></li>
+        <li><a href="4. CAD Design & 3D Modelling.html">CAD Design &amp; 3D Modelling</a></li>
+        <li><a href="5. Graphic Design.html">Graphic Design</a></li>
+        <li><a href="6. Data Analysts & Business Analysts.html">Data Analysts &amp; Business Analysts</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Company</h3>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Legal</h3>
+      <ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Divine Devs. All rights reserved.</p>
+    <div class="footer-legal"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a></div>
+  </div>
+</footer>
+
+<!-- FLOATING BTNS -->
+<div class="floating-btns">
+  <a href="https://wa.me/919499943075" target="_blank" class="float-btn" style="background:#25D366;color:white;"><i class="fa-brands fa-whatsapp"></i></a>
+  <a href="tel:+919499943075" class="float-btn" style="background:#2563eb;color:white;"><i class="fa-solid fa-phone"></i></a>
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="float-btn" style="background:#333;color:white;border:none;cursor:pointer;"><i class="fa-solid fa-arrow-up"></i></button>
+</div>
+
+<script>
+  // Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const hamIcon    = document.getElementById('ham-icon');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    hamIcon.className = mobileMenu.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+  });
+
+  // FAQ
+  function toggleFAQ(btn) {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Scroll reveal
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  // Counters
+  function animateCounter(el, target) {
+    let v = 0;
+    const inc = Math.max(1, Math.ceil(target / 80));
+    const tick = () => { v = Math.min(v + inc, target); el.textContent = v + '+'; if (v < target) requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+  }
+  const statObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.querySelectorAll('[data-target]').forEach(n => animateCounter(n, +n.dataset.target)); statObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stats-strip').forEach(s => statObs.observe(s));
+
+  // Sensor live values (simulated)
+  function rnd(min, max, dp = 1) { return (Math.random() * (max - min) + min).toFixed(dp); }
+  function updateSensors() {
+    document.getElementById('s-temp').textContent  = rnd(22, 28) + '°C';
+    document.getElementById('s-hum').textContent   = rnd(55, 72) + '%';
+    document.getElementById('s-lux').textContent   = rnd(300, 800, 0) + '';
+    document.getElementById('s-volt').textContent  = rnd(4.85, 5.10) + 'V';
+  }
+  updateSensors();
+  setInterval(updateSensors, 2200);
+
+  // Typing
+  const words = ['IoT Projects', 'Embedded Systems', 'Smart Automation', 'Engineering Projects', 'Sensor Networks', 'Edge AI'];
+  let wi = 0, ci = 0, deleting = false;
+  const typedEl = document.getElementById('typed-text');
+  function type() {
+    const word = words[wi];
+    if (!deleting) {
+      typedEl.textContent = word.slice(0, ++ci);
+      if (ci === word.length) { deleting = true; setTimeout(type, 1800); return; }
+    } else {
+      typedEl.textContent = word.slice(0, --ci);
+      if (ci === 0) { deleting = false; wi = (wi + 1) % words.length; }
+    }
+    setTimeout(type, deleting ? 50 : 82);
+  }
+  setTimeout(type, 900);
+
+  // Mouse trail — amber/orange
+  // Mouse trail — desktop/pointer only
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    document.addEventListener('mousemove', e => {
+      const s = document.createElement('div');
+      const colors = ['rgba(245,158,11,.9)', 'rgba(234,88,12,.9)', 'rgba(251,191,36,.8)'];
+      const c = colors[Math.floor(Math.random() * colors.length)];
+      s.style.cssText = `position:fixed;width:4px;height:4px;background:${c};border-radius:50%;pointer-events:none;left:${e.clientX}px;top:${e.clientY}px;z-index:9999;box-shadow:0 0 8px ${c},0 0 18px ${c};transition:opacity .5s;`;
+      document.body.appendChild(s);
+      setTimeout(() => s.style.opacity = '0', 90);
+      setTimeout(() => s.remove(), 600);
+    });
+
+  }
+</script>
+</body>
+</html>

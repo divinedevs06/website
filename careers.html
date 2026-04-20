@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" style="color-scheme:dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Careers – Divine Devs</title>
+  <link rel="shortcut icon" href="logo/white logo.png" type="image/x-icon">
+  <meta name="description" content="Join the Divine Devs team. Explore open roles in web development, digital marketing, design, IoT, and data analytics."/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'"/>
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/></noscript>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    /* ── TOKENS ── */
+    :root{
+      --bg:#080e1f;--fg:#f0f4ff;--muted:#8494b0;
+      --card:rgba(15,23,42,.72);--border:rgba(255,255,255,.07);
+      --grad:linear-gradient(135deg,hsl(217 91% 60%),hsl(270 91% 65%));
+      --primary:hsl(217 91% 60%);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+    body{background:var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+
+    /* ── BG ── */
+    body::before{
+      content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+      background-image:linear-gradient(rgba(99,102,241,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,.025) 1px,transparent 1px);
+      background-size:60px 60px;
+    }
+    .page{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
+
+    /* ── NAV ── */
+    header{position:sticky;top:0;z-index:50;background:rgba(8,14,31,.82);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+    .nav{max-width:1280px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+    .logo{display:flex;align-items:center;gap:.5rem;text-decoration:none}
+    .logo-text{font-size:1.2rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .logo img{width:30px;height:30px;object-fit:contain;border-radius:6px}
+    .nav-links{display:flex;gap:1.75rem;list-style:none}
+    .nav-links a{color:var(--fg);text-decoration:none;font-size:.9rem;font-weight:500;transition:color .18s}
+    .nav-links a:hover{color:var(--primary)}
+    .nav-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem 1.1rem;border-radius:.7rem;background:var(--grad);color:#fff;font-size:.85rem;font-weight:600;text-decoration:none;border:none;cursor:pointer;white-space:nowrap}
+    .hamburger{display:none;background:none;border:none;color:var(--fg);font-size:1.4rem;cursor:pointer;padding:.25rem}
+    .mob-menu{display:none;flex-direction:column;gap:.85rem;padding:1rem 1.5rem;background:rgba(8,14,31,.96);border-top:1px solid var(--border)}
+    .mob-menu.open{display:flex}
+    .mob-menu a{color:var(--fg);text-decoration:none;font-weight:500}
+
+    /* ── HERO ── */
+    .hero{padding:5rem 1.5rem 3rem;text-align:center;max-width:900px;margin:0 auto}
+    .badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.25);color:var(--primary);padding:.3rem .85rem;border-radius:9999px;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.25rem}
+    .hero h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-bottom:1rem}
+    .grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero p{color:var(--muted);font-size:1.05rem;max-width:600px;margin:0 auto 2rem;line-height:1.7}
+    .hero-btns{display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.75rem;border-radius:.75rem;font-size:.95rem;font-weight:600;text-decoration:none;transition:box-shadow .2s,transform .2s;cursor:pointer;border:none}
+    .btn-grad{background:var(--grad);color:#fff}
+    .btn-grad:hover{box-shadow:0 0 24px rgba(99,102,241,.45);transform:translateY(-1px)}
+    .btn-ghost{background:transparent;color:var(--fg);border:1px solid rgba(255,255,255,.14)}
+    .btn-ghost:hover{border-color:var(--primary);background:rgba(99,102,241,.07)}
+
+    /* ── SECTION ── */
+    section{padding:4rem 1.5rem;position:relative;z-index:1}
+    .container{max-width:1100px;margin:0 auto}
+    .sec-label{display:inline-flex;align-items:center;gap:.4rem;background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.18);color:var(--primary);padding:.25rem .8rem;border-radius:9999px;font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:.85rem}
+    .sec-title{font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:800;letter-spacing:-.02em;margin-bottom:.75rem;line-height:1.2}
+    .sec-sub{color:var(--muted);font-size:1rem;max-width:580px;line-height:1.65}
+
+    /* ── PERKS ── */
+    .perks-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem;margin-top:2.5rem}
+    .perk{background:var(--card);border:1px solid var(--border);border-radius:1rem;padding:1.5rem;transition:border-color .2s,transform .2s}
+    .perk:hover{border-color:rgba(99,102,241,.3);transform:translateY(-3px)}
+    .perk-icon{width:44px;height:44px;border-radius:.75rem;background:rgba(99,102,241,.12);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--primary);margin-bottom:1rem}
+    .perk h3{font-size:1rem;font-weight:700;margin-bottom:.4rem}
+    .perk p{color:var(--muted);font-size:.875rem;line-height:1.55}
+
+    /* ── VALUES ── */
+    .values-section{background:rgba(10,16,36,.5)}
+    .values-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:2.5rem}
+    .val-card{background:var(--card);border:1px solid var(--border);border-radius:.875rem;padding:1.25rem;text-align:center}
+    .val-card .vi{font-size:1.75rem;margin-bottom:.6rem}
+    .val-card h4{font-size:.9rem;font-weight:700;margin-bottom:.25rem}
+    .val-card p{font-size:.78rem;color:var(--muted);line-height:1.5}
+
+    /* ── JOB LISTINGS ── */
+    .jobs-section{background:rgba(6,12,28,.4)}
+    .filter-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}
+    .filt{padding:.35rem .9rem;border-radius:9999px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:.8rem;font-weight:600;cursor:pointer;transition:all .18s}
+    .filt.active,.filt:hover{background:var(--grad);border-color:transparent;color:#fff}
+    .jobs-list{display:flex;flex-direction:column;gap:1rem}
+    .job-card{background:var(--card);border:1px solid var(--border);border-radius:1rem;padding:1.5rem 1.75rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;transition:border-color .2s,box-shadow .2s;flex-wrap:wrap}
+    .job-card:hover{border-color:rgba(99,102,241,.3);box-shadow:0 8px 30px rgba(99,102,241,.08)}
+    .job-left{flex:1;min-width:200px}
+    .job-dept{font-size:.72rem;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.35rem}
+    .job-title{font-size:1.05rem;font-weight:700;margin-bottom:.4rem}
+    .job-meta{display:flex;flex-wrap:wrap;gap:.5rem}
+    .job-tag{display:inline-flex;align-items:center;gap:.3rem;font-size:.72rem;color:var(--muted);background:rgba(255,255,255,.05);border:1px solid var(--border);padding:.18rem .55rem;border-radius:9999px}
+    .job-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem 1.25rem;border-radius:.65rem;background:var(--grad);color:#fff;font-size:.85rem;font-weight:600;text-decoration:none;white-space:nowrap;transition:box-shadow .2s}
+    .job-btn:hover{box-shadow:0 0 18px rgba(99,102,241,.4)}
+    .no-jobs{text-align:center;padding:3rem;color:var(--muted);font-size:.95rem}
+
+    /* ── APPLY FORM ── */
+    .apply-section{background:rgba(10,16,36,.5)}
+    .apply-wrap{background:var(--card);border:1px solid var(--border);border-radius:1.25rem;padding:2.5rem;max-width:720px;margin:2rem auto 0}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .form-group{display:flex;flex-direction:column;gap:.4rem}
+    .form-group.full{grid-column:span 2}
+    label{font-size:.8rem;font-weight:600;color:var(--muted)}
+    input,select,textarea{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:.6rem;padding:.65rem .9rem;color:var(--fg);font-size:.9rem;font-family:inherit;width:100%;transition:border-color .2s}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:rgba(99,102,241,.5)}
+    textarea{resize:vertical;min-height:110px}
+    select option{background:#0e1a30}
+    .submit-btn{width:100%;padding:.8rem;border-radius:.75rem;background:var(--grad);color:#fff;font-size:1rem;font-weight:700;border:none;cursor:pointer;margin-top:.5rem;transition:box-shadow .2s,transform .2s;display:flex;align-items:center;justify-content:center;gap:.5rem}
+    .submit-btn:hover{box-shadow:0 0 24px rgba(99,102,241,.45);transform:translateY(-1px)}
+    .form-note{font-size:.78rem;color:var(--muted);text-align:center;margin-top:.75rem}
+    .toast{display:none;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.25);color:#4ade80;border-radius:.65rem;padding:.75rem 1rem;font-size:.875rem;margin-top:1rem;text-align:center}
+    .toast.show{display:block}
+
+    /* ── FOOTER ── */
+    footer{margin-top:auto;background:rgba(6,12,28,.92);border-top:1px solid var(--border);padding:3.5rem 1.5rem 1.5rem;position:relative;z-index:1}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;max-width:1100px;margin:0 auto 2rem}
+    .footer-brand p{color:var(--muted);font-size:.85rem;line-height:1.65;margin:.85rem 0 1.25rem}
+    .fc-item{display:flex;align-items:flex-start;gap:.6rem;font-size:.85rem;color:var(--muted);margin-bottom:.65rem}
+    .fc-item svg{color:var(--primary);flex-shrink:0;margin-top:2px}
+    .footer-col h3{font-size:.9rem;font-weight:700;margin-bottom:1rem}
+    .footer-col ul{list-style:none}
+    .footer-col li{margin-bottom:.65rem}
+    .footer-col a{color:var(--muted);text-decoration:none;font-size:.85rem;transition:color .18s}
+    .footer-col a:hover{color:var(--primary)}
+    .footer-bottom{max-width:1100px;margin:0 auto;padding-top:1.25rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem}
+    .footer-bottom p{color:var(--muted);font-size:.78rem}
+    .footer-legal{display:flex;gap:1.25rem}
+    .footer-legal a{color:var(--muted);font-size:.78rem;text-decoration:none;transition:color .18s}
+    .footer-legal a:hover{color:var(--primary)}
+
+    /* ── FLOAT ── */
+    .float-btns{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:999}
+    .flt{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1rem;transition:transform .18s;border:none;cursor:pointer}
+    .flt:hover{transform:scale(1.1)}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:768px){
+      .nav-links,.nav-btn-wrap{display:none}
+      .hamburger{display:block}
+      .footer-grid{grid-template-columns:1fr 1fr}
+      .form-grid{grid-template-columns:1fr}
+      .form-group.full{grid-column:span 1}
+      .job-card{flex-direction:column;align-items:flex-start}
+    }
+    @media(max-width:480px){.footer-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="page">
+
+<!-- NAV -->
+<header>
+  <div class="nav">
+    <a class="logo" href="index.html">
+      <img src="logo/white logo.png" alt="Divine Devs"/>
+      <span class="logo-text">Divine Devs</span>
+    </a>
+    <nav aria-label="Main"><ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="Portfolio.html">Portfolio</a></li>
+      <li><a href="service.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul></nav>
+    <div class="nav-btn-wrap"><a href="contact.html" class="nav-btn">Request Quote <i class="fa-solid fa-arrow-right"></i></a></div>
+    <button class="hamburger" id="ham" aria-label="Menu"><i class="fa-solid fa-bars" id="ham-ico"></i></button>
+  </div>
+  <div class="mob-menu" id="mob">
+    <a href="index.html">Home</a><a href="about.html">About</a>
+    <a href="Portfolio.html">Portfolio</a><a href="service.html">Services</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="btn btn-grad" style="width:fit-content">Request Quote <i class="fa-solid fa-arrow-right"></i></a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge"><i class="fa-solid fa-briefcase"></i> We're Hiring</div>
+  <h1>Build the Future<br>With <span class="grad">Divine Devs</span></h1>
+  <p>Join a passionate team of creators, engineers, and strategists helping businesses grow through technology, design, and data — from Chennai to the world.</p>
+  <div class="hero-btns">
+    <a href="#open-roles" class="btn btn-grad">View Open Roles <i class="fa-solid fa-arrow-down"></i></a>
+    <a href="#apply" class="btn btn-ghost">Apply Now <i class="fa-solid fa-paper-plane"></i></a>
+  </div>
+</div>
+
+<!-- PERKS -->
+<section>
+  <div class="container">
+    <div class="sec-label"><i class="fa-solid fa-star"></i> Why Join Us</div>
+    <h2 class="sec-title">Life at <span class="grad">Divine Devs</span></h2>
+    <p class="sec-sub">We're a small team doing big things. Every person here has real ownership, real impact, and real growth.</p>
+    <div class="perks-grid">
+      <div class="perk"><div class="perk-icon"><i class="fa-solid fa-laptop-code"></i></div><h3>Remote-Friendly Work</h3><p>Work from anywhere in India. We trust you with your time and deliverables, not your location.</p></div>
+      <div class="perk"><div class="perk-icon"><i class="fa-solid fa-seedling"></i></div><h3>Real Ownership</h3><p>You own your projects end-to-end. No hand-holding, no micromanagement — just your craft and your client.</p></div>
+      <div class="perk"><div class="perk-icon"><i class="fa-solid fa-graduation-cap"></i></div><h3>Learning Budget</h3><p>Courses, certifications, tools — we invest in your skills. Your growth is the company's growth.</p></div>
+      <div class="perk"><div class="perk-icon"><i class="fa-solid fa-money-bill-trend-up"></i></div><h3>Competitive Pay</h3><p>Transparent, market-aligned compensation with performance bonuses and equity opportunities for senior roles.</p></div>
+      <div class="perk"><div class="perk-icon"><i class="fa-solid fa-people-group"></i></div><h3>Collaborative Culture</h3><p>No politics, no hierarchy fog. Ideas win on merit. Weekly team syncs, open Slack channels, honest feedback.</p></div>
+      <div class="perk"><div class="perk-icon"><i class="fa-solid fa-rocket"></i></div><h3>Fast Career Growth</h3><p>Early-stage means rapid advancement. Prove yourself and take on bigger responsibilities within months, not years.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-section">
+  <div class="container">
+    <div class="sec-label"><i class="fa-solid fa-heart"></i> Our Values</div>
+    <h2 class="sec-title">What We Believe In</h2>
+    <div class="values-grid">
+      <div class="val-card"><div class="vi">⚡</div><h4>Move Fast</h4><p>Ship early, learn quickly, iterate with purpose.</p></div>
+      <div class="val-card"><div class="vi">🎯</div><h4>Quality First</h4><p>We'd rather do fewer things exceptionally well.</p></div>
+      <div class="val-card"><div class="vi">🤝</div><h4>Client Obsessed</h4><p>Every decision starts with what's best for the client.</p></div>
+      <div class="val-card"><div class="vi">🔍</div><h4>Radical Honesty</h4><p>Clear, direct communication — with clients and each other.</p></div>
+      <div class="val-card"><div class="vi">🌱</div><h4>Always Learning</h4><p>Curiosity is non-negotiable. Stay sharp, stay humble.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- OPEN ROLES -->
+<section class="jobs-section" id="open-roles">
+  <div class="container">
+    <div class="sec-label"><i class="fa-solid fa-magnifying-glass"></i> Open Positions</div>
+    <h2 class="sec-title">Current <span class="grad">Openings</span></h2>
+    <p class="sec-sub" style="margin-bottom:2rem">We hire for attitude and teach skills. If you're driven, curious, and want to grow fast — we want to hear from you.</p>
+
+    <div class="filter-row">
+      <button class="filt active" data-dept="all">All Roles</button>
+      <button class="filt" data-dept="tech">Tech</button>
+      <button class="filt" data-dept="design">Design</button>
+      <button class="filt" data-dept="marketing">Marketing</button>
+      <button class="filt" data-dept="data">Data</button>
+    </div>
+
+    <div class="jobs-list" id="jobs-list">
+
+      <div class="job-card" data-dept="tech">
+        <div class="job-left">
+          <div class="job-dept">Tech</div>
+          <div class="job-title">Full-Stack Web Developer</div>
+          <div class="job-meta">
+            <span class="job-tag"><i class="fa-solid fa-location-dot"></i> Remote / Chennai</span>
+            <span class="job-tag"><i class="fa-solid fa-clock"></i> Full-Time</span>
+            <span class="job-tag"><i class="fa-solid fa-layer-group"></i> Mid-Level</span>
+          </div>
+        </div>
+        <a href="#apply" class="job-btn">Apply <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <div class="job-card" data-dept="tech">
+        <div class="job-left">
+          <div class="job-dept">Tech</div>
+          <div class="job-title">IoT / Embedded Systems Engineer</div>
+          <div class="job-meta">
+            <span class="job-tag"><i class="fa-solid fa-location-dot"></i> Chennai</span>
+            <span class="job-tag"><i class="fa-solid fa-clock"></i> Full-Time</span>
+            <span class="job-tag"><i class="fa-solid fa-layer-group"></i> Junior – Mid</span>
+          </div>
+        </div>
+        <a href="#apply" class="job-btn">Apply <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <div class="job-card" data-dept="design">
+        <div class="job-left">
+          <div class="job-dept">Design</div>
+          <div class="job-title">UI/UX & Graphic Designer</div>
+          <div class="job-meta">
+            <span class="job-tag"><i class="fa-solid fa-location-dot"></i> Remote</span>
+            <span class="job-tag"><i class="fa-solid fa-clock"></i> Full-Time / Freelance</span>
+            <span class="job-tag"><i class="fa-solid fa-layer-group"></i> Any Level</span>
+          </div>
+        </div>
+        <a href="#apply" class="job-btn">Apply <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <div class="job-card" data-dept="design">
+        <div class="job-left">
+          <div class="job-dept">Design</div>
+          <div class="job-title">CAD / 3D Modelling Specialist</div>
+          <div class="job-meta">
+            <span class="job-tag"><i class="fa-solid fa-location-dot"></i> Remote / Chennai</span>
+            <span class="job-tag"><i class="fa-solid fa-clock"></i> Full-Time</span>
+            <span class="job-tag"><i class="fa-solid fa-layer-group"></i> Mid-Level</span>
+          </div>
+        </div>
+        <a href="#apply" class="job-btn">Apply <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <div class="job-card" data-dept="marketing">
+        <div class="job-left">
+          <div class="job-dept">Marketing</div>
+          <div class="job-title">Digital Marketing Specialist</div>
+          <div class="job-meta">
+            <span class="job-tag"><i class="fa-solid fa-location-dot"></i> Remote</span>
+            <span class="job-tag"><i class="fa-solid fa-clock"></i> Full-Time</span>
+            <span class="job-tag"><i class="fa-solid fa-layer-group"></i> Junior – Mid</span>
+          </div>
+        </div>
+        <a href="#apply" class="job-btn">Apply <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <div class="job-card" data-dept="marketing">
+        <div class="job-left">
+          <div class="job-dept">Marketing</div>
+          <div class="job-title">Content Writer & SEO Analyst</div>
+          <div class="job-meta">
+            <span class="job-tag"><i class="fa-solid fa-location-dot"></i> Remote</span>
+            <span class="job-tag"><i class="fa-solid fa-clock"></i> Freelance / Part-Time</span>
+            <span class="job-tag"><i class="fa-solid fa-layer-group"></i> Any Level</span>
+          </div>
+        </div>
+        <a href="#apply" class="job-btn">Apply <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <div class="job-card" data-dept="data">
+        <div class="job-left">
+          <div class="job-dept">Data</div>
+          <div class="job-title">Data Analyst & Business Analyst</div>
+          <div class="job-meta">
+            <span class="job-tag"><i class="fa-solid fa-location-dot"></i> Remote / Chennai</span>
+            <span class="job-tag"><i class="fa-solid fa-clock"></i> Full-Time</span>
+            <span class="job-tag"><i class="fa-solid fa-layer-group"></i> Mid-Level</span>
+          </div>
+        </div>
+        <a href="#apply" class="job-btn">Apply <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- APPLY FORM -->
+<section class="apply-section" id="apply">
+  <div class="container" style="text-align:center;">
+    <div class="sec-label" style="margin:0 auto .85rem;"><i class="fa-solid fa-paper-plane"></i> Apply Now</div>
+    <h2 class="sec-title">Send Your Application</h2>
+    <p class="sec-sub" style="margin:0 auto 0">Don't see a role that fits? Apply anyway — we hire great people and find the right fit together.</p>
+  </div>
+  <div class="apply-wrap">
+    <form id="apply-form" novalidate>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="af-name">Full Name *</label>
+          <input type="text" id="af-name" name="name" placeholder="Your full name" required/>
+        </div>
+        <div class="form-group">
+          <label for="af-email">Email Address *</label>
+          <input type="email" id="af-email" name="email" placeholder="you@email.com" required/>
+        </div>
+        <div class="form-group">
+          <label for="af-phone">Phone Number</label>
+          <input type="tel" id="af-phone" name="phone" placeholder="+91 98765 43210"/>
+        </div>
+        <div class="form-group">
+          <label for="af-role">Role Applying For *</label>
+          <select id="af-role" name="role" required>
+            <option value="">Select a role…</option>
+            <option>Full-Stack Web Developer</option>
+            <option>IoT / Embedded Systems Engineer</option>
+            <option>UI/UX & Graphic Designer</option>
+            <option>CAD / 3D Modelling Specialist</option>
+            <option>Digital Marketing Specialist</option>
+            <option>Content Writer & SEO Analyst</option>
+            <option>Data Analyst & Business Analyst</option>
+            <option>Other / Open Application</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="af-exp">Years of Experience</label>
+          <select id="af-exp" name="experience">
+            <option value="">Select…</option>
+            <option>0 – 1 year (Fresher)</option>
+            <option>1 – 3 years</option>
+            <option>3 – 5 years</option>
+            <option>5+ years</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="af-portfolio">Portfolio / LinkedIn URL</label>
+          <input type="url" id="af-portfolio" name="portfolio" placeholder="https://yourportfolio.com"/>
+        </div>
+        <div class="form-group full">
+          <label for="af-msg">Why do you want to join Divine Devs? *</label>
+          <textarea id="af-msg" name="message" placeholder="Tell us about yourself, your skills, and why you're a great fit…" required></textarea>
+        </div>
+      </div>
+      <button type="submit" class="submit-btn"><i class="fa-solid fa-paper-plane"></i> Submit Application</button>
+      <p class="form-note">We review every application personally and respond within 5 business days.</p>
+      <div class="toast" id="apply-toast">✅ Application received! We'll be in touch within 5 business days.</div>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" style="display:flex;align-items:center;gap:.5rem;text-decoration:none;margin-bottom:.5rem;">
+        <img src="logo/white logo.png" alt="Divine Devs" style="height:26px;object-fit:contain;"/>
+        <span style="font-size:1.05rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Divine Devs</span>
+      </a>
+      <p>We are a creative startup delivering innovative digital and design solutions for modern businesses.</p>
+      <div>
+        <div class="fc-item"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><span>divinedevs06@gmail.com</span></div>
+        <div class="fc-item"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>+91 9498063395</span></div>
+        <div class="fc-item"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg><span>Iyyappanthangal, Chennai, Tamil Nadu – 600056</span></div>
+      </div>
+    </div>
+    <div class="footer-col"><h3>Services</h3><ul>
+      <li><a href="1. Web Development.html">Web Development</a></li>
+      <li><a href="2. Digital Marketing.html">Digital Marketing</a></li>
+      <li><a href="3. Projects.html">Projects</a></li>
+      <li><a href="4. CAD Design & 3D Modelling.html">CAD Design &amp; 3D Modelling</a></li>
+      <li><a href="5. Graphic Design.html">Graphic Design</a></li>
+      <li><a href="6. Data Analysts & Business Analysts.html">Data &amp; Business Analysts</a></li>
+    </ul></div>
+    <div class="footer-col"><h3>Company</h3><ul>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="careers.html">Careers</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul></div>
+    <div class="footer-col"><h3>Legal</h3><ul>
+      <li><a href="privacy.html">Privacy Policy</a></li>
+      <li><a href="terms.html">Terms of Service</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Divine Devs. All rights reserved.</p>
+    <div class="footer-legal"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a></div>
+  </div>
+</footer>
+
+</div><!-- .page -->
+
+<!-- FLOATING -->
+<div class="float-btns">
+  <a href="https://wa.me/919499943075" target="_blank" class="flt" style="background:#25D366;color:#fff;"><i class="fa-brands fa-whatsapp"></i></a>
+  <a href="tel:+919499943075" class="flt" style="background:#2563eb;color:#fff;"><i class="fa-solid fa-phone"></i></a>
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="flt" style="background:#333;color:#fff;"><i class="fa-solid fa-arrow-up"></i></button>
+</div>
+
+<script>
+  // Mobile menu
+  const ham=document.getElementById('ham'),mob=document.getElementById('mob'),ico=document.getElementById('ham-ico');
+  ham.addEventListener('click',()=>{mob.classList.toggle('open');ico.className=mob.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';});
+
+  // Job filter
+  document.querySelectorAll('.filt').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.filt').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const dept=btn.dataset.dept;
+      document.querySelectorAll('.job-card').forEach(card=>{
+        card.style.display=(dept==='all'||card.dataset.dept===dept)?'flex':'none';
+      });
+    });
+  });
+
+  // Apply form
+  document.getElementById('apply-form').addEventListener('submit',function(e){
+    e.preventDefault();
+    const toast=document.getElementById('apply-toast');
+    this.querySelectorAll('[required]').forEach(el=>el.style.borderColor='');
+    let valid=true;
+    this.querySelectorAll('[required]').forEach(el=>{if(!el.value.trim()){el.style.borderColor='rgba(248,113,113,.7)';valid=false;}});
+    if(!valid)return;
+    document.querySelector('.submit-btn').innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Sending…';
+    setTimeout(()=>{
+      document.querySelector('.submit-btn').innerHTML='<i class="fa-solid fa-check"></i> Sent!';
+      toast.classList.add('show');
+      this.reset();
+    },1400);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" style="color-scheme: dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Web Development – Divine Devs</title>
+  <link rel="shortcut icon" href="logo/white logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* ── DESIGN TOKENS (matching existing site) ── */
+    :root {
+      --primary: hsl(217 91% 60%);
+      --primary-glow: hsl(217 91% 70%);
+      --background: hsl(222 84% 5%);
+      --foreground: hsl(210 40% 98%);
+      --muted-foreground: hsl(215 20% 65%);
+      --border: hsl(217 32% 17%);
+      --card-bg: hsl(222 47% 8%);
+      --gradient-hero: linear-gradient(135deg, hsl(217 91% 60%), hsl(270 91% 65%));
+    }
+
+    /* ── BASE ── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--background);
+      color: var(--foreground);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── ANIMATED BACKGROUND GRID ── */
+    .bg-grid {
+      position: fixed; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(59,130,246,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    /* ── FLOATING ORBS ── */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: .18;
+      pointer-events: none;
+      animation: orbFloat 12s ease-in-out infinite alternate;
+    }
+    .orb-1 { width:520px;height:520px;background:radial-gradient(circle,hsl(217 91% 60%),transparent 70%);top:-120px;left:-80px;animation-delay:0s; }
+    .orb-2 { width:400px;height:400px;background:radial-gradient(circle,hsl(270 91% 65%),transparent 70%);bottom:-100px;right:-60px;animation-delay:-5s; }
+    .orb-3 { width:300px;height:300px;background:radial-gradient(circle,hsl(190 80% 55%),transparent 70%);top:50%;left:50%;animation-delay:-9s;opacity:.10; }
+    @keyframes orbFloat { 0%{transform:translateY(0) scale(1)} 100%{transform:translateY(30px) scale(1.08)} }
+
+    /* ── GLASS UTILITY ── */
+    .glass {
+      background: rgba(15,23,42,.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+    .glass-card {
+      background: rgba(15,23,42,.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 1rem;
+    }
+
+    /* ── GRADIENT TEXT ── */
+    .gradient-text {
+      background: var(--gradient-hero);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── NAVBAR ── */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(9,15,35,.75);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .nav-container { max-width:1280px;margin:0 auto;padding:0 1.5rem; display:flex;align-items:center;justify-content:space-between;height:64px; }
+    .nav-logo { display:flex;align-items:center;gap:.5rem;text-decoration:none; }
+    .nav-logo-icon { width:32px;height:32px;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center; }
+    .nav-logo-text { font-size:1.25rem;font-weight:700;background:var(--gradient-hero);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+    .nav-links { display:flex;gap:2rem;list-style:none; }
+    .nav-links a { color:var(--foreground);text-decoration:none;font-weight:500;font-size:.95rem;position:relative;padding-bottom:2px;transition:color .2s; }
+    .nav-links a::after { content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--gradient-hero);transform:scaleX(0);transition:transform .3s;transform-origin:left; }
+    .nav-links a:hover { color:var(--primary); }
+    .nav-links a:hover::after { transform:scaleX(1); }
+    .nav-cta {
+      display:inline-flex;align-items:center;gap:.5rem;
+      padding:.5rem 1.25rem;border-radius:.75rem;border:none;cursor:pointer;
+      background:var(--gradient-hero);color:#fff;font-size:.875rem;font-weight:600;
+      text-decoration:none;transition:box-shadow .3s,transform .2s;
+    }
+    .nav-cta:hover { box-shadow:0 0 20px rgba(99,102,241,.5);transform:translateY(-1px); }
+    .hamburger { display:none;background:none;border:none;cursor:pointer;color:var(--foreground);font-size:1.5rem; }
+    .mobile-menu { display:none;flex-direction:column;gap:1rem;padding:1rem 1.5rem;background:rgba(9,15,35,.95);border-top:1px solid rgba(255,255,255,.07); }
+    .mobile-menu a { color:var(--foreground);text-decoration:none;font-weight:500; }
+    .mobile-menu.open { display:flex; }
+
+    /* ── HERO ── */
+    .hero {
+      position:relative;z-index:1;
+      min-height:70vh;display:flex;align-items:center;justify-content:center;
+      text-align:center;padding:6rem 1.5rem 4rem;
+      overflow:hidden;
+    }
+    .hero-badge {
+      display:inline-flex;align-items:center;gap:.5rem;
+      background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.3);
+      color:var(--primary);padding:.375rem 1rem;border-radius:9999px;
+      font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+      margin-bottom:1.5rem;
+      animation:fadeSlideUp .7s ease both;
+    }
+    .hero-title {
+      font-size:clamp(2.5rem,7vw,5rem);font-weight:800;line-height:1.1;
+      letter-spacing:-.02em;margin-bottom:1.5rem;
+      animation:fadeSlideUp .7s .15s ease both;
+    }
+    .hero-subtitle {
+      max-width:640px;margin:0 auto 2.5rem;
+      color:var(--muted-foreground);font-size:1.125rem;line-height:1.7;
+      animation:fadeSlideUp .7s .3s ease both;
+    }
+    .hero-ctas { display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeSlideUp .7s .45s ease both; }
+    .btn-primary {
+      display:inline-flex;align-items:center;gap:.5rem;
+      background:var(--gradient-hero);color:#fff;padding:.75rem 2rem;
+      border-radius:.875rem;font-weight:600;text-decoration:none;
+      border:none;cursor:pointer;transition:box-shadow .3s,transform .2s;font-size:1rem;
+    }
+    .btn-primary:hover { box-shadow:0 0 28px rgba(99,102,241,.55);transform:translateY(-2px); }
+    .btn-outline {
+      display:inline-flex;align-items:center;gap:.5rem;
+      background:transparent;color:var(--foreground);padding:.75rem 2rem;
+      border-radius:.875rem;font-weight:600;text-decoration:none;
+      border:1px solid rgba(255,255,255,.15);cursor:pointer;transition:border-color .3s,background .3s;font-size:1rem;
+    }
+    .btn-outline:hover { border-color:var(--primary);background:rgba(99,102,241,.08); }
+
+    /* spinning code ring decoration */
+    .hero-ring {
+      position:absolute;right:-160px;top:50%;transform:translateY(-50%);
+      width:480px;height:480px;border-radius:50%;
+      border:1px solid rgba(99,102,241,.15);
+      animation:spin 30s linear infinite;
+      pointer-events:none;
+    }
+    .hero-ring::before {
+      content:'';position:absolute;inset:40px;border-radius:50%;
+      border:1px solid rgba(99,102,241,.1);
+    }
+    .hero-ring::after {
+      content:'';position:absolute;inset:80px;border-radius:50%;
+      border:1px dashed rgba(99,102,241,.08);
+    }
+    @keyframes spin { to{transform:translateY(-50%) rotate(360deg)} }
+
+    /* typing cursor */
+    .cursor { animation:blink 1s step-end infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* ── SECTION WRAPPER ── */
+    .section { position:relative;z-index:1;padding:5rem 1.5rem; }
+    .container { max-width:1200px;margin:0 auto; }
+    .section-label {
+      display:inline-flex;align-items:center;gap:.5rem;
+      background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2);
+      color:var(--primary);padding:.3rem .9rem;border-radius:9999px;
+      font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+      margin-bottom:1rem;
+    }
+    .section-title { font-size:clamp(1.8rem,4vw,2.75rem);font-weight:800;letter-spacing:-.02em;margin-bottom:1rem;line-height:1.2; }
+    .section-subtitle { color:var(--muted-foreground);font-size:1.05rem;max-width:600px;line-height:1.7; }
+    .section-header { margin-bottom:3.5rem; }
+
+    /* ── WHAT WE DO GRID ── */
+    .services-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem; }
+    .service-card {
+      padding:2rem;border-radius:1.25rem;
+      background:rgba(15,23,42,.7);
+      border:1px solid rgba(255,255,255,.07);
+      transition:transform .3s,border-color .3s,box-shadow .3s;
+      cursor:default;
+      position:relative;overflow:hidden;
+    }
+    .service-card::before {
+      content:'';position:absolute;inset:0;
+      background:var(--gradient-hero);opacity:0;
+      transition:opacity .4s;border-radius:inherit;
+    }
+    .service-card:hover { transform:translateY(-6px);border-color:rgba(99,102,241,.4);box-shadow:0 20px 50px rgba(99,102,241,.15); }
+    .service-card:hover::before { opacity:.04; }
+    .service-icon {
+      width:52px;height:52px;border-radius:.875rem;
+      background:rgba(99,102,241,.15);display:flex;align-items:center;justify-content:center;
+      font-size:1.4rem;color:var(--primary);margin-bottom:1.25rem;
+      transition:background .3s,transform .3s;
+    }
+    .service-card:hover .service-icon { background:rgba(99,102,241,.25);transform:scale(1.1) rotate(-5deg); }
+    .service-card h3 { font-size:1.15rem;font-weight:700;margin-bottom:.6rem; }
+    .service-card p { color:var(--muted-foreground);font-size:.9rem;line-height:1.65; }
+    .service-tag {
+      display:inline-block;margin-top:1rem;
+      background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2);
+      color:var(--primary);padding:.2rem .65rem;border-radius:9999px;font-size:.72rem;font-weight:600;
+    }
+
+    /* ── PROCESS TIMELINE ── */
+    .process-section { background:rgba(9,15,35,.5); }
+    .timeline { position:relative;padding-left:2.5rem; }
+    .timeline::before {
+      content:'';position:absolute;left:.75rem;top:0;bottom:0;width:2px;
+      background:linear-gradient(to bottom,hsl(217 91% 60%),hsl(270 91% 65%),transparent);
+      border-radius:2px;
+    }
+    .timeline-item { position:relative;margin-bottom:2.5rem; }
+    .timeline-dot {
+      position:absolute;left:-2.5rem;top:.25rem;
+      width:1.5rem;height:1.5rem;border-radius:50%;
+      background:var(--gradient-hero);display:flex;align-items:center;justify-content:center;
+      font-size:.65rem;font-weight:800;color:#fff;flex-shrink:0;
+      box-shadow:0 0 12px rgba(99,102,241,.5);
+    }
+    .timeline-item h4 { font-size:1.05rem;font-weight:700;margin-bottom:.35rem; }
+    .timeline-item p { color:var(--muted-foreground);font-size:.9rem;line-height:1.6; }
+
+    /* ── TOOLS SECTION ── */
+    .tools-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:1rem; }
+    .tool-chip {
+      display:flex;flex-direction:column;align-items:center;gap:.6rem;
+      padding:1.25rem .75rem;border-radius:1rem;
+      background:rgba(15,23,42,.7);border:1px solid rgba(255,255,255,.07);
+      transition:transform .25s,border-color .25s,box-shadow .25s;
+      cursor:default;
+    }
+    .tool-chip:hover { transform:translateY(-4px);border-color:rgba(99,102,241,.4);box-shadow:0 10px 30px rgba(99,102,241,.15); }
+    .tool-chip i, .tool-chip svg { font-size:1.8rem; }
+    .tool-chip span { font-size:.78rem;font-weight:600;color:var(--muted-foreground);text-align:center; }
+    .tool-category { margin-bottom:.75rem;font-size:.82rem;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.07em; }
+    .tools-category-block { margin-bottom:2.5rem; }
+
+    /* ── STATS STRIP ── */
+    .stats-strip {
+      display:flex;flex-wrap:wrap;justify-content:center;gap:3rem;
+      padding:3rem 1.5rem;
+      background:rgba(9,15,35,.6);
+      border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .stat { text-align:center; }
+    .stat-num { font-size:2.5rem;font-weight:800;background:var(--gradient-hero);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1; }
+    .stat-label { color:var(--muted-foreground);font-size:.85rem;margin-top:.3rem; }
+
+    /* ── FAQ ── */
+    .faq-list { display:flex;flex-direction:column;gap:1rem;max-width:800px;margin:0 auto; }
+    .faq-item {
+      background:rgba(15,23,42,.7);border:1px solid rgba(255,255,255,.07);
+      border-radius:1rem;overflow:hidden;
+      transition:border-color .3s;
+    }
+    .faq-item.open { border-color:rgba(99,102,241,.35); }
+    .faq-question {
+      width:100%;display:flex;justify-content:space-between;align-items:center;
+      padding:1.25rem 1.5rem;background:none;border:none;cursor:pointer;
+      color:var(--foreground);font-size:1rem;font-weight:600;text-align:left;gap:1rem;
+    }
+    .faq-icon {
+      flex-shrink:0;width:28px;height:28px;border-radius:50%;
+      background:rgba(99,102,241,.15);display:flex;align-items:center;justify-content:center;
+      transition:background .3s,transform .4s;color:var(--primary);font-size:.85rem;
+    }
+    .faq-item.open .faq-icon { background:rgba(99,102,241,.3);transform:rotate(45deg); }
+    .faq-answer {
+      max-height:0;overflow:hidden;transition:max-height .45s ease,padding .3s;
+      color:var(--muted-foreground);font-size:.925rem;line-height:1.7;
+      padding:0 1.5rem;
+    }
+    .faq-item.open .faq-answer { max-height:300px;padding-bottom:1.5rem; }
+
+    /* ── CTA BANNER ── */
+    .cta-section {
+      position:relative;z-index:1;
+      background:var(--gradient-hero);
+      padding:5rem 1.5rem;text-align:center;overflow:hidden;
+    }
+    .cta-section::before {
+      content:'';position:absolute;inset:0;
+      background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .cta-section h2 { font-size:clamp(1.8rem,4vw,2.75rem);font-weight:800;color:#fff;margin-bottom:1rem;position:relative; }
+    .cta-section p { color:rgba(255,255,255,.8);font-size:1.1rem;max-width:540px;margin:0 auto 2rem;line-height:1.6;position:relative; }
+    .btn-white {
+      display:inline-flex;align-items:center;gap:.5rem;
+      background:#fff;color:#1e1b4b;padding:.8rem 2.25rem;
+      border-radius:.875rem;font-weight:700;font-size:1rem;
+      text-decoration:none;border:none;cursor:pointer;
+      transition:transform .2s,box-shadow .3s;position:relative;
+    }
+    .btn-white:hover { transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.25); }
+
+    /* ── FOOTER (matching existing) ── */
+    footer {
+      position:relative;z-index:1;
+      background:rgba(9,15,35,.9);
+      border-top:1px solid rgba(255,255,255,.07);
+      padding:4rem 1.5rem 2rem;
+    }
+    .footer-grid { display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;max-width:1200px;margin:0 auto 2rem; }
+    .footer-brand p { color:var(--muted-foreground);font-size:.875rem;line-height:1.7;margin:1rem 0 1.5rem; }
+    .footer-contact-item { display:flex;align-items:flex-start;gap:.75rem;font-size:.875rem;color:var(--muted-foreground);margin-bottom:.75rem; }
+    .footer-contact-item svg { color:var(--primary);flex-shrink:0;margin-top:2px; }
+    .footer-col h3 { font-size:.95rem;font-weight:700;margin-bottom:1.25rem; }
+    .footer-col ul { list-style:none; }
+    .footer-col li { margin-bottom:.75rem; }
+    .footer-col a { color:var(--muted-foreground);text-decoration:none;font-size:.875rem;transition:color .2s; }
+    .footer-col a:hover { color:var(--primary); }
+    .footer-bottom { max-width:1200px;margin:0 auto;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem; }
+    .footer-bottom p { color:var(--muted-foreground);font-size:.8rem; }
+    .footer-legal { display:flex;gap:1.5rem; }
+    .footer-legal a { color:var(--muted-foreground);font-size:.8rem;text-decoration:none;transition:color .2s; }
+    .footer-legal a:hover { color:var(--primary); }
+
+    /* ── FLOATING BUTTONS ── */
+    .floating-btns { position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:999; }
+    .float-btn { width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.1rem;transition:transform .2s; }
+    .float-btn:hover { transform:scale(1.1); }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease; }
+    .reveal.visible { opacity:1;transform:translateY(0); }
+
+    /* ── KEYFRAMES ── */
+    @keyframes fadeSlideUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:768px) {
+      .nav-links,.nav-cta-wrap { display:none; }
+      .hamburger { display:block; }
+      .footer-grid { grid-template-columns:1fr 1fr; }
+      .hero-ring { display:none; }
+    }
+    @media(max-width:480px) {
+      .footer-grid { grid-template-columns:1fr; }
+    }
+
+    /* ── TYPING TEXT ── */
+    #typed-text { color:var(--primary); }
+  
+    /* ══════════════════════════════════════════════
+       RESPONSIVE OVERHAUL — iOS / Android / Mobile
+       ══════════════════════════════════════════════ */
+
+    /* 1. Fix CSS bug: inset-x-0 is Tailwind, not native CSS */
+    .nav-links a::after { left:0; right:0; }
+
+    /* 2. iOS momentum scrolling & tap-delay fix */
+    html { -webkit-text-size-adjust:100%; }
+    body { -webkit-overflow-scrolling: touch; }
+    a, button, [role="button"] { touch-action: manipulation; }
+
+    /* 3. Prevent horizontal overflow on all screen sizes */
+    html, body { max-width:100%; overflow-x:hidden; }
+
+    /* 4. Safe-area insets for iPhone notch / home bar */
+    header { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+    .floating-btns { bottom: calc(20px + env(safe-area-inset-bottom)); right: calc(20px + env(safe-area-inset-right)); }
+
+    /* 5. Split-grid — process/timeline+visual sections */
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    /* 6. Spec grid (2-col info cards) */
+    .spec-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem;
+    }
+
+    /* 7. Triple stat grid */
+    .triple-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: .75rem;
+      text-align: center;
+    }
+
+    /* 8. results-section 2-col on reveal */
+    .results-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* ── TABLET (≤1024px) ── */
+    @media (max-width: 1024px) {
+      .split-grid { gap: 2.5rem; }
+      .services-grid { grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); }
+      .tools-grid   { grid-template-columns: repeat(auto-fill, minmax(105px,1fr)); }
+      .viewport-grid, .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+      .industries-grid, .domains-grid, .deliverables-grid, .values-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* ── MOBILE LARGE (≤768px) ── */
+    @media (max-width: 768px) {
+      /* Nav */
+      .nav-links, .nav-cta-wrap { display: none; }
+      .hamburger { display: block; }
+
+      /* Hero — reduce padding */
+      .hero { padding: 4rem 1.25rem 2.5rem; min-height: auto; }
+      .hero-title { font-size: clamp(1.9rem, 7vw, 3rem); }
+      .hero-subtitle { font-size: 1rem; }
+      .hero-ring, .cube-wrap, .pulse-ring, .circuit-wrap { display: none; }
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .hero-ctas .btn-primary,
+      .hero-ctas .btn-outline { width: 100%; justify-content: center; }
+
+      /* Sections */
+      .section { padding: 3rem 1.25rem; }
+      .section-header { margin-bottom: 2rem; }
+      .cta-section { padding: 3.5rem 1.25rem; }
+      footer { padding: 3rem 1.25rem 1.5rem; }
+
+      /* Split grids → single column */
+      .split-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+      .results-two-col { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+      .spec-grid-2 { grid-template-columns: 1fr 1fr; gap: .5rem; }
+      .triple-grid { grid-template-columns: 1fr 1fr 1fr; gap: .5rem; }
+
+      /* Inline split grids (override inline styles) */
+      .container > div[style*="grid-template-columns:1fr 1fr"][style*="gap:4rem"],
+      .container > div[style*="grid-template-columns: 1fr 1fr"] {
+        display: block !important;
+      }
+      .container > div[style*="grid-template-columns:1fr 1fr"][style*="gap:4rem"] > div,
+      .container > div[style*="grid-template-columns: 1fr 1fr"] > div {
+        margin-bottom: 2rem;
+      }
+
+      /* Stats strip */
+      .stats-strip { gap: 1.5rem; padding: 2rem 1rem; }
+      .stat-num { font-size: 2rem; }
+
+      /* Service cards */
+      .services-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .service-card { padding: 1.5rem; }
+
+      /* Tools */
+      .tools-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: .75rem; }
+      .tool-chip { padding: 1rem .5rem; }
+      .tool-chip span { font-size: .72rem; }
+
+      /* Viewport / portfolio grids */
+      .viewport-grid { grid-template-columns: 1fr 1fr; gap: .75rem; }
+      .portfolio-grid { grid-template-columns: 1fr 1fr; }
+      .port-card.tall { grid-row: span 1; }
+
+      /* Industries / domains / deliverables */
+      .industries-grid, .domains-grid, .deliverables-grid, .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: .75rem;
+      }
+
+      /* Results section */
+      .results-grid { grid-template-columns: 1fr; }
+      .chart-row { grid-template-columns: 1fr !important; grid-column: span 1 !important; }
+      .dashboard-body { grid-template-columns: 1fr 1fr; }
+
+      /* Sensor / IoT panels */
+      .sensor-grid { grid-template-columns: 1fr 1fr; gap: .75rem; }
+      .sensor-chart-row { grid-template-columns: 1fr !important; gap: 1rem !important; }
+
+      /* Footer */
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .footer-brand { grid-column: span 2; }
+
+      /* FAQ */
+      .faq-question { font-size: .95rem; padding: 1rem 1.25rem; }
+      .faq-answer { padding: 0 1.25rem; }
+      .faq-item.open .faq-answer { max-height: 500px; }
+
+      /* Funnel steps full width */
+      .funnel-step { width: 100% !important; }
+
+      /* Floating btns */
+      .floating-btns { gap: 8px; }
+      .float-btn { width: 44px; height: 44px; font-size: 1rem; }
+
+      /* CTA btn */
+      .btn-white { padding: .75rem 1.5rem; font-size: .95rem; }
+    }
+
+    /* ── MOBILE SMALL (≤480px) ── */
+    @media (max-width: 480px) {
+      .hero { padding: 3.5rem 1rem 2rem; }
+      .hero-title { font-size: clamp(1.75rem, 8vw, 2.5rem); }
+      .section { padding: 2.5rem 1rem; }
+      .cta-section { padding: 3rem 1rem; }
+      footer { padding: 2.5rem 1rem 1.25rem; }
+
+      .services-grid { grid-template-columns: 1fr; }
+      .tools-grid { grid-template-columns: repeat(3, 1fr); gap: .6rem; }
+      .tool-chip { padding: .9rem .4rem; }
+      .tool-chip span { font-size: .68rem; }
+
+      .viewport-grid { grid-template-columns: 1fr; }
+      .portfolio-grid { grid-template-columns: 1fr !important; }
+      .industries-grid, .domains-grid, .deliverables-grid, .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .spec-grid-2 { grid-template-columns: 1fr; }
+      .triple-grid { grid-template-columns: 1fr 1fr; }
+
+      .dashboard-body { grid-template-columns: 1fr; }
+      .sensor-grid { grid-template-columns: 1fr 1fr; }
+      .kpi-card, .s-card { padding: .75rem; }
+
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-brand { grid-column: span 1; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: .5rem; }
+
+      .stat-num { font-size: 1.75rem; }
+      .stats-strip { gap: 1.25rem; }
+
+      .faq-question { font-size: .9rem; padding: .9rem 1rem; }
+      .faq-answer { padding: 0 1rem; }
+      .faq-item.open .faq-answer { max-height: 600px; }
+
+      .glass-card, .chart-wrap, .mini-chart { padding: 1rem; }
+
+      .btn-primary, .btn-outline { padding: .65rem 1.4rem; font-size: .9rem; }
+      .nav-container { padding: 0 1rem; }
+    }
+
+    /* ── EXTRA SMALL (≤375px / iPhone SE) ── */
+    @media (max-width: 375px) {
+      .hero-title { font-size: 1.65rem; }
+      .section-title { font-size: 1.5rem; }
+      .tools-grid { grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+      .tool-chip { padding: .75rem .35rem; }
+      .floating-btns { right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); gap: 6px; }
+      .float-btn { width: 40px; height: 40px; font-size: .9rem; }
+    }
+
+    /* ── HOVER: disable on touch devices (iOS/Android) ── */
+    @media (hover: none) {
+      .service-card:hover,
+      .tool-chip:hover,
+      .result-card:hover,
+      .industry-card:hover,
+      .domain-card:hover,
+      .deliv-card:hover,
+      .perk:hover,
+      .val-card:hover,
+      .port-card:hover,
+      .viewport-card:hover,
+      .job-card:hover { transform: none; box-shadow: none; border-color: rgba(255,255,255,.07); }
+      .service-card:hover::before { opacity: 0; }
+      .btn-primary:hover,
+      .btn-outline:hover,
+      .btn-white:hover,
+      .nav-cta:hover { transform: none; box-shadow: none; }
+      .service-card:hover .service-icon { transform: none; }
+    }
+
+    /* ── REDUCED MOTION (accessibility) ── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .orb, .orb-1, .orb-2, .orb-3 { animation: none; }
+    }
+
+    /* ── PERFORMANCE: reduce orb blur on small screens ── */
+    @media (max-width: 768px) {
+      .orb-1 { width: 280px; height: 280px; filter: blur(60px); opacity: .12; }
+      .orb-2 { width: 220px; height: 220px; filter: blur(50px); opacity: .12; }
+      .orb-3 { display: none; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- Decorative bg -->
+<div class="bg-grid"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- ═══════════════ NAVBAR ═══════════════ -->
+<header>
+  <div class="nav-container">
+    <a class="nav-logo" href="index.html">
+      <div class="nav-logo-icon">
+        <img src="logo/white logo.png" alt="Divine Devs Logo" style="width:32px;height:32px;object-fit:contain;" />
+      </div>
+      <span class="nav-logo-text, text colour:white, " style="color: white; font-weight: bold; font-size: 20px;">Divine Devs</span>
+    </a>
+
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="Portfolio.html">Portfolio</a></li>
+        <li><a href="service.html">Services</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-cta-wrap">
+      <a href="contact.html" class="nav-cta">
+        Request Quote
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <i class="fa-solid fa-bars" id="ham-icon"></i>
+    </button>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="Portfolio.html">Portfolio</a>
+    <a href="service.html">Services</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="btn-primary" style="width:fit-content">Request Quote <i class="fa-solid fa-arrow-right"></i></a>
+  </div>
+</header>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+  <div class="hero-ring"></div>
+  <div style="position:relative;z-index:2;">
+    <br>
+    <h1 class="hero-title">
+      We Build <span class="gradient-text"><span id="typed-text">Websites</span><span class="cursor">|</span></span><br />That Work Hard
+    </h1>
+    <p class="hero-subtitle">
+      From pixel-perfect landing pages to enterprise-grade web applications — we craft fast, scalable, and beautiful digital experiences powered by modern technology.
+    </p>
+    <div class="hero-ctas">
+      <a href="contact.html" class="btn-primary">
+        Start Your Project <i class="fa-solid fa-rocket"></i>
+      </a>
+      <a href="Portfolio.html" class="btn-primary">
+        View Our Work <i class="fa-solid fa-folder-open"></i>
+      </a>
+      <a href="#what-we-do" class="btn-outline">
+        Explore Services <i class="fa-solid fa-chevron-down"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ STATS ═══════════════ -->
+ <!--
+<div class="stats-strip reveal">
+  <div class="stat">
+    <div class="stat-num" data-target="150">0</div>
+    <div class="stat-label">Projects Delivered</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" data-target="98">0</div>
+    <div class="stat-label">Client Satisfaction %</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" data-target="3">0</div>
+    <div class="stat-label">Years of Excellence</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" data-target="40">0</div>
+    <div class="stat-label">Technologies Mastered</div>
+  </div>
+</div> -->
+
+<!-- ═══════════════ WHAT WE DO ═══════════════ -->
+<section class="section" id="what-we-do">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label"><i class="fa-solid fa-layer-group"></i> What We Do</div>
+      <h2 class="section-title">Full-Spectrum <span class="gradient-text">Web Development</span></h2>
+      <p class="section-subtitle">We cover every layer of the web — from beautiful front-ends to rock-solid back-ends and cloud deployments.</p>
+    </div>
+
+    <div class="services-grid">
+      <!-- Card 1 -->
+      <div class="service-card reveal" style="transition-delay:.05s">
+        <div class="service-icon"><i class="fa-solid fa-palette"></i></div>
+        <h3>Custom Website Design</h3>
+        <p>Bespoke, responsive designs that reflect your brand identity and convert visitors into loyal customers. Every pixel is intentional.</p>
+        <span class="service-tag">UI / UX</span>
+      </div>
+      <!-- Card 2 -->
+      <div class="service-card reveal" style="transition-delay:.1s">
+        <div class="service-icon"><i class="fa-solid fa-bolt"></i></div>
+        <h3>Frontend Development</h3>
+        <p>Lightning-fast interfaces using React, Next.js, and Tailwind CSS. Smooth animations, accessibility, and blazing Core Web Vitals scores.</p>
+        <span class="service-tag">HTML, CSS</span>
+      </div>
+      <!-- Card 3 -->
+      <div class="service-card reveal" style="transition-delay:.15s">
+        <div class="service-icon"><i class="fa-solid fa-server"></i></div>
+        <h3>Backend Development</h3>
+        <p>Scalable APIs and server architectures with Node.js, Django, Laravel or Go. Reliable, secure, and built for growth.</p>
+        <span class="service-tag">SQL</span>
+      </div>
+      <!-- Card 4 -->
+      <div class="service-card reveal" style="transition-delay:.2s">
+        <div class="service-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+        <h3>E-Commerce Solutions</h3>
+        <p>High-converting online stores on Shopify, WooCommerce or custom-built platforms. Secure checkout, inventory & analytics built-in.</p>
+        <span class="service-tag">Shopify · WooCommerce</span>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="service-card reveal" style="transition-delay:.3s">
+        <div class="service-icon"><i class="fa-solid fa-gauge-high"></i></div>
+        <h3>Performance & SEO</h3>
+        <p>We obsess over Core Web Vitals, semantic HTML, and technical SEO to make sure your site ranks high and loads fast.</p>
+        <span class="service-tag">SEO · Optimization</span>
+      </div>
+
+      <!-- Card 9 -->
+      <div class="service-card reveal" style="transition-delay:.45s">
+        <div class="service-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <h3>Security & Maintenance</h3>
+        <p>SSL, HTTPS, input sanitisation, regular updates, and vulnerability audits. Your web presence is always protected and up-to-date.</p>
+        <span class="service-tag">SSL · Security Audits</span>
+      </div>
+
+      <!--
+      <div class="service-card reveal" style="transition-delay:.25s">
+        <div class="service-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+        <h3>Progressive Web Apps</h3>
+        <p>App-like experiences directly in the browser — offline support, push notifications, and instant load times on any device.</p>
+        <span class="service-tag">PWA · Service Workers</span>
+      </div>
+
+      <div class="service-card reveal" style="transition-delay:.35s">
+        <div class="service-icon"><i class="fa-solid fa-database"></i></div>
+        <h3>CMS & Headless CMS</h3>
+        <p>Empower your team to manage content effortlessly with WordPress, Sanity, Contentful, or a fully headless architecture.</p>
+        <span class="service-tag">WordPress · Sanity</span>
+      </div>
+
+      <div class="service-card reveal" style="transition-delay:.4s">
+        <div class="service-icon"><i class="fa-solid fa-cloud"></i></div>
+        <h3>Cloud & DevOps</h3>
+        <p>CI/CD pipelines, Docker containers, and AWS/GCP/Azure deployments. Your site stays live 24/7 with zero-downtime releases.</p>
+        <span class="service-tag">AWS · Docker · CI/CD</span>
+      </div> -->
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ PROCESS ═══════════════ -->
+<section class="section process-section">
+  <div class="container" class="split-grid">
+    <div class="reveal">
+      <div class="section-label"><i class="fa-solid fa-road"></i> Our Process</div>
+      <h2 class="section-title">How We <span class="gradient-text">Build It</span></h2>
+      <p class="section-subtitle" style="margin-bottom:2rem;">A transparent, collaborative workflow that keeps you in the loop at every stage.</p>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot">1</div>
+          <h4>Discovery &amp; Strategy</h4>
+          <p>We deep-dive into your goals, audience, and competition to craft a data-backed plan that guides every decision.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">2</div>
+          <h4>UI/UX Design</h4>
+          <p>Wireframes and high-fidelity prototypes in Figma. You approve every screen before a single line of code is written.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">3</div>
+          <h4>Development &amp; Testing</h4>
+          <p>Agile sprints with weekly demos. Rigorous cross-browser &amp; device testing ensures a flawless experience everywhere.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">4</div>
+          <h4>Launch &amp; Optimise</h4>
+          <p>Smooth deployment to production with monitoring, analytics, and ongoing performance tuning post-launch.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visual code block -->
+    <div class="reveal" style="transition-delay:.2s">
+      <div class="glass-card" style="padding:1.75rem;font-family:monospace;font-size:.85rem;line-height:1.8;overflow:auto;">
+        <div style="display:flex;gap:.5rem;margin-bottom:1rem;">
+          <span style="width:12px;height:12px;background:#ff5f57;border-radius:50%;display:inline-block;"></span>
+          <span style="width:12px;height:12px;background:#ffbd2e;border-radius:50%;display:inline-block;"></span>
+          <span style="width:12px;height:12px;background:#28c840;border-radius:50%;display:inline-block;"></span>
+          <span style="color:var(--muted-foreground);margin-left:auto;font-size:.75rem;">index.tsx</span>
+        </div>
+        <span style="color:#7c8cf8">import</span> <span style="color:#e2e8f0">React</span> <span style="color:#7c8cf8">from</span> <span style="color:#a3e635">'react'</span>;<br>
+        <span style="color:#7c8cf8">import</span> <span style="color:#e2e8f0">{ motion }</span> <span style="color:#7c8cf8">from</span> <span style="color:#a3e635">'framer-motion'</span>;<br>
+        <br>
+        <span style="color:#64748b">// ✨ Divine Devs crafted this</span><br>
+        <span style="color:#7c8cf8">export default function</span> <span style="color:#fbbf24">Hero</span>() {<br>
+        &nbsp;&nbsp;<span style="color:#7c8cf8">return</span> (<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f472b6">&lt;motion.section</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#a3e635">initial</span>={{ <span style="color:#e2e8f0">opacity: 0</span> }}<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#a3e635">animate</span>={{ <span style="color:#e2e8f0">opacity: 1</span> }}<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#a3e635">transition</span>={{ <span style="color:#e2e8f0">duration: 0.7</span> }}<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f472b6">&gt;</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f472b6">&lt;h1</span> <span style="color:#a3e635">className</span>=<span style="color:#a3e635">"gradient-text"</span><span style="color:#f472b6">&gt;</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Built by <span style="color:#fbbf24">Divine Devs</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f472b6">&lt;/h1&gt;</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f472b6">&lt;/motion.section&gt;</span><br>
+        &nbsp;&nbsp;);<br>
+        }<br>
+        <br>
+        <span style="color:#64748b">// 🚀 Performance score: 98/100</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TOOLS ═══════════════ -->
+<section class="section" id="tools">
+  <div class="container">
+    <div class="section-header reveal" style="text-align:center;">
+      <div class="section-label" style="margin:0 auto 1rem;"><i class="fa-solid fa-screwdriver-wrench"></i> Tech Stack</div>
+      <h2 class="section-title">Tools &amp; <span class="gradient-text">Technologies</span></h2>
+      <p class="section-subtitle" style="margin:0 auto;">We handpick the right technologies for each project, ensuring the perfect blend of performance, scalability, and developer experience.</p>
+    </div>
+
+    <!-- Frontend -->
+    <div class="tools-category-block reveal">
+      <div class="tool-category"><i class="fa-solid fa-desktop" style="margin-right:.4rem"></i>Frontend</div>
+      <div class="tools-grid">
+        <div class="tool-chip"><i class="fa-brands fa-react" style="color:#61DAFB"></i><span>React</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><text y="22" font-size="22" font-weight="800" fill="white">N</text></svg><span>Next.js</span></div>
+        <div class="tool-chip"><i class="fa-brands fa-vuejs" style="color:#42b883"></i><span>Vue.js</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="18" fill="#FF3E00" font-weight="700">S</text></svg><span>Svelte</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="16" fill="#38BDF8" font-weight="700">TW</text></svg><span>Tailwind</span></div>
+        <div class="tool-chip"><i class="fa-brands fa-sass" style="color:#CD6799"></i><span>SCSS</span></div>
+        <div class="tool-chip"><i class="fa-brands fa-js" style="color:#F7DF1E"></i><span>TypeScript</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="14" fill="#aa00ff" font-weight="700">MUI</text></svg><span>Material UI</span></div>
+      </div>
+    </div>
+
+    <!-- Backend -->
+    <div class="tools-category-block reveal" style="transition-delay:.1s">
+      <div class="tool-category"><i class="fa-solid fa-server" style="margin-right:.4rem"></i>Backend</div>
+      <div class="tools-grid">
+        <div class="tool-chip"><i class="fa-brands fa-node-js" style="color:#5FA04E"></i><span>Node.js</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="14" fill="#009688" font-weight="700">Dj</text></svg><span>Django</span></div>
+        <div class="tool-chip"><i class="fa-brands fa-php" style="color:#777BB4"></i><span>Laravel</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="14" fill="#00ACD7" font-weight="700">Go</text></svg><span>Go</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="13" fill="#e11d48" font-weight="700">Ex</text></svg><span>Express</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="11" fill="#38bdf8" font-weight="700">GQL</text></svg><span>GraphQL</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="12" fill="#f59e0b" font-weight="700">REST</text></svg><span>REST APIs</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="11" fill="#84cc16" font-weight="700">WS</text></svg><span>WebSockets</span></div>
+      </div>
+    </div>
+
+    <!-- Database & Cloud -->
+    <div class="tools-category-block reveal" style="transition-delay:.2s">
+      <div class="tool-category"><i class="fa-solid fa-cloud" style="margin-right:.4rem"></i>Database &amp; Cloud</div>
+      <div class="tools-grid">
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="11" fill="#4DB33D" font-weight="700">Mg</text></svg><span>MongoDB</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="11" fill="#336791" font-weight="700">Pg</text></svg><span>PostgreSQL</span></div>
+        <div class="tool-chip"><i class="fa-brands fa-aws" style="color:#FF9900"></i><span>AWS</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="11" fill="#4285F4" font-weight="700">GCP</text></svg><span>Google Cloud</span></div>
+        <div class="tool-chip"><i class="fa-brands fa-docker" style="color:#2496ED"></i><span>Docker</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="12" fill="#f06529" font-weight="700">Fb</text></svg><span>Firebase</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="12" fill:#00b4d8" font-weight="700">Su</text></svg><span>Supabase</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="12" fill="#e44d26" font-weight="700">Rd</text></svg><span>Redis</span></div>
+      </div>
+    </div>
+
+    <!-- CMS -->
+    <div class="tools-category-block reveal" style="transition-delay:.3s">
+      <div class="tool-category"><i class="fa-solid fa-pen-to-square" style="margin-right:.4rem"></i>CMS &amp; E-Commerce</div>
+      <div class="tools-grid">
+        <div class="tool-chip"><i class="fa-brands fa-wordpress" style="color:#21759B"></i><span>WordPress</span></div>
+        <div class="tool-chip"><i class="fa-brands fa-shopify" style="color:#96BF48"></i><span>Shopify</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="12" fill="#F03E2F" font-weight="700">Wc</text></svg><span>WooCommerce</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="12" fill="#f59e0b" font-weight="700">Sn</text></svg><span>Sanity</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="10" fill="#2478CC" font-weight="700">Cf</text></svg><span>Contentful</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="12" fill="#E92063" font-weight="700">St</text></svg><span>Strapi</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FAQ ═══════════════ -->
+<section class="section" id="faq" style="background:rgba(9,15,35,.4)">
+  <div class="container">
+    <div class="section-header reveal" style="text-align:center;">
+      <div class="section-label" style="margin:0 auto 1rem;"><i class="fa-solid fa-circle-question"></i> FAQ</div>
+      <h2 class="section-title">Frequently Asked <span class="gradient-text">Questions</span></h2>
+      <p class="section-subtitle" style="margin:0 auto;">Everything you need to know before we start building together.</p>
+    </div>
+
+    <div class="faq-list reveal">
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          How long does it take to build a website?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          Timelines vary by scope. A standard informational or portfolio site typically takes 2–4 weeks. Mid-size business sites with custom features take 4–8 weeks. Complex web applications or e-commerce platforms can range from 8–16 weeks. We provide a precise timeline after our discovery call.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Do you build websites that work on mobile?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          Absolutely — every website we build is fully responsive by default. We follow a mobile-first approach and test across all major devices and screen sizes (iOS, Android, tablets, desktops) to ensure a seamless experience everywhere.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          What technologies do you recommend for my project?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          Our recommendation depends on your goals. For marketing sites, we typically use Next.js for blazing-fast performance and SEO. For data-heavy web apps, we lean on React + Node.js + PostgreSQL. For content-heavy sites, a headless CMS like Sanity paired with a modern frontend is ideal. We guide you through the best choice during discovery.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Will I be able to update the website myself?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          Yes! We integrate user-friendly CMS solutions (WordPress, Sanity, or Contentful) so your team can update text, images, blogs, and more without touching code. We also provide a training session and documentation after handoff.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Do you provide hosting and domain setup?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          We can handle the full hosting setup for you on platforms like AWS, Vercel, Netlify, or a VPS. We assist with domain registration, DNS configuration, SSL certificates, and email setup. Alternatively, we can work with your existing hosting provider.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          What happens after the website is launched?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          We offer ongoing maintenance packages that include security updates, bug fixes, performance monitoring, and feature additions. Even without a retainer, we provide 30 days of free post-launch support for any issues that arise.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          How much does a website cost?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          Pricing depends on the complexity and scope of the project. A simple landing page can start from ₹15,000, while a feature-rich web application can range from ₹80,000 upwards. We provide a detailed, transparent quote after understanding your exact requirements — no hidden costs.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CTA BANNER ═══════════════ -->
+<section class="cta-section">
+  <div style="position:relative;z-index:1;">
+    <h2>Ready to Build Something <br>Extraordinary?</h2>
+    <p>Let's turn your vision into a high-performing digital product. Tell us about your project today.</p>
+    <a href="contact.html" class="btn-white">
+      Get a Free Quote <i class="fa-solid fa-arrow-right"></i>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="footer-grid">
+    <!-- Brand -->
+    <div class="footer-brand">
+      <a href="index.html" style="display:flex;align-items:center;gap:.5rem;text-decoration:none;margin-bottom:.5rem;">
+        <img src="logo/white logo.png" alt="Divine Devs" style="height:28px;object-fit:contain;" />
+        <span style="color: white; font-size: 1.1rem; font-weight: 700;">Divine Devs</span>
+      </a>
+      <p>We are a creative startup delivering innovative digital and design solutions for modern businesses. We help transform ideas into powerful digital experiences.</p>
+      <div>
+        <div class="footer-contact-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+          <span>divinedevs06@gmail.com</span>
+        </div>
+        <div class="footer-contact-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <span>+91 9499943075</span>
+        </div>
+        <div class="footer-contact-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <span>Iyyappanthangal, Chennai, Tamil Nadu, India – 600056</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Services -->
+    <div class="footer-col">
+      <h3>Services</h3>
+      <ul>
+        <li><a href="1. Web Development.html">Web Development</a></li>
+        <li><a href="2. Digital Marketing.html">Digital Marketing</a></li>
+        <li><a href="3. projects.html">Projects</a></li>
+        <li><a href="4. CAD Design & 3D Modelling.html">CAD Design &amp; 3D Modelling</a></li>
+        <li><a href="5. Graphic Design.html">Graphic Design</a></li>
+        <li><a href="6. Data Analysts & Business Analysts.html">Data Analysts &amp; Business Analysts</a></li>
+      </ul>
+    </div>
+
+    <!-- Company -->
+    <div class="footer-col">
+      <h3>Company</h3>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Legal -->
+    <div class="footer-col">
+      <h3>Legal</h3>
+      <ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 Divine Devs. All rights reserved.</p>
+    <div class="footer-legal">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════ FLOATING BTNS ═══════════════ -->
+<div class="floating-btns">
+  <a href="https://wa.me/919499943075" target="_blank" class="float-btn" style="background:#25D366;color:white;">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+  <a href="tel:+919499943075" class="float-btn" style="background:#2563eb;color:white;">
+    <i class="fa-solid fa-phone"></i>
+  </a>
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="float-btn" style="background:#333;color:white;border:none;cursor:pointer;">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+</div>
+
+<!-- ═══════════════ SCRIPTS ═══════════════ -->
+<script>
+  // ── Mobile menu ──
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const hamIcon = document.getElementById('ham-icon');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    hamIcon.className = mobileMenu.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+  });
+
+  // ── FAQ accordion ──
+  function toggleFAQ(btn) {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // ── Scroll reveal ──
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // ── Animated counters ──
+  function animateCounter(el, target, duration = 1800) {
+    let start = 0;
+    const step = () => {
+      start += Math.ceil(target / (duration / 16));
+      if (start >= target) { el.textContent = target + (el.dataset.suffix || ''); return; }
+      el.textContent = start;
+      requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const nums = entry.target.querySelectorAll('[data-target]');
+        nums.forEach(n => animateCounter(n, parseInt(n.dataset.target)));
+        statObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stats-strip').forEach(s => statObserver.observe(s));
+
+  // ── Typing hero text ──
+  const words = ['Websites', 'Web Apps', 'E-Commerce', 'PWAs', 'Platforms', 'APIs'];
+  let wi = 0, ci = 0, deleting = false;
+  const typedEl = document.getElementById('typed-text');
+  function type() {
+    const word = words[wi];
+    if (!deleting) {
+      typedEl.textContent = word.slice(0, ++ci);
+      if (ci === word.length) { deleting = true; setTimeout(type, 1600); return; }
+    } else {
+      typedEl.textContent = word.slice(0, --ci);
+      if (ci === 0) { deleting = false; wi = (wi + 1) % words.length; }
+    }
+    setTimeout(type, deleting ? 60 : 90);
+  }
+  setTimeout(type, 800);
+
+  // ── Mouse trail (desktop/pointer only) ──
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    document.addEventListener('mousemove', e => {
+    const star = document.createElement('div');
+    star.style.cssText = `
+      position:fixed;width:4px;height:4px;background:white;border-radius:50%;
+      pointer-events:none;left:${e.clientX}px;top:${e.clientY}px;z-index:9999;
+      box-shadow:0 0 10px cyan,0 0 20px purple;transition:opacity .6s;
+    `;
+    document.body.appendChild(star);
+    setTimeout(() => { star.style.opacity = '0'; }, 100);
+    setTimeout(() => star.remove(), 700);
+  });
+  }
+</script>
+</body>
+</html>

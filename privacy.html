@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" style="color-scheme:dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Privacy Policy – Divine Devs</title>
+  <link rel="shortcut icon" href="logo/white logo.png" type="image/x-icon">
+  <meta name="description" content="Divine Devs Privacy Policy — how we collect, use, and protect your data."/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'"/>
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/></noscript>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    :root{--bg:#080e1f;--fg:#f0f4ff;--muted:#8494b0;--card:rgba(15,23,42,.72);--border:rgba(255,255,255,.07);--grad:linear-gradient(135deg,hsl(217 91% 60%),hsl(270 91% 65%));--primary:hsl(217 91% 60%)}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+    body{background:var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,sans-serif;line-height:1.7;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(99,102,241,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,.025) 1px,transparent 1px);background-size:60px 60px}
+    .page{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
+
+    /* NAV */
+    header{position:sticky;top:0;z-index:50;background:rgba(8,14,31,.82);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+    .nav{max-width:1280px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+    .logo{display:flex;align-items:center;gap:.5rem;text-decoration:none}
+    .logo-text{font-size:1.2rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .logo img{width:30px;height:30px;object-fit:contain;border-radius:6px}
+    .nav-links{display:flex;gap:1.75rem;list-style:none}
+    .nav-links a{color:var(--fg);text-decoration:none;font-size:.9rem;font-weight:500;transition:color .18s}
+    .nav-links a:hover{color:var(--primary)}
+    .nav-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem 1.1rem;border-radius:.7rem;background:var(--grad);color:#fff;font-size:.85rem;font-weight:600;text-decoration:none}
+    .hamburger{display:none;background:none;border:none;color:var(--fg);font-size:1.4rem;cursor:pointer;padding:.25rem}
+    .mob-menu{display:none;flex-direction:column;gap:.85rem;padding:1rem 1.5rem;background:rgba(8,14,31,.96);border-top:1px solid var(--border)}
+    .mob-menu.open{display:flex}
+    .mob-menu a{color:var(--fg);text-decoration:none;font-weight:500}
+
+    /* HERO */
+    .hero{padding:4.5rem 1.5rem 2.5rem;text-align:center;max-width:860px;margin:0 auto}
+    .badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.25);color:var(--primary);padding:.28rem .82rem;border-radius:9999px;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1rem}
+    .hero h1{font-size:clamp(1.8rem,4.5vw,3rem);font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-bottom:.75rem}
+    .grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-meta{color:var(--muted);font-size:.9rem}
+
+    /* CONTENT LAYOUT */
+    .content-wrap{max-width:820px;margin:0 auto;padding:0 1.5rem 5rem}
+    .toc-card{background:var(--card);border:1px solid var(--border);border-radius:1rem;padding:1.5rem;margin-bottom:2.5rem}
+    .toc-card h3{font-size:.9rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:1rem}
+    .toc-card ol{padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem}
+    .toc-card li a{color:var(--primary);text-decoration:none;font-size:.88rem;transition:opacity .18s}
+    .toc-card li a:hover{opacity:.75}
+
+    /* POLICY SECTIONS */
+    .policy-section{margin-bottom:3rem;scroll-margin-top:90px}
+    .policy-section h2{font-size:1.3rem;font-weight:800;margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.6rem}
+    .policy-section h2 i{font-size:1rem;color:var(--primary)}
+    .policy-section p{color:var(--muted);font-size:.925rem;line-height:1.75;margin-bottom:.85rem}
+    .policy-section p:last-child{margin-bottom:0}
+    .policy-section ul,
+    .policy-section ol{color:var(--muted);font-size:.925rem;line-height:1.75;padding-left:1.4rem;margin-bottom:.85rem;display:flex;flex-direction:column;gap:.35rem}
+    .policy-section strong{color:var(--fg)}
+    .highlight-box{background:rgba(99,102,241,.07);border:1px solid rgba(99,102,241,.18);border-radius:.75rem;padding:1rem 1.25rem;margin:1rem 0}
+    .highlight-box p{color:var(--fg) !important;font-size:.9rem !important;margin:0 !important}
+    .contact-box{background:var(--card);border:1px solid var(--border);border-radius:.875rem;padding:1.25rem 1.5rem;display:flex;gap:1rem;align-items:flex-start;margin-top:1rem}
+    .contact-box i{color:var(--primary);margin-top:.2rem;flex-shrink:0}
+    .contact-box p{color:var(--muted);font-size:.875rem;line-height:1.6;margin:0 !important}
+    .contact-box a{color:var(--primary);text-decoration:none}
+
+    /* FOOTER */
+    footer{margin-top:auto;background:rgba(6,12,28,.92);border-top:1px solid var(--border);padding:3.5rem 1.5rem 1.5rem;position:relative;z-index:1}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;max-width:1100px;margin:0 auto 2rem}
+    .footer-brand p{color:var(--muted);font-size:.85rem;line-height:1.65;margin:.85rem 0 1.25rem}
+    .fc-item{display:flex;align-items:flex-start;gap:.6rem;font-size:.85rem;color:var(--muted);margin-bottom:.65rem}
+    .fc-item svg{color:var(--primary);flex-shrink:0;margin-top:2px}
+    .footer-col h3{font-size:.9rem;font-weight:700;margin-bottom:1rem}
+    .footer-col ul{list-style:none}
+    .footer-col li{margin-bottom:.65rem}
+    .footer-col a{color:var(--muted);text-decoration:none;font-size:.85rem;transition:color .18s}
+    .footer-col a:hover{color:var(--primary)}
+    .footer-bottom{max-width:1100px;margin:0 auto;padding-top:1.25rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem}
+    .footer-bottom p{color:var(--muted);font-size:.78rem}
+    .footer-legal{display:flex;gap:1.25rem}
+    .footer-legal a{color:var(--muted);font-size:.78rem;text-decoration:none;transition:color .18s}
+    .footer-legal a:hover{color:var(--primary)}
+
+    /* FLOAT */
+    .float-btns{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:999}
+    .flt{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1rem;transition:transform .18s;border:none;cursor:pointer}
+    .flt:hover{transform:scale(1.1)}
+
+    @media(max-width:768px){.nav-links,.nav-btn-wrap{display:none}.hamburger{display:block}.footer-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:480px){.footer-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="page">
+
+<!-- NAV -->
+<header>
+  <div class="nav">
+    <a class="logo" href="index.html"><img src="logo/white logo.png" alt="Divine Devs"/><span class="logo-text">Divine Devs</span></a>
+    <nav aria-label="Main"><ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="Portfolio.html">Portfolio</a></li>
+      <li><a href="service.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul></nav>
+    <div class="nav-btn-wrap"><a href="contact.html" class="nav-btn">Request Quote <i class="fa-solid fa-arrow-right"></i></a></div>
+    <button class="hamburger" id="ham" aria-label="Menu"><i class="fa-solid fa-bars" id="ham-ico"></i></button>
+  </div>
+  <div class="mob-menu" id="mob">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="Portfolio.html">Portfolio</a>
+    <a href="service.html">Services</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge"><i class="fa-solid fa-shield-halved"></i> Legal</div>
+  <h1><span class="grad">Privacy Policy</span></h1>
+  <p class="hero-meta">Last updated: <strong>1 January 2026</strong> &nbsp;·&nbsp; Effective: <strong>1 January 2026</strong></p>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- TOC -->
+  <div class="toc-card">
+    <h3><i class="fa-solid fa-list"></i> &nbsp;Contents</h3>
+    <ol>
+      <li><a href="#p1">Information We Collect</a></li>
+      <li><a href="#p2">How We Use Your Information</a></li>
+      <li><a href="#p3">Information Sharing & Disclosure</a></li>
+      <li><a href="#p4">Cookies & Tracking Technologies</a></li>
+      <li><a href="#p5">Data Retention</a></li>
+      <li><a href="#p6">Data Security</a></li>
+      <li><a href="#p7">Your Rights</a></li>
+      <li><a href="#p8">Third-Party Links</a></li>
+      <li><a href="#p9">Children's Privacy</a></li>
+      <li><a href="#p10">Changes to This Policy</a></li>
+      <li><a href="#p11">Contact Us</a></li>
+    </ol>
+  </div>
+
+  <div class="highlight-box"><p>Your privacy matters to us. This policy explains clearly and honestly what data we collect, why we collect it, and how we protect it. We do not sell your data — ever.</p></div>
+
+  <!-- Sections -->
+  <div class="policy-section" id="p1">
+    <h2><i class="fa-solid fa-database"></i> 1. Information We Collect</h2>
+    <p>We collect information you provide directly, information collected automatically, and information from third parties, as described below.</p>
+    <p><strong>Information you provide directly:</strong></p>
+    <ul>
+      <li><strong>Contact forms:</strong> Name, email address, phone number, company name, and message content when you fill in any form on our website.</li>
+      <li><strong>Project inquiries:</strong> Project requirements, budget range, and timeline information submitted through our quote or contact forms.</li>
+      <li><strong>Job applications:</strong> Name, email, phone, portfolio URL, work experience, and cover letter submitted through our Careers page.</li>
+      <li><strong>Email communication:</strong> Any information you share when corresponding with us via email.</li>
+    </ul>
+    <p><strong>Information collected automatically:</strong></p>
+    <ul>
+      <li><strong>Usage data:</strong> Pages visited, time spent, referring URLs, and browser type collected via analytics tools.</li>
+      <li><strong>Device data:</strong> IP address, device type, operating system, and browser version.</li>
+      <li><strong>Cookies:</strong> Session and preference cookies as described in Section 4.</li>
+    </ul>
+  </div>
+
+  <div class="policy-section" id="p2">
+    <h2><i class="fa-solid fa-bullseye"></i> 2. How We Use Your Information</h2>
+    <p>We use the information we collect for the following purposes:</p>
+    <ul>
+      <li>To respond to your enquiries, project requests, and contact form submissions.</li>
+      <li>To provide, deliver, and improve our services to you as a client.</li>
+      <li>To process job applications and communicate with candidates.</li>
+      <li>To send project updates, invoices, and service-related communications.</li>
+      <li>To analyse website usage and improve our website's performance and content.</li>
+      <li>To comply with legal obligations and enforce our Terms of Service.</li>
+      <li>To prevent fraud, abuse, and other harmful or illegal activities.</li>
+    </ul>
+    <p>We will only send you marketing communications if you have explicitly opted in or have an existing business relationship with us, and we will always provide an easy way to opt out.</p>
+  </div>
+
+  <div class="policy-section" id="p3">
+    <h2><i class="fa-solid fa-share-nodes"></i> 3. Information Sharing & Disclosure</h2>
+    <p><strong>We do not sell, rent, or trade your personal information to any third party.</strong> We may share your information only in the following limited circumstances:</p>
+    <ul>
+      <li><strong>Service providers:</strong> Trusted third-party tools we use to operate our business (e.g., email delivery, cloud hosting, analytics) under strict data processing agreements.</li>
+      <li><strong>Legal requirements:</strong> When required by applicable law, court order, or government authority.</li>
+      <li><strong>Business transfers:</strong> In the event of a merger, acquisition, or sale of assets, your data may be transferred. We will notify you before this occurs.</li>
+      <li><strong>With your consent:</strong> For any other purpose with your explicit prior consent.</li>
+    </ul>
+  </div>
+
+  <div class="policy-section" id="p4">
+    <h2><i class="fa-solid fa-cookie-bite"></i> 4. Cookies & Tracking Technologies</h2>
+    <p>We use cookies and similar technologies to enhance your experience on our website. These include:</p>
+    <ul>
+      <li><strong>Essential cookies:</strong> Required for the website to function correctly (e.g., session management).</li>
+      <li><strong>Analytics cookies:</strong> Help us understand how visitors use our site (e.g., Google Analytics). All data is anonymised.</li>
+      <li><strong>Preference cookies:</strong> Remember your settings such as dark mode preferences.</li>
+    </ul>
+    <p>You can control or disable cookies through your browser settings. Note that disabling certain cookies may affect website functionality. We do not use cookies for advertising or third-party ad tracking.</p>
+  </div>
+
+  <div class="policy-section" id="p5">
+    <h2><i class="fa-solid fa-clock"></i> 5. Data Retention</h2>
+    <p>We retain your personal information only for as long as necessary to fulfil the purposes for which it was collected:</p>
+    <ul>
+      <li><strong>Contact and enquiry data:</strong> Retained for 2 years from last contact, then securely deleted.</li>
+      <li><strong>Client project data:</strong> Retained for 5 years to support ongoing work, invoicing, and legal compliance.</li>
+      <li><strong>Job application data:</strong> Retained for 12 months; unsuccessful applicants are notified of deletion.</li>
+      <li><strong>Analytics data:</strong> Anonymised and retained for up to 26 months per our analytics provider's standard policy.</li>
+    </ul>
+    <p>You may request earlier deletion of your data at any time (see Section 7).</p>
+  </div>
+
+  <div class="policy-section" id="p6">
+    <h2><i class="fa-solid fa-lock"></i> 6. Data Security</h2>
+    <p>We take the security of your personal information seriously and implement appropriate technical and organisational measures to protect it against unauthorised access, alteration, disclosure, or destruction. These include:</p>
+    <ul>
+      <li>HTTPS encryption on all pages and data transmission.</li>
+      <li>Restricted access to personal data — only authorised team members can access it.</li>
+      <li>Regular security reviews and updates to our systems and software.</li>
+      <li>Secure cloud storage with reputable providers (AWS, Google Cloud).</li>
+    </ul>
+    <p>While we take every reasonable precaution, no method of transmission over the internet is 100% secure. If you believe your data has been compromised, please contact us immediately.</p>
+  </div>
+
+  <div class="policy-section" id="p7">
+    <h2><i class="fa-solid fa-user-shield"></i> 7. Your Rights</h2>
+    <p>Depending on your location, you may have the following rights regarding your personal data:</p>
+    <ul>
+      <li><strong>Right of access:</strong> Request a copy of the personal data we hold about you.</li>
+      <li><strong>Right to rectification:</strong> Request correction of inaccurate or incomplete data.</li>
+      <li><strong>Right to erasure:</strong> Request deletion of your personal data ("right to be forgotten").</li>
+      <li><strong>Right to object:</strong> Object to processing of your data for specific purposes (e.g., marketing).</li>
+      <li><strong>Right to data portability:</strong> Request your data in a commonly used, machine-readable format.</li>
+      <li><strong>Right to withdraw consent:</strong> Withdraw consent at any time where processing is based on consent.</li>
+    </ul>
+    <p>To exercise any of these rights, contact us at <a href="mailto:divinedevs06@gmail.com" style="color:var(--primary)">divinedevs06@gmail.com</a>. We will respond within 30 days.</p>
+  </div>
+
+  <div class="policy-section" id="p8">
+    <h2><i class="fa-solid fa-arrow-up-right-from-square"></i> 8. Third-Party Links</h2>
+    <p>Our website may contain links to third-party websites, social media platforms, and tools. We are not responsible for the privacy practices or content of those external sites. We encourage you to review the privacy policies of any third-party services you visit through our website.</p>
+  </div>
+
+  <div class="policy-section" id="p9">
+    <h2><i class="fa-solid fa-child"></i> 9. Children's Privacy</h2>
+    <p>Our website and services are not directed at individuals under the age of 13. We do not knowingly collect personal information from children under 13. If you believe a child under 13 has provided us with personal information, please contact us and we will promptly delete it.</p>
+  </div>
+
+  <div class="policy-section" id="p10">
+    <h2><i class="fa-solid fa-rotate"></i> 10. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or other factors. We will notify you of material changes by:</p>
+    <ul>
+      <li>Posting the updated policy on this page with a new "Last updated" date.</li>
+      <li>Sending an email notification to active clients where appropriate.</li>
+    </ul>
+    <p>Continued use of our website or services after any changes constitutes your acceptance of the updated policy.</p>
+  </div>
+
+  <div class="policy-section" id="p11">
+    <h2><i class="fa-solid fa-envelope"></i> 11. Contact Us</h2>
+    <p>If you have any questions, concerns, or requests regarding this Privacy Policy or your personal data, please reach out to us:</p>
+    <div class="contact-box"><i class="fa-solid fa-building"></i><p><strong>Divine Devs</strong><br>Iyyappanthangal, Chennai, Tamil Nadu, India – 600056<br>Email: <a href="mailto:divinedevs06@gmail.com">divinedevs06@gmail.com</a><br>Phone: <a href="tel:+919498063395">+91 9498063395</a></p></div>
+    <p style="margin-top:1rem">We aim to acknowledge all privacy-related requests within <strong>5 business days</strong> and resolve them within <strong>30 days</strong>.</p>
+  </div>
+
+</div><!-- .content-wrap -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" style="display:flex;align-items:center;gap:.5rem;text-decoration:none;margin-bottom:.5rem;"><img src="logo/white logo.png" alt="Divine Devs" style="height:26px;object-fit:contain;"/><span style="font-size:1.05rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Divine Devs</span></a>
+      <p>We are a creative startup delivering innovative digital and design solutions for modern businesses.</p>
+      <div>
+        <div class="fc-item"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><span>divinedevs06@gmail.com</span></div>
+        <div class="fc-item"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>+91 9498063395</span></div>
+        <div class="fc-item"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg><span>Iyyappanthangal, Chennai, Tamil Nadu – 600056</span></div>
+      </div>
+    </div>
+    <div class="footer-col"><h3>Services</h3><ul>
+      <li><a href="1. Web Development.html">Web Development</a></li>
+      <li><a href="2. Digital Marketing.html">Digital Marketing</a></li>
+      <li><a href="3. Projects.html">Projects</a></li>
+      <li><a href="4. CAD Design & 3D Modelling.html">CAD Design &amp; 3D Modelling</a></li>
+      <li><a href="5. Graphic Design.html">Graphic Design</a></li>
+      <li><a href="6. Data Analysts & Business Analysts.html">Data &amp; Business Analysts</a></li>
+    </ul></div>
+    <div class="footer-col"><h3>Company</h3><ul>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="careers.html">Careers</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul></div>
+    <div class="footer-col"><h3>Legal</h3><ul>
+      <li><a href="privacy.html">Privacy Policy</a></li>
+      <li><a href="terms.html">Terms of Service</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Divine Devs. All rights reserved.</p>
+    <div class="footer-legal"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a></div>
+  </div>
+</footer>
+</div>
+
+<div class="float-btns">
+  <a href="https://wa.me/919499943075" target="_blank" class="flt" style="background:#25D366;color:#fff;"><i class="fa-brands fa-whatsapp"></i></a>
+  <a href="tel:+919499943075" class="flt" style="background:#2563eb;color:#fff;"><i class="fa-solid fa-phone"></i></a>
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="flt" style="background:#333;color:#fff;"><i class="fa-solid fa-arrow-up"></i></button>
+</div>
+
+<script>
+  const ham=document.getElementById('ham'),mob=document.getElementById('mob'),ico=document.getElementById('ham-ico');
+  ham.addEventListener('click',()=>{mob.classList.toggle('open');ico.className=mob.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';});
+</script>
+</body>
+</html>

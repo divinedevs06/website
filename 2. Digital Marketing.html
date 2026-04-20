@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" style="color-scheme: dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Digital Marketing – Divine Devs</title>
+  <link rel="shortcut icon" href="logo/white logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    :root {
+      --primary: hsl(217 91% 60%);
+      --primary-glow: hsl(217 91% 70%);
+      --accent: hsl(32 98% 56%);
+      --accent2: hsl(152 69% 50%);
+      --background: hsl(222 84% 5%);
+      --foreground: hsl(210 40% 98%);
+      --muted-foreground: hsl(215 20% 65%);
+      --border: hsl(217 32% 17%);
+      --gradient-hero: linear-gradient(135deg, hsl(32 98% 56%), hsl(217 91% 60%));
+      --gradient-dm: linear-gradient(135deg, hsl(32 98% 56%), hsl(340 90% 60%));
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--background);
+      color: var(--foreground);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── BG GRID ── */
+    .bg-grid {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(251,146,60,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(251,146,60,.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* ── ORBS ── */
+    .orb { position:fixed; border-radius:50%; filter:blur(90px); opacity:.18; pointer-events:none; animation:orbFloat 12s ease-in-out infinite alternate; }
+    .orb-1 { width:520px;height:520px;background:radial-gradient(circle,hsl(32 98% 56%),transparent 70%);top:-120px;left:-80px;animation-delay:0s; }
+    .orb-2 { width:420px;height:420px;background:radial-gradient(circle,hsl(340 90% 60%),transparent 70%);bottom:-100px;right:-60px;animation-delay:-5s; }
+    .orb-3 { width:300px;height:300px;background:radial-gradient(circle,hsl(217 91% 60%),transparent 70%);top:50%;left:50%;animation-delay:-9s;opacity:.10; }
+    @keyframes orbFloat { 0%{transform:translateY(0) scale(1)} 100%{transform:translateY(30px) scale(1.08)} }
+
+    /* ── UTILITIES ── */
+    .glass-card { background:rgba(15,23,42,.7); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,.07); border-radius:1rem; }
+    .gradient-text { background:var(--gradient-dm); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .gradient-text-blue { background:linear-gradient(135deg,hsl(217 91% 60%),hsl(270 91% 65%)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+    /* ── NAVBAR ── */
+    header { position:sticky;top:0;z-index:50;background:rgba(9,15,35,.75);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.07); }
+    .nav-container { max-width:1280px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:64px; }
+    .nav-logo { display:flex;align-items:center;gap:.5rem;text-decoration:none; }
+    .nav-logo-text { font-size:1.25rem;font-weight:700;background:linear-gradient(135deg,hsl(217 91% 60%),hsl(270 91% 65%));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+    .nav-links { display:flex;gap:2rem;list-style:none; }
+    .nav-links a { color:var(--foreground);text-decoration:none;font-weight:500;font-size:.95rem;position:relative;padding-bottom:2px;transition:color .2s; }
+    .nav-links a::after { content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--gradient-dm);transform:scaleX(0);transition:transform .3s;transform-origin:left; }
+    .nav-links a:hover { color:var(--accent); }
+    .nav-links a:hover::after { transform:scaleX(1); }
+    .nav-cta { display:inline-flex;align-items:center;gap:.5rem;padding:.5rem 1.25rem;border-radius:.75rem;border:none;cursor:pointer;background:var(--gradient-dm);color:#fff;font-size:.875rem;font-weight:600;text-decoration:none;transition:box-shadow .3s,transform .2s; }
+    .nav-cta:hover { box-shadow:0 0 20px rgba(251,146,60,.5);transform:translateY(-1px); }
+    .hamburger { display:none;background:none;border:none;cursor:pointer;color:var(--foreground);font-size:1.5rem; }
+    .mobile-menu { display:none;flex-direction:column;gap:1rem;padding:1rem 1.5rem;background:rgba(9,15,35,.95);border-top:1px solid rgba(255,255,255,.07); }
+    .mobile-menu a { color:var(--foreground);text-decoration:none;font-weight:500; }
+    .mobile-menu.open { display:flex; }
+
+    /* ── HERO ── */
+    .hero { position:relative;z-index:1;min-height:72vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:6rem 1.5rem 4rem;overflow:hidden; }
+    .hero-badge { display:inline-flex;align-items:center;gap:.5rem;background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.3);color:var(--accent);padding:.375rem 1rem;border-radius:9999px;font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.5rem;animation:fadeSlideUp .7s ease both; }
+    .hero-title { font-size:clamp(2.5rem,7vw,5rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-bottom:1.5rem;animation:fadeSlideUp .7s .15s ease both; }
+    .hero-subtitle { max-width:650px;margin:0 auto 2.5rem;color:var(--muted-foreground);font-size:1.125rem;line-height:1.7;animation:fadeSlideUp .7s .3s ease both; }
+    .hero-ctas { display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeSlideUp .7s .45s ease both; }
+    .btn-primary { display:inline-flex;align-items:center;gap:.5rem;background:var(--gradient-dm);color:#fff;padding:.75rem 2rem;border-radius:.875rem;font-weight:600;text-decoration:none;border:none;cursor:pointer;transition:box-shadow .3s,transform .2s;font-size:1rem; }
+    .btn-primary:hover { box-shadow:0 0 28px rgba(251,146,60,.55);transform:translateY(-2px); }
+    .btn-outline { display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:var(--foreground);padding:.75rem 2rem;border-radius:.875rem;font-weight:600;text-decoration:none;border:1px solid rgba(255,255,255,.15);cursor:pointer;transition:border-color .3s,background .3s;font-size:1rem; }
+    .btn-outline:hover { border-color:var(--accent);background:rgba(251,146,60,.08); }
+
+    /* Floating metrics decoration */
+    .metric-float {
+      position:absolute;background:rgba(15,23,42,.85);border:1px solid rgba(251,146,60,.2);border-radius:1rem;padding:.85rem 1.2rem;
+      display:flex;align-items:center;gap:.75rem;backdrop-filter:blur(12px);
+      animation:floatPulse 4s ease-in-out infinite;
+    }
+    .metric-float .mf-icon { width:36px;height:36px;border-radius:.6rem;background:rgba(251,146,60,.15);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1rem; }
+    .metric-float .mf-val { font-size:1.1rem;font-weight:800; }
+    .metric-float .mf-lbl { font-size:.72rem;color:var(--muted-foreground); }
+    .mf-1 { top:15%;right:8%;animation-delay:0s; }
+    .mf-2 { bottom:20%;left:5%;animation-delay:-2s; }
+    .mf-3 { top:55%;right:4%;animation-delay:-3.5s; }
+    @keyframes floatPulse { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    @media(max-width:900px){.metric-float{display:none;}}
+
+    /* ── SECTION ── */
+    .section { position:relative;z-index:1;padding:5rem 1.5rem; }
+    .container { max-width:1200px;margin:0 auto; }
+    .section-label { display:inline-flex;align-items:center;gap:.5rem;background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.2);color:var(--accent);padding:.3rem .9rem;border-radius:9999px;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem; }
+    .section-title { font-size:clamp(1.8rem,4vw,2.75rem);font-weight:800;letter-spacing:-.02em;margin-bottom:1rem;line-height:1.2; }
+    .section-subtitle { color:var(--muted-foreground);font-size:1.05rem;max-width:600px;line-height:1.7; }
+    .section-header { margin-bottom:3.5rem; }
+
+    /* ── SERVICE CARDS ── */
+    .services-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem; }
+    .service-card { padding:2rem;border-radius:1.25rem;background:rgba(15,23,42,.7);border:1px solid rgba(255,255,255,.07);transition:transform .3s,border-color .3s,box-shadow .3s;cursor:default;position:relative;overflow:hidden; }
+    .service-card::before { content:'';position:absolute;inset:0;background:var(--gradient-dm);opacity:0;transition:opacity .4s;border-radius:inherit; }
+    .service-card:hover { transform:translateY(-6px);border-color:rgba(251,146,60,.35);box-shadow:0 20px 50px rgba(251,146,60,.12); }
+    .service-card:hover::before { opacity:.04; }
+    .service-icon { width:52px;height:52px;border-radius:.875rem;background:rgba(251,146,60,.12);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--accent);margin-bottom:1.25rem;transition:background .3s,transform .3s; }
+    .service-card:hover .service-icon { background:rgba(251,146,60,.22);transform:scale(1.1) rotate(-5deg); }
+    .service-card h3 { font-size:1.15rem;font-weight:700;margin-bottom:.6rem; }
+    .service-card p { color:var(--muted-foreground);font-size:.9rem;line-height:1.65; }
+    .service-tag { display:inline-block;margin-top:1rem;background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.2);color:var(--accent);padding:.2rem .65rem;border-radius:9999px;font-size:.72rem;font-weight:600; }
+
+    /* ── STATS STRIP ── */
+    .stats-strip { display:flex;flex-wrap:wrap;justify-content:center;gap:3rem;padding:3rem 1.5rem;background:rgba(9,15,35,.6);border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06); }
+    .stat { text-align:center; }
+    .stat-num { font-size:2.5rem;font-weight:800;background:var(--gradient-dm);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1; }
+    .stat-label { color:var(--muted-foreground);font-size:.85rem;margin-top:.3rem; }
+
+    /* ── RESULTS SHOWCASE ── */
+    .results-section { background:rgba(9,15,35,.5); }
+    .results-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem; }
+    .result-card {
+      padding:1.75rem;border-radius:1.25rem;background:rgba(15,23,42,.7);
+      border:1px solid rgba(255,255,255,.07);
+      display:flex;flex-direction:column;gap:.75rem;
+      transition:transform .3s,border-color .3s;
+    }
+    .result-card:hover { transform:translateY(-4px);border-color:rgba(251,146,60,.3); }
+    .result-header { display:flex;justify-content:space-between;align-items:center; }
+    .result-channel { font-size:.78rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.07em; }
+    .result-icon { width:36px;height:36px;border-radius:.6rem;background:rgba(251,146,60,.12);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:.9rem; }
+    .result-metric { font-size:2.2rem;font-weight:800;line-height:1; }
+    .result-label { font-size:.85rem;color:var(--muted-foreground); }
+    .result-bar { height:6px;border-radius:3px;background:rgba(255,255,255,.06);overflow:hidden; }
+    .result-bar-fill { height:100%;border-radius:3px;background:var(--gradient-dm);animation:barGrow 1.5s ease both; }
+    @keyframes barGrow { from{width:0} }
+
+    /* ── PROCESS ── */
+    .timeline { position:relative;padding-left:2.5rem; }
+    .timeline::before { content:'';position:absolute;left:.75rem;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,hsl(32 98% 56%),hsl(340 90% 60%),transparent);border-radius:2px; }
+    .timeline-item { position:relative;margin-bottom:2.5rem; }
+    .timeline-dot { position:absolute;left:-2.5rem;top:.25rem;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--gradient-dm);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:#fff;flex-shrink:0;box-shadow:0 0 12px rgba(251,146,60,.5); }
+    .timeline-item h4 { font-size:1.05rem;font-weight:700;margin-bottom:.35rem; }
+    .timeline-item p { color:var(--muted-foreground);font-size:.9rem;line-height:1.6; }
+
+    /* ── TOOLS ── */
+    .tools-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:1rem; }
+    .tool-chip { display:flex;flex-direction:column;align-items:center;gap:.6rem;padding:1.25rem .75rem;border-radius:1rem;background:rgba(15,23,42,.7);border:1px solid rgba(255,255,255,.07);transition:transform .25s,border-color .25s,box-shadow .25s;cursor:default; }
+    .tool-chip:hover { transform:translateY(-4px);border-color:rgba(251,146,60,.35);box-shadow:0 10px 30px rgba(251,146,60,.12); }
+    .tool-chip i { font-size:1.8rem; }
+    .tool-chip span { font-size:.78rem;font-weight:600;color:var(--muted-foreground);text-align:center; }
+    .tool-category { margin-bottom:.75rem;font-size:.82rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.07em; }
+    .tools-category-block { margin-bottom:2.5rem; }
+
+    /* ── FAQ ── */
+    .faq-list { display:flex;flex-direction:column;gap:1rem;max-width:800px;margin:0 auto; }
+    .faq-item { background:rgba(15,23,42,.7);border:1px solid rgba(255,255,255,.07);border-radius:1rem;overflow:hidden;transition:border-color .3s; }
+    .faq-item.open { border-color:rgba(251,146,60,.35); }
+    .faq-question { width:100%;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 1.5rem;background:none;border:none;cursor:pointer;color:var(--foreground);font-size:1rem;font-weight:600;text-align:left;gap:1rem; }
+    .faq-icon { flex-shrink:0;width:28px;height:28px;border-radius:50%;background:rgba(251,146,60,.12);display:flex;align-items:center;justify-content:center;transition:background .3s,transform .4s;color:var(--accent);font-size:.85rem; }
+    .faq-item.open .faq-icon { background:rgba(251,146,60,.25);transform:rotate(45deg); }
+    .faq-answer { max-height:0;overflow:hidden;transition:max-height .45s ease,padding .3s;color:var(--muted-foreground);font-size:.925rem;line-height:1.7;padding:0 1.5rem; }
+    .faq-item.open .faq-answer { max-height:320px;padding-bottom:1.5rem; }
+
+    /* ── CTA ── */
+    .cta-section { position:relative;z-index:1;background:var(--gradient-dm);padding:5rem 1.5rem;text-align:center;overflow:hidden; }
+    .cta-section::before { content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+    .cta-section h2 { font-size:clamp(1.8rem,4vw,2.75rem);font-weight:800;color:#fff;margin-bottom:1rem;position:relative; }
+    .cta-section p { color:rgba(255,255,255,.85);font-size:1.1rem;max-width:540px;margin:0 auto 2rem;line-height:1.6;position:relative; }
+    .btn-white { display:inline-flex;align-items:center;gap:.5rem;background:#fff;color:#7c2d12;padding:.8rem 2.25rem;border-radius:.875rem;font-weight:700;font-size:1rem;text-decoration:none;border:none;cursor:pointer;transition:transform .2s,box-shadow .3s;position:relative; }
+    .btn-white:hover { transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.25); }
+
+    /* ── FOOTER ── */
+    footer { position:relative;z-index:1;background:rgba(9,15,35,.9);border-top:1px solid rgba(255,255,255,.07);padding:4rem 1.5rem 2rem; }
+    .footer-grid { display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;max-width:1200px;margin:0 auto 2rem; }
+    .footer-brand p { color:var(--muted-foreground);font-size:.875rem;line-height:1.7;margin:1rem 0 1.5rem; }
+    .footer-contact-item { display:flex;align-items:flex-start;gap:.75rem;font-size:.875rem;color:var(--muted-foreground);margin-bottom:.75rem; }
+    .footer-contact-item svg { color:var(--accent);flex-shrink:0;margin-top:2px; }
+    .footer-col h3 { font-size:.95rem;font-weight:700;margin-bottom:1.25rem; }
+    .footer-col ul { list-style:none; }
+    .footer-col li { margin-bottom:.75rem; }
+    .footer-col a { color:var(--muted-foreground);text-decoration:none;font-size:.875rem;transition:color .2s; }
+    .footer-col a:hover { color:var(--accent); }
+    .footer-bottom { max-width:1200px;margin:0 auto;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem; }
+    .footer-bottom p { color:var(--muted-foreground);font-size:.8rem; }
+    .footer-legal { display:flex;gap:1.5rem; }
+    .footer-legal a { color:var(--muted-foreground);font-size:.8rem;text-decoration:none;transition:color .2s; }
+    .footer-legal a:hover { color:var(--accent); }
+
+    /* ── FLOATING BTNS ── */
+    .floating-btns { position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:999; }
+    .float-btn { width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.1rem;transition:transform .2s; }
+    .float-btn:hover { transform:scale(1.1); }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease; }
+    .reveal.visible { opacity:1;transform:translateY(0); }
+
+    /* ── GROWTH CHART ── */
+    .chart-wrap { padding:1.75rem;border-radius:1.25rem;background:rgba(15,23,42,.7);border:1px solid rgba(255,255,255,.07); }
+    .chart-title { font-size:.9rem;font-weight:600;color:var(--muted-foreground);margin-bottom:1.5rem; }
+    .chart-bars { display:flex;align-items:flex-end;gap:.5rem;height:140px; }
+    .chart-bar-wrap { flex:1;display:flex;flex-direction:column;align-items:center;gap:.35rem; }
+    .chart-bar { width:100%;border-radius:.3rem .3rem 0 0;background:var(--gradient-dm);animation:chartUp 1.2s ease both;transform-origin:bottom; }
+    .chart-bar-lbl { font-size:.65rem;color:var(--muted-foreground); }
+    .chart-val { font-size:.72rem;font-weight:700;color:var(--accent); }
+    @keyframes chartUp { from{transform:scaleY(0)} to{transform:scaleY(1)} }
+    .chart-legend { display:flex;gap:1.5rem;margin-top:1rem;flex-wrap:wrap; }
+    .legend-dot { width:10px;height:10px;border-radius:50%;background:var(--gradient-dm);flex-shrink:0; }
+    .legend-item { display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:var(--muted-foreground); }
+
+    /* ── FUNNEL VIZ ── */
+    .funnel { display:flex;flex-direction:column;gap:.5rem; }
+    .funnel-step { border-radius:.6rem;display:flex;align-items:center;justify-content:space-between;padding:.75rem 1.25rem;font-size:.9rem;font-weight:600;transition:transform .2s; }
+    .funnel-step:hover { transform:scaleX(1.02); }
+
+    @keyframes fadeSlideUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    @media(max-width:768px){.nav-links,.nav-cta-wrap{display:none;}.hamburger{display:block;}.footer-grid{grid-template-columns:1fr 1fr;}}
+    @media(max-width:480px){.footer-grid{grid-template-columns:1fr;}}
+    #typed-text { color:var(--accent); }
+    .cursor { animation:blink 1s step-end infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  
+    /* ══════════════════════════════════════════════
+       RESPONSIVE OVERHAUL — iOS / Android / Mobile
+       ══════════════════════════════════════════════ */
+
+    /* 1. Fix CSS bug: inset-x-0 is Tailwind, not native CSS */
+    .nav-links a::after { left:0; right:0; }
+
+    /* 2. iOS momentum scrolling & tap-delay fix */
+    html { -webkit-text-size-adjust:100%; }
+    body { -webkit-overflow-scrolling: touch; }
+    a, button, [role="button"] { touch-action: manipulation; }
+
+    /* 3. Prevent horizontal overflow on all screen sizes */
+    html, body { max-width:100%; overflow-x:hidden; }
+
+    /* 4. Safe-area insets for iPhone notch / home bar */
+    header { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+    .floating-btns { bottom: calc(20px + env(safe-area-inset-bottom)); right: calc(20px + env(safe-area-inset-right)); }
+
+    /* 5. Split-grid — process/timeline+visual sections */
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    /* 6. Spec grid (2-col info cards) */
+    .spec-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem;
+    }
+
+    /* 7. Triple stat grid */
+    .triple-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: .75rem;
+      text-align: center;
+    }
+
+    /* 8. results-section 2-col on reveal */
+    .results-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* ── TABLET (≤1024px) ── */
+    @media (max-width: 1024px) {
+      .split-grid { gap: 2.5rem; }
+      .services-grid { grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); }
+      .tools-grid   { grid-template-columns: repeat(auto-fill, minmax(105px,1fr)); }
+      .viewport-grid, .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+      .industries-grid, .domains-grid, .deliverables-grid, .values-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* ── MOBILE LARGE (≤768px) ── */
+    @media (max-width: 768px) {
+      /* Nav */
+      .nav-links, .nav-cta-wrap { display: none; }
+      .hamburger { display: block; }
+
+      /* Hero — reduce padding */
+      .hero { padding: 4rem 1.25rem 2.5rem; min-height: auto; }
+      .hero-title { font-size: clamp(1.9rem, 7vw, 3rem); }
+      .hero-subtitle { font-size: 1rem; }
+      .hero-ring, .cube-wrap, .pulse-ring, .circuit-wrap { display: none; }
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .hero-ctas .btn-primary,
+      .hero-ctas .btn-outline { width: 100%; justify-content: center; }
+
+      /* Sections */
+      .section { padding: 3rem 1.25rem; }
+      .section-header { margin-bottom: 2rem; }
+      .cta-section { padding: 3.5rem 1.25rem; }
+      footer { padding: 3rem 1.25rem 1.5rem; }
+
+      /* Split grids → single column */
+      .split-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+      .results-two-col { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+      .spec-grid-2 { grid-template-columns: 1fr 1fr; gap: .5rem; }
+      .triple-grid { grid-template-columns: 1fr 1fr 1fr; gap: .5rem; }
+
+      /* Inline split grids (override inline styles) */
+      .container > div[style*="grid-template-columns:1fr 1fr"][style*="gap:4rem"],
+      .container > div[style*="grid-template-columns: 1fr 1fr"] {
+        display: block !important;
+      }
+      .container > div[style*="grid-template-columns:1fr 1fr"][style*="gap:4rem"] > div,
+      .container > div[style*="grid-template-columns: 1fr 1fr"] > div {
+        margin-bottom: 2rem;
+      }
+
+      /* Stats strip */
+      .stats-strip { gap: 1.5rem; padding: 2rem 1rem; }
+      .stat-num { font-size: 2rem; }
+
+      /* Service cards */
+      .services-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .service-card { padding: 1.5rem; }
+
+      /* Tools */
+      .tools-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: .75rem; }
+      .tool-chip { padding: 1rem .5rem; }
+      .tool-chip span { font-size: .72rem; }
+
+      /* Viewport / portfolio grids */
+      .viewport-grid { grid-template-columns: 1fr 1fr; gap: .75rem; }
+      .portfolio-grid { grid-template-columns: 1fr 1fr; }
+      .port-card.tall { grid-row: span 1; }
+
+      /* Industries / domains / deliverables */
+      .industries-grid, .domains-grid, .deliverables-grid, .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: .75rem;
+      }
+
+      /* Results section */
+      .results-grid { grid-template-columns: 1fr; }
+      .chart-row { grid-template-columns: 1fr !important; grid-column: span 1 !important; }
+      .dashboard-body { grid-template-columns: 1fr 1fr; }
+
+      /* Sensor / IoT panels */
+      .sensor-grid { grid-template-columns: 1fr 1fr; gap: .75rem; }
+      .sensor-chart-row { grid-template-columns: 1fr !important; gap: 1rem !important; }
+
+      /* Footer */
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .footer-brand { grid-column: span 2; }
+
+      /* FAQ */
+      .faq-question { font-size: .95rem; padding: 1rem 1.25rem; }
+      .faq-answer { padding: 0 1.25rem; }
+      .faq-item.open .faq-answer { max-height: 500px; }
+
+      /* Funnel steps full width */
+      .funnel-step { width: 100% !important; }
+
+      /* Floating btns */
+      .floating-btns { gap: 8px; }
+      .float-btn { width: 44px; height: 44px; font-size: 1rem; }
+
+      /* CTA btn */
+      .btn-white { padding: .75rem 1.5rem; font-size: .95rem; }
+    }
+
+    /* ── MOBILE SMALL (≤480px) ── */
+    @media (max-width: 480px) {
+      .hero { padding: 3.5rem 1rem 2rem; }
+      .hero-title { font-size: clamp(1.75rem, 8vw, 2.5rem); }
+      .section { padding: 2.5rem 1rem; }
+      .cta-section { padding: 3rem 1rem; }
+      footer { padding: 2.5rem 1rem 1.25rem; }
+
+      .services-grid { grid-template-columns: 1fr; }
+      .tools-grid { grid-template-columns: repeat(3, 1fr); gap: .6rem; }
+      .tool-chip { padding: .9rem .4rem; }
+      .tool-chip span { font-size: .68rem; }
+
+      .viewport-grid { grid-template-columns: 1fr; }
+      .portfolio-grid { grid-template-columns: 1fr !important; }
+      .industries-grid, .domains-grid, .deliverables-grid, .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .spec-grid-2 { grid-template-columns: 1fr; }
+      .triple-grid { grid-template-columns: 1fr 1fr; }
+
+      .dashboard-body { grid-template-columns: 1fr; }
+      .sensor-grid { grid-template-columns: 1fr 1fr; }
+      .kpi-card, .s-card { padding: .75rem; }
+
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-brand { grid-column: span 1; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: .5rem; }
+
+      .stat-num { font-size: 1.75rem; }
+      .stats-strip { gap: 1.25rem; }
+
+      .faq-question { font-size: .9rem; padding: .9rem 1rem; }
+      .faq-answer { padding: 0 1rem; }
+      .faq-item.open .faq-answer { max-height: 600px; }
+
+      .glass-card, .chart-wrap, .mini-chart { padding: 1rem; }
+
+      .btn-primary, .btn-outline { padding: .65rem 1.4rem; font-size: .9rem; }
+      .nav-container { padding: 0 1rem; }
+    }
+
+    /* ── EXTRA SMALL (≤375px / iPhone SE) ── */
+    @media (max-width: 375px) {
+      .hero-title { font-size: 1.65rem; }
+      .section-title { font-size: 1.5rem; }
+      .tools-grid { grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+      .tool-chip { padding: .75rem .35rem; }
+      .floating-btns { right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); gap: 6px; }
+      .float-btn { width: 40px; height: 40px; font-size: .9rem; }
+    }
+
+    /* ── HOVER: disable on touch devices (iOS/Android) ── */
+    @media (hover: none) {
+      .service-card:hover,
+      .tool-chip:hover,
+      .result-card:hover,
+      .industry-card:hover,
+      .domain-card:hover,
+      .deliv-card:hover,
+      .perk:hover,
+      .val-card:hover,
+      .port-card:hover,
+      .viewport-card:hover,
+      .job-card:hover { transform: none; box-shadow: none; border-color: rgba(255,255,255,.07); }
+      .service-card:hover::before { opacity: 0; }
+      .btn-primary:hover,
+      .btn-outline:hover,
+      .btn-white:hover,
+      .nav-cta:hover { transform: none; box-shadow: none; }
+      .service-card:hover .service-icon { transform: none; }
+    }
+
+    /* ── REDUCED MOTION (accessibility) ── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .orb, .orb-1, .orb-2, .orb-3 { animation: none; }
+    }
+
+    /* ── PERFORMANCE: reduce orb blur on small screens ── */
+    @media (max-width: 768px) {
+      .orb-1 { width: 280px; height: 280px; filter: blur(60px); opacity: .12; }
+      .orb-2 { width: 220px; height: 220px; filter: blur(50px); opacity: .12; }
+      .orb-3 { display: none; }
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- ═══════════ NAVBAR ═══════════ -->
+<header>
+  <div class="nav-container">
+    <a class="nav-logo" href="index.html">
+      <div style="width:32px;height:32px;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+        <img src="logo/white logo.png" alt="Divine Devs Logo" style="width:32px;height:32px;object-fit:contain;" />
+      </div>
+      <span class="nav-logo-text, text colour:white, " style="color: white; font-weight: bold; font-size: 20px;">Divine Devs</span>
+    </a>
+    <nav><ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="Portfolio.html">Portfolio</a></li>
+      <li><a href="service.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul></nav>
+    <div class="nav-cta-wrap"><a href="contact.html" class="nav-cta">Request Quote <i class="fa-solid fa-arrow-right"></i></a></div>
+    <button class="hamburger" id="hamburger"><i class="fa-solid fa-bars" id="ham-icon"></i></button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="Portfolio.html">Portfolio</a>
+    <a href="service.html">Services</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="btn-primary" style="width:fit-content">Request Quote <i class="fa-solid fa-arrow-right"></i></a>
+  </div>
+</header>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <!-- Floating metric cards -->
+  <div class="metric-float mf-1">
+    <div class="mf-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+    <div><div class="mf-val gradient-text">+320%</div><div class="mf-lbl">Organic Traffic</div></div>
+  </div>
+  <div class="metric-float mf-2">
+    <div class="mf-icon"><i class="fa-solid fa-bullseye"></i></div>
+    <div><div class="mf-val gradient-text">4.8x</div><div class="mf-lbl">Avg. ROAS</div></div>
+  </div>
+  <div class="metric-float mf-3">
+    <div class="mf-icon"><i class="fa-brands fa-google"></i></div>
+    <div><div class="mf-val gradient-text">#1</div><div class="mf-lbl">Google Rankings</div></div>
+  </div>
+
+  <div style="position:relative;z-index:2;max-width:800px;">
+    <br>
+    <h1 class="hero-title">
+      We Grow Your Brand<br>Through <span class="gradient-text"><span id="typed-text">SEO</span><span class="cursor">|</span></span>
+    </h1>
+    <p class="hero-subtitle">
+      Data-driven digital marketing that generates real leads, real traffic, and real revenue. From search to social, we build campaigns that deliver measurable ROI.
+    </p>
+    <div class="hero-ctas">
+      <a href="contact.html" class="btn-primary">Grow My Business <i class="fa-solid fa-rocket"></i></a>
+      <a href="Portfolio.html" class="btn-primary">View Our Work <i class="fa-solid fa-folder-open"></i></a>
+      <a href="#what-we-do" class="btn-outline">See Our Services <i class="fa-solid fa-chevron-down"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ STATS ═══════════ -->
+ <!--
+<div class="stats-strip reveal">
+  <div class="stat"><div class="stat-num" data-target="200">0</div><div class="stat-label">Campaigns Launched</div></div>
+  <div class="stat"><div class="stat-num" data-target="320">0</div><div class="stat-label">Avg. Traffic Growth %</div></div>
+  <div class="stat"><div class="stat-num" data-target="48">0</div><div class="stat-label">Average ROAS (×10)</div></div>
+  <div class="stat"><div class="stat-num" data-target="95">0</div><div class="stat-label">Client Retention %</div></div>
+</div> -->
+
+<!-- ═══════════ WHAT WE DO ═══════════ -->
+<section class="section" id="what-we-do">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label"><i class="fa-solid fa-layer-group"></i> What We Do</div>
+      <h2 class="section-title">Full-Funnel <span class="gradient-text">Digital Marketing</span></h2>
+      <p class="section-subtitle">We cover every stage of the customer journey — from first impression to loyal advocate.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal" style="transition-delay:.05s">
+        <div class="service-icon"><i class="fa-brands fa-google"></i></div>
+        <h3>Search Engine Optimisation (SEO)</h3>
+        <p>Technical audits, keyword strategy, on-page optimisation, and authority link-building that put you on page one — and keep you there.</p>
+        <span class="service-tag">On-Page · Off-Page · Technical</span>
+      </div>
+      <div class="service-card reveal" style="transition-delay:.1s">
+        <div class="service-icon"><i class="fa-solid fa-bullseye"></i></div>
+        <h3>Pay-Per-Click Advertising</h3>
+        <p>High-converting Google Ads, Bing Ads, and Meta Ads campaigns. Smart bidding, negative keywords, and relentless A/B testing maximise your ad spend.</p>
+        <span class="service-tag">Google Ads · Meta Ads</span>
+      </div>
+      <div class="service-card reveal" style="transition-delay:.15s">
+        <div class="service-icon"><i class="fa-brands fa-instagram"></i></div>
+        <h3>Social Media Marketing</h3>
+        <p>Brand-aligned content calendars, community management, and paid social campaigns across Instagram, LinkedIn, Facebook, X, and YouTube.</p>
+        <span class="service-tag">Instagram · LinkedIn · YouTube</span>
+      </div>
+      <div class="service-card reveal" style="transition-delay:.2s">
+        <div class="service-icon"><i class="fa-solid fa-pen-nib"></i></div>
+        <h3>Content Marketing</h3>
+        <p>SEO-optimised blogs, whitepapers, video scripts, infographics, and case studies that educate your audience and drive organic traffic.</p>
+        <span class="service-tag">Blogs · Video · Infographics</span>
+      </div>
+      <div class="service-card reveal" style="transition-delay:.25s">
+        <div class="service-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
+        <h3>Email Marketing</h3>
+        <p>Drip campaigns, newsletters, and lifecycle automation that nurture leads and convert subscribers into paying customers — on autopilot.</p>
+        <span class="service-tag">Mailchimp · HubSpot · Klaviyo</span>
+      </div>
+      <div class="service-card reveal" style="transition-delay:.3s">
+        <div class="service-icon"><i class="fa-solid fa-chart-bar"></i></div>
+        <h3>Analytics & Reporting</h3>
+        <p>Real-time dashboards, monthly performance reports, and actionable insights. We track every metric that matters so you always know your ROI.</p>
+        <span class="service-tag">GA4 · Looker Studio · GTM</span>
+      </div>
+      <div class="service-card reveal" style="transition-delay:.35s">
+        <div class="service-icon"><i class="fa-solid fa-star"></i></div>
+        <h3>Online Reputation Management</h3>
+        <p>Monitor, respond to, and improve your brand's online presence. We turn reviews into trust and negative sentiment into opportunity.</p>
+        <span class="service-tag">Reviews · Brand Monitoring</span>
+      </div>
+      <div class="service-card reveal" style="transition-delay:.4s">
+        <div class="service-icon"><i class="fa-solid fa-user-group"></i></div>
+        <h3>Influencer & Affiliate Marketing</h3>
+        <p>We connect you with niche-relevant influencers and build affiliate networks that bring in cost-effective, high-intent traffic at scale.</p>
+        <span class="service-tag">Influencer · Affiliate</span>
+      </div>
+      <div class="service-card reveal" style="transition-delay:.45s">
+        <div class="service-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+        <h3>Conversion Rate Optimisation</h3>
+        <p>Heatmaps, user recordings, and multivariate testing that reveal exactly why visitors leave — then fix it to convert more without spending more.</p>
+        <span class="service-tag">CRO · A/B Testing · Heatmaps</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ RESULTS ═══════════ -->
+<section class="section results-section">
+  <div class="container">
+    <div class="section-header reveal" style="text-align:center;">
+      <div class="section-label" style="margin:0 auto 1rem;"><i class="fa-solid fa-trophy"></i> Results</div>
+      <h2 class="section-title">Real Numbers, <span class="gradient-text">Real Impact</span></h2>
+      <p class="section-subtitle" style="margin:0 auto;">Every strategy we run is measured against clear KPIs. Here's the kind of impact we deliver across channels.</p>
+    </div>
+
+    <div class="results-two-col reveal">
+
+      <!-- Bar Chart -->
+      <div class="chart-wrap">
+        <div class="chart-title">📈 Organic Traffic Growth (Monthly)</div>
+        <div class="chart-bars">
+          <div class="chart-bar-wrap">
+            <div class="chart-val">12k</div>
+            <div class="chart-bar" style="height:30%;animation-delay:.1s"></div>
+            <div class="chart-bar-lbl">Jan</div>
+          </div>
+          <div class="chart-bar-wrap">
+            <div class="chart-val">18k</div>
+            <div class="chart-bar" style="height:42%;animation-delay:.2s"></div>
+            <div class="chart-bar-lbl">Feb</div>
+          </div>
+          <div class="chart-bar-wrap">
+            <div class="chart-val">25k</div>
+            <div class="chart-bar" style="height:56%;animation-delay:.3s"></div>
+            <div class="chart-bar-lbl">Mar</div>
+          </div>
+          <div class="chart-bar-wrap">
+            <div class="chart-val">34k</div>
+            <div class="chart-bar" style="height:70%;animation-delay:.4s"></div>
+            <div class="chart-bar-lbl">Apr</div>
+          </div>
+          <div class="chart-bar-wrap">
+            <div class="chart-val">45k</div>
+            <div class="chart-bar" style="height:88%;animation-delay:.5s"></div>
+            <div class="chart-bar-lbl">May</div>
+          </div>
+          <div class="chart-bar-wrap">
+            <div class="chart-val">51k</div>
+            <div class="chart-bar" style="height:100%;animation-delay:.6s"></div>
+            <div class="chart-bar-lbl">Jun</div>
+          </div>
+        </div>
+        <div class="chart-legend">
+          <div class="legend-item"><div class="legend-dot"></div>Organic Sessions</div>
+        </div>
+      </div>
+
+      <!-- Funnel -->
+      <div>
+        <div class="chart-wrap" style="margin-bottom:1rem;">
+          <div class="chart-title">🎯 Typical Campaign Funnel Performance</div>
+          <div class="funnel">
+            <div class="funnel-step" style="background:rgba(251,146,60,.18);width:100%;color:#fbbf24;">
+              <span>👁️ Impressions</span><span>1,200,000</span>
+            </div>
+            <div class="funnel-step" style="background:rgba(251,146,60,.14);width:85%;color:#fb923c;">
+              <span>🖱️ Clicks</span><span>48,000</span>
+            </div>
+            <div class="funnel-step" style="background:rgba(251,146,60,.10);width:65%;color:#f97316;">
+              <span>🔗 Leads</span><span>9,600</span>
+            </div>
+            <div class="funnel-step" style="background:rgba(251,146,60,.08);width:42%;color:#ea580c;">
+              <span>💰 Sales</span><span>1,440</span>
+            </div>
+          </div>
+        </div>
+        <div class="results-grid" style="grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="result-card">
+            <div class="result-header">
+              <span class="result-channel">SEO</span>
+              <div class="result-icon"><i class="fa-brands fa-google"></i></div>
+            </div>
+            <div class="result-metric gradient-text">+320%</div>
+            <div class="result-label">Organic traffic in 6 months</div>
+            <div class="result-bar"><div class="result-bar-fill" style="width:80%"></div></div>
+          </div>
+          <div class="result-card">
+            <div class="result-header">
+              <span class="result-channel">Paid Ads</span>
+              <div class="result-icon"><i class="fa-solid fa-bullseye"></i></div>
+            </div>
+            <div class="result-metric gradient-text">4.8×</div>
+            <div class="result-label">Average return on ad spend</div>
+            <div class="result-bar"><div class="result-bar-fill" style="width:90%"></div></div>
+          </div>
+          <div class="result-card">
+            <div class="result-header">
+              <span class="result-channel">Social</span>
+              <div class="result-icon"><i class="fa-brands fa-instagram"></i></div>
+            </div>
+            <div class="result-metric gradient-text">+185%</div>
+            <div class="result-label">Follower & engagement growth</div>
+            <div class="result-bar"><div class="result-bar-fill" style="width:65%"></div></div>
+          </div>
+          <div class="result-card">
+            <div class="result-header">
+              <span class="result-channel">Email</span>
+              <div class="result-icon"><i class="fa-solid fa-envelope"></i></div>
+            </div>
+            <div class="result-metric gradient-text">42%</div>
+            <div class="result-label">Avg. email open rate</div>
+            <div class="result-bar"><div class="result-bar-fill" style="width:70%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PROCESS ═══════════ -->
+<section class="section">
+  <div class="container" class="split-grid">
+    <div class="reveal">
+      <div class="section-label"><i class="fa-solid fa-road"></i> Our Strategy</div>
+      <h2 class="section-title">How We <span class="gradient-text">Drive Growth</span></h2>
+      <p class="section-subtitle" style="margin-bottom:2rem;">A proven 5-step framework that transforms your digital presence into a revenue engine.</p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot">1</div>
+          <h4>Audit & Research</h4>
+          <p>Deep competitor analysis, keyword gap research, audience persona mapping, and a full audit of your current digital footprint.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">2</div>
+          <h4>Strategy & Planning</h4>
+          <p>We build a 90-day roadmap with clear KPIs, channel mix, budget allocation, and content calendar tailored to your goals.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">3</div>
+          <h4>Campaign Execution</h4>
+          <p>Expert implementation across all agreed channels — ads go live, content is published, and SEO changes are deployed with precision.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">4</div>
+          <h4>Optimise & Scale</h4>
+          <p>Weekly performance reviews, real-time bid adjustments, content refreshes, and data-driven pivots to keep improving results.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">5</div>
+          <h4>Report & Evolve</h4>
+          <p>Transparent monthly reports with every metric, spend, and insight clearly laid out — no vanity metrics, only what moves your business forward.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Strategy visual -->
+    <div class="reveal" style="transition-delay:.2s;display:flex;flex-direction:column;gap:1rem;">
+      <div class="glass-card" style="padding:1.5rem;">
+        <div style="font-size:.8rem;color:var(--muted-foreground);margin-bottom:1rem;font-weight:600;">🔍 SEO Keyword Opportunity Report</div>
+        <div style="display:flex;flex-direction:column;gap:.6rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem .75rem;background:rgba(251,146,60,.08);border-radius:.5rem;">
+            <span style="font-size:.85rem;">web development company chennai</span>
+            <span style="font-size:.75rem;font-weight:700;color:#4ade80;">Vol: 2.4k</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem .75rem;background:rgba(251,146,60,.06);border-radius:.5rem;">
+            <span style="font-size:.85rem;">digital marketing agency india</span>
+            <span style="font-size:.75rem;font-weight:700;color:#4ade80;">Vol: 5.1k</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem .75rem;background:rgba(251,146,60,.04);border-radius:.5rem;">
+            <span style="font-size:.85rem;">best ui ux design services</span>
+            <span style="font-size:.75rem;font-weight:700;color:#fbbf24;">Vol: 1.8k</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem .75rem;background:rgba(251,146,60,.04);border-radius:.5rem;">
+            <span style="font-size:.85rem;">affordable web design startups</span>
+            <span style="font-size:.75rem;font-weight:700;color:#fbbf24;">Vol: 900</span>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card" style="padding:1.5rem;">
+        <div style="font-size:.8rem;color:var(--muted-foreground);margin-bottom:.75rem;font-weight:600;">📊 Campaign Performance — Live</div>
+        <div class="triple-grid">
+          <div style="background:rgba(251,146,60,.08);border-radius:.6rem;padding:.75rem;">
+            <div style="font-size:1.4rem;font-weight:800;background:var(--gradient-dm);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">2.3%</div>
+            <div style="font-size:.7rem;color:var(--muted-foreground);">CTR</div>
+          </div>
+          <div style="background:rgba(251,146,60,.08);border-radius:.6rem;padding:.75rem;">
+            <div style="font-size:1.4rem;font-weight:800;background:var(--gradient-dm);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">₹18</div>
+            <div style="font-size:.7rem;color:var(--muted-foreground);">CPC</div>
+          </div>
+          <div style="background:rgba(251,146,60,.08);border-radius:.6rem;padding:.75rem;">
+            <div style="font-size:1.4rem;font-weight:800;background:var(--gradient-dm);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">4.8x</div>
+            <div style="font-size:.7rem;color:var(--muted-foreground);">ROAS</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TOOLS ═══════════ -->
+<section class="section" id="tools" style="background:rgba(9,15,35,.4);">
+  <div class="container">
+    <div class="section-header reveal" style="text-align:center;">
+      <div class="section-label" style="margin:0 auto 1rem;"><i class="fa-solid fa-screwdriver-wrench"></i> Tools We Use</div>
+      <h2 class="section-title">Industry-Leading <span class="gradient-text">Marketing Tools</span></h2>
+      <p class="section-subtitle" style="margin:0 auto;">We use best-in-class platforms so every campaign is tracked, optimised, and scalable from day one.</p>
+    </div>
+
+    <div class="tools-category-block reveal">
+      <div class="tool-category"><i class="fa-solid fa-magnifying-glass" style="margin-right:.4rem"></i>SEO & Research</div>
+      <div class="tools-grid">
+        <div class="tool-chip"><i class="fa-brands fa-google" style="color:#4285F4"></i><span>Google Search Console</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="11" fill="#FF6933" font-weight="800">Ah</text></svg><span>Ahrefs</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="10" fill="#FF5733" font-weight="800">SF</text></svg><span>SEMrush</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="10" fill="#6e40c9" font-weight="800">Mz</text></svg><span>Moz Pro</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="10" fill="#ff9900" font-weight="800">Sc</text></svg><span>Screaming Frog</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="11" fill="#00bfa5" font-weight="800">Ub</text></svg><span>Ubersuggest</span></div>
+      </div>
+    </div>
+
+    <div class="tools-category-block reveal" style="transition-delay:.1s">
+      <div class="tool-category"><i class="fa-solid fa-chart-line" style="margin-right:.4rem"></i>Analytics & Ads</div>
+      <div class="tools-grid">
+        <div class="tool-chip"><i class="fa-brands fa-google" style="color:#E37400"></i><span>Google Analytics 4</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="10" fill="#4285F4" font-weight="800">GTM</text></svg><span>Google Tag Manager</span></div>
+        <div class="tool-chip"><i class="fa-brands fa-meta" style="color:#0668E1"></i><span>Meta Ads Manager</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="10" fill="#70B244" font-weight="800">Ls</text></svg><span>Looker Studio</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="10" fill="#0d9488" font-weight="800">HJ</text></svg><span>Hotjar</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="11" fill="#f97316" font-weight="800">Mxp</text></svg><span>Mixpanel</span></div>
+      </div>
+    </div>
+
+    <div class="tools-category-block reveal" style="transition-delay:.2s">
+      <div class="tool-category"><i class="fa-solid fa-envelope" style="margin-right:.4rem"></i>Email & Automation</div>
+      <div class="tools-grid">
+        <div class="tool-chip"><i class="fa-brands fa-mailchimp" style="color:#FFE01B"></i><span>Mailchimp</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="10" fill="#FF7A59" font-weight="800">Hs</text></svg><span>HubSpot</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="10" fill="#7C3AED" font-weight="800">Kl</text></svg><span>Klaviyo</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="10" fill="#0284c7" font-weight="800">Ac</text></svg><span>ActiveCampaign</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="10" fill="#e11d48" font-weight="800">Zp</text></svg><span>Zapier</span></div>
+        <div class="tool-chip"><svg width="28" height="28" viewBox="0 0 28 28"><text y="22" font-size="10" fill="#7c3aed" font-weight="800">Mk</text></svg><span>Marketo</span></div>
+      </div>
+    </div>
+
+    <div class="tools-category-block reveal" style="transition-delay:.3s">
+      <div class="tool-category"><i class="fa-brands fa-instagram" style="margin-right:.4rem"></i>Social Media</div>
+      <div class="tools-grid">
+        <div class="tool-chip"><i class="fa-brands fa-meta" style="color:#0668E1"></i><span>Meta Business Suite</span></div>
+        <div class="tool-chip"><i class="fa-brands fa-linkedin" style="color:#0A66C2"></i><span>LinkedIn Ads</span></div>
+        <div class="tool-chip"><i class="fa-brands fa-instagram" style="color:#E4405F"></i><span>Instagram Ads</span></div>
+        <div class="tool-chip"><i class="fa-brands fa-google" style="color:#4285F4"></i><span>Google Ads</span></div>
+        <div class="tool-chip"><i class="fa-brands fa-twitter" style="color:#1DA1F2"></i><span>Twitter Ads</span></div>
+        <div class="tool-chip"><i class="fa-brands fa-youtube" style="color:#FF0000"></i><span>YouTube Ads</span></div>
+
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FAQ ═══════════ -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-header reveal" style="text-align:center;">
+      <div class="section-label" style="margin:0 auto 1rem;"><i class="fa-solid fa-circle-question"></i> FAQ</div>
+      <h2 class="section-title">Frequently Asked <span class="gradient-text">Questions</span></h2>
+      <p class="section-subtitle" style="margin:0 auto;">Answers to the questions we hear most before starting a digital marketing engagement.</p>
+    </div>
+    <div class="faq-list reveal">
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          How long does it take to see results from digital marketing?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          It depends on the channel. Paid ads (Google/Meta) can drive traffic and leads within days of going live. SEO is a long-term investment — you'll typically see meaningful results in 3–6 months, with compounding growth after that. Social media and email marketing usually show engagement improvements within 4–8 weeks.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          What is the minimum budget needed for digital marketing?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          Our monthly management packages start from ₹15,000. For paid ad campaigns, we recommend a minimum ad spend of ₹10,000–₹20,000/month to gather meaningful data and optimise effectively. SEO and content-only retainers start from ₹12,000/month. We tailor every package to your goals and budget.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Do you manage social media accounts or just run ads?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          Both! We offer full social media management — including content creation, scheduling, community management, and story/reel production — as well as standalone paid social advertising. You can choose either or a combined package depending on your needs.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          How do you measure and report on campaign performance?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          Every client gets a dedicated Looker Studio (Google Data Studio) dashboard with real-time metrics. We also send detailed monthly reports covering traffic, conversions, cost-per-lead, ROAS, keyword rankings, and more. We hold monthly strategy calls to walk through results and next steps.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Can you help a new business with no digital presence?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          Absolutely. We love working with startups and new businesses. We handle everything from scratch — setting up Google Business Profile, creating social accounts, building your first SEO foundation, and running targeted ads to generate your first leads quickly while organic channels build momentum.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          What makes Divine Devs different from other marketing agencies?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          We combine marketing expertise with our in-house web development and design capabilities — meaning landing pages, ad creatives, and website CRO are all handled under one roof without delays. We're also radically transparent: no lock-in contracts, no inflated vanity metrics, and no black-box reporting.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Do you work with businesses outside of Chennai?
+          <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="faq-answer">
+          Yes! While we're based in Chennai, Tamil Nadu, we work with clients across India and internationally. All our services are delivered remotely through scheduled calls, shared dashboards, and collaborative tools — location is never a barrier.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CTA ═══════════ -->
+<section class="cta-section">
+  <div style="position:relative;z-index:1;">
+    <h2>Ready to Dominate<br>Your Market Online?</h2>
+    <p>Let's build a strategy that turns clicks into customers and followers into revenue. Your growth story starts with a conversation.</p>
+    <a href="contact.html" class="btn-white">Get a Free Strategy Call <i class="fa-solid fa-arrow-right"></i></a>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" style="display:flex;align-items:center;gap:.5rem;text-decoration:none;margin-bottom:.5rem;">
+        <img src="logo/white logo.png" alt="Divine Devs" style="height:28px;object-fit:contain;" />
+        <span style="font-size:1.1rem;font-weight:700;background:linear-gradient(white);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Divine Devs</span>
+      </a>
+      <p>We are a creative startup delivering innovative digital and design solutions for modern businesses. We help transform ideas into powerful digital experiences.</p>
+      <div>
+        <div class="footer-contact-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+          <span>divinedevs06@gmail.com</span>
+        </div>
+        <div class="footer-contact-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <span>+91 9499943075</span>
+        </div>
+        <div class="footer-contact-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <span>Iyyappanthangal, Chennai, Tamil Nadu, India – 600056</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h3>Services</h3>
+      <ul>
+        <li><a href="1. Web Development.html">Web Development</a></li>
+        <li><a href="2. Digital Marketing.html">Digital Marketing</a></li>
+        <li><a href="3. projects.html">Projects</a></li>
+        <li><a href="4. CAD Design & 3D Modelling.html">CAD Design &amp; 3D Modelling</a></li>
+        <li><a href="5. Graphic Design.html">Graphic Design</a></li>
+        <li><a href="6. Data Analysts & Business Analysts.html">Data Analysts &amp; Business Analysts</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Company</h3>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Legal</h3>
+      <ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Divine Devs. All rights reserved.</p>
+    <div class="footer-legal"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a></div>
+  </div>
+</footer>
+
+<!-- ═══════════ FLOATING BTNS ═══════════ -->
+<div class="floating-btns">
+  <a href="https://wa.me/919499943075" target="_blank" class="float-btn" style="background:#25D366;color:white;"><i class="fa-brands fa-whatsapp"></i></a>
+  <a href="tel:+919499943075" class="float-btn" style="background:#2563eb;color:white;"><i class="fa-solid fa-phone"></i></a>
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="float-btn" style="background:#333;color:white;border:none;cursor:pointer;"><i class="fa-solid fa-arrow-up"></i></button>
+</div>
+
+<!-- ═══════════ SCRIPTS ═══════════ -->
+<script>
+  // Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const hamIcon = document.getElementById('ham-icon');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    hamIcon.className = mobileMenu.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+  });
+
+  // FAQ
+  function toggleFAQ(btn) {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Counters
+  function animateCounter(el, target) {
+    let v = 0;
+    const step = () => {
+      v += Math.ceil(target / 100);
+      if (v >= target) { el.textContent = target + (target === 48 ? '' : ''); return; }
+      el.textContent = v;
+      requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  const statObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('[data-target]').forEach(n => animateCounter(n, +n.dataset.target));
+        statObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stats-strip').forEach(s => statObs.observe(s));
+
+  // Typing effect
+  const words = ['SEO', 'Paid Ads', 'Social Media', 'Content', 'Email', 'Analytics'];
+  let wi = 0, ci = 0, deleting = false;
+  const typedEl = document.getElementById('typed-text');
+  function type() {
+    const word = words[wi];
+    if (!deleting) {
+      typedEl.textContent = word.slice(0, ++ci);
+      if (ci === word.length) { deleting = true; setTimeout(type, 1600); return; }
+    } else {
+      typedEl.textContent = word.slice(0, --ci);
+      if (ci === 0) { deleting = false; wi = (wi + 1) % words.length; }
+    }
+    setTimeout(type, deleting ? 55 : 85);
+  }
+  setTimeout(type, 800);
+
+  // Mouse trail
+  // Mouse trail — desktop/pointer only
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    document.addEventListener('mousemove', e => {
+      const s = document.createElement('div');
+      s.style.cssText = `position:fixed;width:4px;height:4px;background:white;border-radius:50%;pointer-events:none;left:${e.clientX}px;top:${e.clientY}px;z-index:9999;box-shadow:0 0 8px orange,0 0 18px red;transition:opacity .5s;`;
+      document.body.appendChild(s);
+      setTimeout(() => s.style.opacity = '0', 80);
+      setTimeout(() => s.remove(), 600);
+    });
+
+  }
+</script>
+</body>
+</html>

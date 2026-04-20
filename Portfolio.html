@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" style="color-scheme: dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Our Portfolio | Divine Devs</title>
+    <link rel="shortcut icon" href="logo/white logo.png" type="image/x-icon">
+
+    <link rel="stylesheet" crossorigin="" href="styles.css" />
+
+    <style type="text/css">
+      /* ── Sonner toast styles (unchanged) ── */
+      :where(html[dir="ltr"]),:where([data-sonner-toaster][dir="ltr"]){--toast-icon-margin-start:-3px;--toast-icon-margin-end:4px;--toast-svg-margin-start:-1px;--toast-svg-margin-end:0px;--toast-button-margin-start:auto;--toast-button-margin-end:0;--toast-close-button-start:0;--toast-close-button-end:unset;--toast-close-button-transform:translate(-35%,-35%)}
+      :where(html[dir="rtl"]),:where([data-sonner-toaster][dir="rtl"]){--toast-icon-margin-start:4px;--toast-icon-margin-end:-3px;--toast-svg-margin-start:0px;--toast-svg-margin-end:-1px;--toast-button-margin-start:0;--toast-button-margin-end:auto;--toast-close-button-start:unset;--toast-close-button-end:0;--toast-close-button-transform:translate(35%,-35%)}
+      :where([data-sonner-toaster]){position:fixed;width:var(--width);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;--gray1:hsl(0,0%,99%);--gray2:hsl(0,0%,97.3%);--gray3:hsl(0,0%,95.1%);--gray4:hsl(0,0%,93%);--gray5:hsl(0,0%,90.9%);--gray6:hsl(0,0%,88.7%);--gray7:hsl(0,0%,85.8%);--gray8:hsl(0,0%,78%);--gray9:hsl(0,0%,56.1%);--gray10:hsl(0,0%,52.3%);--gray11:hsl(0,0%,43.5%);--gray12:hsl(0,0%,9%);--border-radius:8px;box-sizing:border-box;padding:0;margin:0;list-style:none;outline:none;z-index:999999999;transition:transform .4s ease}
+
+      /* ── Filter bar ── */
+      .filter-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        white-space: nowrap;
+        font-weight: 500;
+        font-size: 0.8rem;
+        padding: 0.45rem 1.1rem;
+        border-radius: 9999px;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(255,255,255,0.04);
+        color: rgba(255,255,255,0.65);
+        cursor: pointer;
+        transition: all 0.25s ease;
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(6px);
+        letter-spacing: 0.01em;
+      }
+      .filter-btn::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg,rgba(139,92,246,0.15),rgba(59,130,246,0.15));
+        opacity: 0;
+        transition: opacity 0.25s ease;
+      }
+      .filter-btn:hover {
+        border-color: rgba(139,92,246,0.5);
+        color: rgba(255,255,255,0.95);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 16px rgba(139,92,246,0.2);
+      }
+      .filter-btn:hover::before { opacity: 1; }
+      .filter-btn.active {
+        background: linear-gradient(135deg,#7c3aed,#2563eb);
+        border-color: transparent;
+        color: #fff;
+        box-shadow: 0 4px 20px rgba(124,58,237,0.45);
+        font-weight: 600;
+      }
+      .filter-btn.active::before { opacity: 0; }
+      .filter-bar-wrap {
+        background: rgba(255,255,255,0.03);
+        border-bottom: 1px solid rgba(255,255,255,0.07);
+        backdrop-filter: blur(12px);
+      }
+      @media (max-width:640px) {
+        .filter-btn { font-size:0.72rem; padding:0.35rem 0.85rem; }
+      }
+
+      /* ── PROJECT GRID — centred flex ── */
+      #projectContainer {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 2rem !important;
+      }
+      /* Each tile (the <a>) is a flex child */
+      #projectContainer > a.project-tile {
+        width: calc(33.333% - 1.5rem) !important;
+        max-width: 384px !important;
+        min-width: 280px !important;
+        box-sizing: border-box !important;
+      }
+      #projectContainer > a.project-tile .project {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      @media (max-width:1024px) {
+        #projectContainer > a.project-tile {
+          width: calc(50% - 1rem) !important;
+        }
+      }
+      @media (max-width:640px) {
+        #projectContainer > a.project-tile {
+          width: 100% !important;
+          min-width: unset !important;
+        }
+      }
+
+      .project { transition: all 0.3s ease; }
+    </style>
+  </head>
+
+  <body>
+    <div id="root">
+      <script>
+        !(function(){var d=document.documentElement,c=d.classList;c.remove("light","dark");d.style.colorScheme="dark";c.add("dark")})();
+      </script>
+
+      <div role="region" aria-label="Notifications (F8)" tabindex="-1" style="pointer-events:none">
+        <ol tabindex="-1" class="fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]"></ol>
+      </div>
+      <section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section>
+
+      <div class="min-h-screen flex flex-col relative">
+
+        <!-- ══ HEADER ══ -->
+        <header class="sticky top-0 z-50 glass-elevated border-b border-border/20">
+          <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+              <a class="flex items-center space-x-2 group" href="/">
+                <div class="w-8 h-8 black rounded-lg flex items-center justify-center group-hover:animate-pulse-glow transition-all">
+                  <image src="logo/white logo.png" alt="Divine Devs Logo" class="w-10 h-15" />
+                </div>
+                <span class="text-xl font-heading font-bold ">Divine Devs</span>
+              </a>
+              <nav class="hidden md:flex items-center space-x-8">
+                <a class="text-foreground hover:text-primary transition-colors duration-200 font-medium relative group" href="index.html">Home<span class="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span></a>
+                <a class="text-foreground hover:text-primary transition-colors duration-200 font-medium relative group" href="about.html">About<span class="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span></a>
+                <a class="text-foreground hover:text-primary transition-colors duration-200 font-medium relative group" href="Portfolio.html">Portfolio<span class="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span></a>
+                <a class="text-foreground hover:text-primary transition-colors duration-200 font-medium relative group" href="service.html">Services<span class="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span></a>
+                <a class="text-foreground hover:text-primary transition-colors duration-200 font-medium relative group" href="contact.html">Contact<span class="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span></a>
+              </nav>
+              <div class="hidden md:flex items-center">
+                <a href="contact.html">
+                  <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 relative overflow-hidden text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 bg-gradient-hero hover:shadow-glow transition-all duration-300 group">
+                    Request Quote
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </button>
+                </a>
+              </div>
+              <!-- Mobile Button -->
+              <div class="md:hidden">
+                <button id="menu-btn" class="relative h-10 w-10 flex items-center justify-center rounded-xl transition-all duration-300 hover:bg-primary/10">
+                  <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                  <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Mobile Menu -->
+          <div id="mobile-menu" class="hidden md:hidden flex flex-col space-y-4 px-6 py-4 bg-background border-t">
+            <a class="text-foreground hover:text-primary transition-colors duration-200 font-medium" href="index.html">Home</a>
+            <a class="text-foreground hover:text-primary transition-colors duration-200 font-medium" href="about.html">About</a>
+            <a class="text-foreground hover:text-primary transition-colors duration-200 font-medium" href="Portfolio.html">Portfolio</a>
+            <a class="text-foreground hover:text-primary transition-colors duration-200 font-medium" href="service.html">Services</a>
+            <a class="text-foreground hover:text-primary transition-colors duration-200 font-medium" href="contact.html">Contact</a>
+            <a class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium relative overflow-hidden text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 bg-gradient-hero hover:shadow-glow transition-all duration-300 group" href="contact.html">
+              Request Quote
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </header>
+
+          <!-- Script -->
+            <script>
+            const btn = document.getElementById("menu-btn");
+            const menu = document.getElementById("mobile-menu");
+            const menuIcon = document.getElementById("menu-icon");
+            const closeIcon = document.getElementById("close-icon");
+
+            btn.addEventListener("click", () => {
+              menu.classList.toggle("hidden");
+
+              // Toggle icons properly
+              menuIcon.classList.toggle("hidden");
+              closeIcon.classList.toggle("hidden");
+            });
+            </script>
+
+            <br>
+            <section class="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-background via-surface/50 to-background">
+              <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <br><br>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-4 sm:mb-6">
+                  Our <span class="gradient-text">Portfolio</span>
+                </h1>
+                <p class="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 px-4">
+                  Selected projects showcasing product strategy, engineering craft, UX design and measurable results across 
+                  various industries.
+                </p>
+              </div>
+            </section>
+
+            <br><br>
+
+            <!-- Filter Buttons -->
+            <style>
+              .filter-btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                white-space: nowrap;
+                font-weight: 500;
+                font-size: 0.8rem;
+                padding: 0.45rem 1.1rem;
+                border-radius: 9999px;
+                border: 1px solid rgba(255,255,255,0.12);
+                background: rgba(255,255,255,0.04);
+                color: rgba(255,255,255,0.65);
+                cursor: pointer;
+                transition: all 0.25s ease;
+                position: relative;
+                overflow: hidden;
+                backdrop-filter: blur(6px);
+                letter-spacing: 0.01em;
+              }
+              .filter-btn::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(59,130,246,0.15));
+                opacity: 0;
+                transition: opacity 0.25s ease;
+              }
+              .filter-btn:hover {
+                border-color: rgba(139,92,246,0.5);
+                color: rgba(255,255,255,0.95);
+                transform: translateY(-1px);
+                box-shadow: 0 4px 16px rgba(139,92,246,0.2);
+              }
+              .filter-btn:hover::before {
+                opacity: 1;
+              }
+              .filter-btn.active {
+                background: linear-gradient(135deg, #7c3aed, #2563eb);
+                border-color: transparent;
+                color: #fff;
+                box-shadow: 0 4px 20px rgba(124,58,237,0.45);
+                font-weight: 600;
+              }
+              .filter-btn.active::before {
+                opacity: 0;
+              }
+              .filter-bar-wrap {
+                background: rgba(255,255,255,0.03);
+                border-bottom: 1px solid rgba(255,255,255,0.07);
+                backdrop-filter: blur(12px);
+              }
+              @media (max-width: 640px) {
+                .filter-btn {
+                  font-size: 0.72rem;
+                  padding: 0.35rem 0.85rem;
+                }
+              }
+            </style>
+
+
+            <!-- filters
+            <section class="filter-bar-wrap py-5 sm:py-6 sticky top-16 z-40">
+              <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-wrap gap-2 sm:gap-3 justify-center">
+                  <button class="filter-btn active" data-filter="all">✦ All</button>
+                  <button class="filter-btn" data-filter="1">Web Development</button>
+                  <button class="filter-btn" data-filter="2">Digital Marketing</button>
+                  <button class="filter-btn" data-filter="3">UI/UX Design</button>
+                  <button class="filter-btn" data-filter="4">CAD & 3D Modelling</button>
+                  <button class="filter-btn" data-filter="5">Graphic Design</button>
+                  <button class="filter-btn" data-filter="6">Data & Business Analysts</button>
+                </div>
+              </div>
+            </section> -->
+
+        <!-- ══ PROJECT GRID ══ -->
+        <section class="py-12 sm:py-16 md:py-20">
+          <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="projectContainer">
+
+              <!-- ── Netgene Technologies (category 1) ── -->
+              <a href="https://netgenetechnologies.com/" target="_blank" rel="noopener noreferrer" class="project-tile group block cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-xl animate-slide-up" aria-label="Open Demo 1" style="animation-delay:0s">
+                <div class="project rounded-lg border bg-card text-card-foreground shadow-sm glass-elevated hover:shadow-paint hover-tilt-3d transition-all duration-300 group-hover:scale-[1.02] overflow-hidden h-full" data-category="1">
+                  <div class="relative overflow-hidden">
+                    <img src="https://i.pinimg.com/736x/75/08/e3/7508e3990857d8ab2c6b83d89bf7eda1.jpg" alt="Demo 1 project showcase" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"/>
+                    <div class="absolute inset-0 bg-gradient-brush opacity-0 group-hover:opacity-20 transition-opacity duration-300 brush-mask"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent"></div>
+                    <div class="absolute top-4 left-4">
+                      <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-background/80 backdrop-blur-sm text-white">E-Commerce</div>
+                    </div>
+                    <div class="absolute top-4 right-4 glass-elevated rounded-full p-2 group-hover:animate-sparkle">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart h-6 w-6"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                    </div>
+                    <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <div class="flex flex-wrap gap-1">
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0s">HTML</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.1s">CSS</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.2s">JavaScript</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-6 relative">
+                    <h3 class="text-xl font-heading font-semibold mb-2 group-hover:gradient-text transition-all">Netgene Technologies</h3>
+                    <p class="text-muted-foreground mb-4 line-clamp-2">
+                      Modern IT solutions for digital transformation and business technology.
+                    </p>
+                    <div class="space-y-2 mb-4">
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Transforming ideas into scalable tech solutions.</div>
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Driving growth through smart digital strategies.</div>
+                    </div>
+                    <div class="flex items-center text-primary group-hover:translate-x-1 transition-transform">
+                      <span class="text-sm font-medium">Open Project</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-1 h-4 w-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-12 h-12 bg-gradient-brush opacity-0 group-hover:opacity-30 transition-opacity duration-300 rounded-tl-full"></div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- ── Twsit Institute (category 1) ── -->
+              <a href="https://www.twstinstitute.com/" target="_blank" rel="noopener noreferrer" class="project-tile group block cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-xl animate-slide-up" aria-label="Open Demo 2" style="animation-delay:0.05s">
+                <div class="project rounded-lg border bg-card text-card-foreground shadow-sm glass-elevated hover:shadow-paint hover-tilt-3d transition-all duration-300 group-hover:scale-[1.02] overflow-hidden h-full" data-category="1">
+                  <div class="relative overflow-hidden">
+                    <img src="https://i.pinimg.com/736x/f7/26/33/f7263305cf918933a0fce7c5abe5c392.jpg" alt="Demo 2 project showcase" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"/>
+                    <div class="absolute inset-0 bg-gradient-brush opacity-0 group-hover:opacity-20 transition-opacity duration-300 brush-mask"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent"></div>
+                    <div class="absolute top-4 left-4">
+                      <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-background/80 backdrop-blur-sm text-white">Education</div>
+                    </div>
+                    <div class="absolute top-4 right-4 glass-elevated rounded-full p-2 group-hover:animate-sparkle">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users h-6 w-6"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <div class="flex flex-wrap gap-1">
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0s">HTML</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.1s">CSS</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-6 relative">
+                    <h3 class="text-xl font-heading font-semibold mb-2 group-hover:gradient-text transition-all">TWST Institute</h3>
+                    <p class="text-muted-foreground mb-4 line-clamp-2">
+                      A professional training institute offering skill-based courses and career development programs.
+                    </p>
+                    <div class="space-y-2 mb-4">
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Skill-based training.</div>
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Career development programs.</div>
+                    </div>
+                    <div class="flex items-center text-primary group-hover:translate-x-1 transition-transform">
+                      <span class="text-sm font-medium">Open Project</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-1 h-4 w-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-12 h-12 bg-gradient-brush opacity-0 group-hover:opacity-30 transition-opacity duration-300 rounded-tl-full"></div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- ── Icmset (category 1) ── -->
+              <a href="https://www.icmset.co.in/" target="_blank" rel="noopener noreferrer" class="project-tile group block cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-xl animate-slide-up" aria-label="Open Demo 2" style="animation-delay:0.05s">
+                <div class="project rounded-lg border bg-card text-card-foreground shadow-sm glass-elevated hover:shadow-paint hover-tilt-3d transition-all duration-300 group-hover:scale-[1.02] overflow-hidden h-full" data-category="1">
+                  <div class="relative overflow-hidden">
+                    <img src="https://i.pinimg.com/736x/a9/2a/af/a92aaf7afdcc998ac1f4170d0ce4f3bf.jpg" alt="Demo 2 project showcase" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"/>
+                    <div class="absolute inset-0 bg-gradient-brush opacity-0 group-hover:opacity-20 transition-opacity duration-300 brush-mask"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent"></div>
+                    <div class="absolute top-4 left-4">
+                      <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-background/80 backdrop-blur-sm text-white">Education</div>
+                    </div>
+                    <div class="absolute top-4 right-4 glass-elevated rounded-full p-2 group-hover:animate-sparkle">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users h-6 w-6"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <div class="flex flex-wrap gap-1">
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0s">HTML</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.1s">CSS</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.2s">JavaScript</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-6 relative">
+                    <h3 class="text-xl font-heading font-semibold mb-2 group-hover:gradient-text transition-all">ICMSET</h3>
+                    <p class="text-muted-foreground mb-4 line-clamp-2">
+                      Technical training, skill development, and certification for students and professionals.
+                    </p>
+                    <div class="space-y-2 mb-4">
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Industry-relevant training programs.</div>
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Certification and career support.</div>
+                    </div>
+                    <div class="flex items-center text-primary group-hover:translate-x-1 transition-transform">
+                      <span class="text-sm font-medium">Open Project</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-1 h-4 w-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-12 h-12 bg-gradient-brush opacity-0 group-hover:opacity-30 transition-opacity duration-300 rounded-tl-full"></div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- ── Shoppind - Demo (category 1) ── -->
+              <a href="https://shopping-demo001.netlify.app/" target="_blank" rel="noopener noreferrer" class="project-tile group block cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-xl animate-slide-up" aria-label="Open Demo 2" style="animation-delay:0.05s">
+                <div class="project rounded-lg border bg-card text-card-foreground shadow-sm glass-elevated hover:shadow-paint hover-tilt-3d transition-all duration-300 group-hover:scale-[1.02] overflow-hidden h-full" data-category="1">
+                  <div class="relative overflow-hidden">
+                    <img src="https://i.pinimg.com/1200x/c9/91/fa/c991fad20ac4e2485a6945c9b78d55d9.jpg" alt="Demo 2 project showcase" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"/>
+                    <div class="absolute inset-0 bg-gradient-brush opacity-0 group-hover:opacity-20 transition-opacity duration-300 brush-mask"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent"></div>
+                    <div class="absolute top-4 left-4">
+                      <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-background/80 backdrop-blur-sm text-white">E-Commerce</div>
+                    </div>
+                    <div class="absolute top-4 right-4 glass-elevated rounded-full p-2 group-hover:animate-sparkle">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart h-6 w-6"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                    </div>
+                    <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <div class="flex flex-wrap gap-1">
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0s">Supabase</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.1s">Razorpay</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.2s">JavaScript</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-6 relative">
+                    <h3 class="text-xl font-heading font-semibold mb-2 group-hover:gradient-text transition-all">Shopping</h3>
+                      <p class="text-muted-foreground mb-4 line-clamp-2">Modern shopping website with seamless browsing, secure checkout, and a user-friendly experience.</p>
+                      <div class="space-y-2 mb-4">
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Feature one</div>
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Feature two</div>
+                    </div>
+                    <div class="flex items-center text-primary group-hover:translate-x-1 transition-transform">
+                      <span class="text-sm font-medium">Open Project</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-1 h-4 w-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-12 h-12 bg-gradient-brush opacity-0 group-hover:opacity-30 transition-opacity duration-300 rounded-tl-full"></div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- ── Real Estate - Demo (category 1) ── -->
+              <a href="https://real-estate-demo002.netlify.app/" target="_blank" rel="noopener noreferrer" class="project-tile group block cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-xl animate-slide-up" aria-label="Open Demo 2" style="animation-delay:0.05s">
+                <div class="project rounded-lg border bg-card text-card-foreground shadow-sm glass-elevated hover:shadow-paint hover-tilt-3d transition-all duration-300 group-hover:scale-[1.02] overflow-hidden h-full" data-category="1">
+                  <div class="relative overflow-hidden">
+                    <img src="https://i.pinimg.com/1200x/92/0c/c1/920cc12ffa388adec807233b14b4e315.jpg" alt="Demo 2 project showcase" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"/>
+                    <div class="absolute inset-0 bg-gradient-brush opacity-0 group-hover:opacity-20 transition-opacity duration-300 brush-mask"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent"></div>
+                    <div class="absolute top-4 left-4">
+                      <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-background/80 backdrop-blur-sm text-white">Static </div>
+                    </div>
+                    <div class="absolute top-4 right-4 glass-elevated rounded-full p-2 group-hover:animate-sparkle">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users h-6 w-6"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <div class="flex flex-wrap gap-1">
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0s">HTML</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.1s">CSS</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.2s">JavaScript</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-6 relative">
+                    <h3 class="text-xl font-heading font-semibold mb-2 group-hover:gradient-text transition-all">Real Estate</h3>
+                    <p class="text-muted-foreground mb-4 line-clamp-2">A sleek platform to explore and discover property listings.</p>
+                    <div class="space-y-2 mb-4">
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Real estate platform</div>
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Property discovery</div>
+                    </div>
+                    <div class="flex items-center text-primary group-hover:translate-x-1 transition-transform">
+                      <span class="text-sm font-medium">Open Project</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-1 h-4 w-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-12 h-12 bg-gradient-brush opacity-0 group-hover:opacity-30 transition-opacity duration-300 rounded-tl-full"></div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- ── School - Demo (category 1) ── -->
+              <a href="https://school-demo003.netlify.app/" target="_blank" rel="noopener noreferrer" class="project-tile group block cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-xl animate-slide-up" aria-label="Open Demo 2" style="animation-delay:0.05s">
+                <div class="project rounded-lg border bg-card text-card-foreground shadow-sm glass-elevated hover:shadow-paint hover-tilt-3d transition-all duration-300 group-hover:scale-[1.02] overflow-hidden h-full" data-category="1">
+                  <div class="relative overflow-hidden">
+                    <img src="https://i.pinimg.com/736x/5e/38/cc/5e38cc33027b8ca8e2e4248545dedbc4.jpg" alt="Demo 2 project showcase" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"/>
+                    <div class="absolute inset-0 bg-gradient-brush opacity-0 group-hover:opacity-20 transition-opacity duration-300 brush-mask"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent"></div>
+                    <div class="absolute top-4 left-4">
+                      <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-background/80 backdrop-blur-sm text-white">Static</div>
+                    </div>
+                    <div class="absolute top-4 right-4 glass-elevated rounded-full p-2 group-hover:animate-sparkle">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users h-6 w-6"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <div class="flex flex-wrap gap-1">
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0s">HTML</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.1s">CSS</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.2s">JavaScript</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-6 relative">
+                    <h3 class="text-xl font-heading font-semibold mb-2 group-hover:gradient-text transition-all">School</h3>
+                    <p class="text-muted-foreground mb-4 line-clamp-2">A modern school website showcasing academics and student life.</p>
+                    <div class="space-y-2 mb-4">
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Education platform</div>
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Academics</div>
+                    </div>
+                    <div class="flex items-center text-primary group-hover:translate-x-1 transition-transform">
+                      <span class="text-sm font-medium">Open Project</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-1 h-4 w-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-12 h-12 bg-gradient-brush opacity-0 group-hover:opacity-30 transition-opacity duration-300 rounded-tl-full"></div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- ── Restaurant - Demo (category 1) ── -->
+              <a href="https://restaurant-demo004.netlify.app/" target="_blank" rel="noopener noreferrer" class="project-tile group block cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-xl animate-slide-up" aria-label="Open Demo 2" style="animation-delay:0.05s">
+                <div class="project rounded-lg border bg-card text-card-foreground shadow-sm glass-elevated hover:shadow-paint hover-tilt-3d transition-all duration-300 group-hover:scale-[1.02] overflow-hidden h-full" data-category="1">
+                  <div class="relative overflow-hidden">
+                    <img src="https://i.pinimg.com/736x/90/58/d7/9058d7c57a5d1008a46add450458d96e.jpg" alt="Demo 2 project showcase" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"/>
+                    <div class="absolute inset-0 bg-gradient-brush opacity-0 group-hover:opacity-20 transition-opacity duration-300 brush-mask"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent"></div>
+                    <div class="absolute top-4 left-4">
+                      <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-background/80 backdrop-blur-sm text-white">Static</div>
+                    </div>
+                    <div class="absolute top-4 right-4 glass-elevated rounded-full p-2 group-hover:animate-sparkle">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users h-6 w-6"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <div class="flex flex-wrap gap-1">
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0s">HTML</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.1s">CSS</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.2s">JavaScript</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-6 relative">
+                    <h3 class="text-xl font-heading font-semibold mb-2 group-hover:gradient-text transition-all">Restaurant</h3>
+                    <p class="text-muted-foreground mb-4 line-clamp-2">A stylish restaurant website showcasing menu, ambiance, and dining experience.</p>
+                    <div class="space-y-2 mb-4">
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Menu showcase</div>
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Dining experience</div>
+                    </div>
+                    <div class="flex items-center text-primary group-hover:translate-x-1 transition-transform">
+                      <span class="text-sm font-medium">Open Project</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-1 h-4 w-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-12 h-12 bg-gradient-brush opacity-0 group-hover:opacity-30 transition-opacity duration-300 rounded-tl-full"></div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- ── Tile 2 (category 1) ── 
+              <a href="#" target="_blank" rel="noopener noreferrer" class="project-tile group block cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-xl animate-slide-up" aria-label="Open Demo 2" style="animation-delay:0.05s">
+                <div class="project rounded-lg border bg-card text-card-foreground shadow-sm glass-elevated hover:shadow-paint hover-tilt-3d transition-all duration-300 group-hover:scale-[1.02] overflow-hidden h-full" data-category="1">
+                  <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=600&h=400&fit=crop" alt="Demo 2 project showcase" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"/>
+                    <div class="absolute inset-0 bg-gradient-brush opacity-0 group-hover:opacity-20 transition-opacity duration-300 brush-mask"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent"></div>
+                    <div class="absolute top-4 left-4">
+                      <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-background/80 backdrop-blur-sm text-white">Web Dev</div>
+                    </div>
+                    <div class="absolute top-4 right-4 glass-elevated rounded-full p-2 group-hover:animate-sparkle">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users h-6 w-6"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <div class="flex flex-wrap gap-1">
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0s">HTML</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.1s">CSS</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.2s">JavaScript</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-6 relative">
+                    <h3 class="text-xl font-heading font-semibold mb-2 group-hover:gradient-text transition-all">Demo 2</h3>
+                    <p class="text-muted-foreground mb-4 line-clamp-2">Demo project description goes here.</p>
+                    <div class="space-y-2 mb-4">
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Feature one</div>
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Feature two</div>
+                    </div>
+                    <div class="flex items-center text-primary group-hover:translate-x-1 transition-transform">
+                      <span class="text-sm font-medium">Open Project</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-1 h-4 w-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-12 h-12 bg-gradient-brush opacity-0 group-hover:opacity-30 transition-opacity duration-300 rounded-tl-full"></div>
+                  </div>
+                </div>
+              </a>
+
+
+              <!-- ── Tile 2 (category 1) ── 
+              <a href="#" target="_blank" rel="noopener noreferrer" class="project-tile group block cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-xl animate-slide-up" aria-label="Open Demo 2" style="animation-delay:0.05s">
+                <div class="project rounded-lg border bg-card text-card-foreground shadow-sm glass-elevated hover:shadow-paint hover-tilt-3d transition-all duration-300 group-hover:scale-[1.02] overflow-hidden h-full" data-category="1">
+                  <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=600&h=400&fit=crop" alt="Demo 2 project showcase" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"/>
+                    <div class="absolute inset-0 bg-gradient-brush opacity-0 group-hover:opacity-20 transition-opacity duration-300 brush-mask"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent"></div>
+                    <div class="absolute top-4 left-4">
+                      <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-background/80 backdrop-blur-sm text-white">Web Dev</div>
+                    </div>
+                    <div class="absolute top-4 right-4 glass-elevated rounded-full p-2 group-hover:animate-sparkle">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users h-6 w-6"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <div class="flex flex-wrap gap-1">
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0s">HTML</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.1s">CSS</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.2s">JavaScript</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-6 relative">
+                    <h3 class="text-xl font-heading font-semibold mb-2 group-hover:gradient-text transition-all">Demo 2</h3>
+                    <p class="text-muted-foreground mb-4 line-clamp-2">Demo project description goes here.</p>
+                    <div class="space-y-2 mb-4">
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Feature one</div>
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Feature two</div>
+                    </div>
+                    <div class="flex items-center text-primary group-hover:translate-x-1 transition-transform">
+                      <span class="text-sm font-medium">Open Project</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-1 h-4 w-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-12 h-12 bg-gradient-brush opacity-0 group-hover:opacity-30 transition-opacity duration-300 rounded-tl-full"></div>
+                  </div>
+                </div>
+              </a>
+
+              
+
+              <!-- ── Tile 3 (category 2) ── 
+              <a href="#" target="_blank" rel="noopener noreferrer" class="project-tile group block cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-xl animate-slide-up" aria-label="Open Demo 3" style="animation-delay:0.1s">
+                <div class="project rounded-lg border bg-card text-card-foreground shadow-sm glass-elevated hover:shadow-paint hover-tilt-3d transition-all duration-300 group-hover:scale-[1.02] overflow-hidden h-full" data-category="2">
+                  <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&h=400&fit=crop" alt="Demo 3 project showcase" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"/>
+                    <div class="absolute inset-0 bg-gradient-brush opacity-0 group-hover:opacity-20 transition-opacity duration-300 brush-mask"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent"></div>
+                    <div class="absolute top-4 left-4">
+                      <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-background/80 backdrop-blur-sm text-white">Digital Marketing</div>
+                    </div>
+                    <div class="absolute top-4 right-4 glass-elevated rounded-full p-2 group-hover:animate-sparkle">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone h-6 w-6"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+                    </div>
+                    <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <div class="flex flex-wrap gap-1">
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0s">SEO</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.1s">Ads</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.2s">Analytics</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-6 relative">
+                    <h3 class="text-xl font-heading font-semibold mb-2 group-hover:gradient-text transition-all">Demo 3</h3>
+                    <p class="text-muted-foreground mb-4 line-clamp-2">Digital marketing campaign demo project.</p>
+                    <div class="space-y-2 mb-4">
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Campaign management</div>
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Performance tracking</div>
+                    </div>
+                    <div class="flex items-center text-primary group-hover:translate-x-1 transition-transform">
+                      <span class="text-sm font-medium">Open Project</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-1 h-4 w-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-12 h-12 bg-gradient-brush opacity-0 group-hover:opacity-30 transition-opacity duration-300 rounded-tl-full"></div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- ── Tile 4 (category 3) ── 
+              <a href="#" target="_blank" rel="noopener noreferrer" class="project-tile group block cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-xl animate-slide-up" aria-label="Open Demo 4" style="animation-delay:0.15s">
+                <div class="project rounded-lg border bg-card text-card-foreground shadow-sm glass-elevated hover:shadow-paint hover-tilt-3d transition-all duration-300 group-hover:scale-[1.02] overflow-hidden h-full" data-category="3">
+                  <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&h=400&fit=crop" alt="Demo 4 project showcase" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"/>
+                    <div class="absolute inset-0 bg-gradient-brush opacity-0 group-hover:opacity-20 transition-opacity duration-300 brush-mask"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent"></div>
+                    <div class="absolute top-4 left-4">
+                      <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-background/80 backdrop-blur-sm text-white">UI/UX Design</div>
+                    </div>
+                    <div class="absolute top-4 right-4 glass-elevated rounded-full p-2 group-hover:animate-sparkle">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone h-6 w-6"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+                    </div>
+                    <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <div class="flex flex-wrap gap-1">
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0s">Figma</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.1s">Prototyping</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.2s">Research</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-6 relative">
+                    <h3 class="text-xl font-heading font-semibold mb-2 group-hover:gradient-text transition-all">Demo 4</h3>
+                    <p class="text-muted-foreground mb-4 line-clamp-2">UI/UX design project showcase.</p>
+                    <div class="space-y-2 mb-4">
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Service booking</div>
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Schedule management</div>
+                    </div>
+                    <div class="flex items-center text-primary group-hover:translate-x-1 transition-transform">
+                      <span class="text-sm font-medium">Open Project</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-1 h-4 w-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-12 h-12 bg-gradient-brush opacity-0 group-hover:opacity-30 transition-opacity duration-300 rounded-tl-full"></div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- ── Tile 5 (category 4) ──
+              <a href="#" target="_blank" rel="noopener noreferrer" class="project-tile group block cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-xl animate-slide-up" aria-label="Open Demo 5" style="animation-delay:0.2s">
+                <div class="project rounded-lg border bg-card text-card-foreground shadow-sm glass-elevated hover:shadow-paint hover-tilt-3d transition-all duration-300 group-hover:scale-[1.02] overflow-hidden h-full" data-category="4">
+                  <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&h=400&fit=crop" alt="Demo 5 project showcase" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"/>
+                    <div class="absolute inset-0 bg-gradient-brush opacity-0 group-hover:opacity-20 transition-opacity duration-300 brush-mask"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent"></div>
+                    <div class="absolute top-4 left-4">
+                      <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-background/80 backdrop-blur-sm text-white">CAD & 3D</div>
+                    </div>
+                    <div class="absolute top-4 right-4 glass-elevated rounded-full p-2 group-hover:animate-sparkle">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart h-6 w-6"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                    </div>
+                    <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <div class="flex flex-wrap gap-1">
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0s">AutoCAD</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.1s">Blender</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.2s">3D Print</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-6 relative">
+                    <h3 class="text-xl font-heading font-semibold mb-2 group-hover:gradient-text transition-all">Demo 5</h3>
+                    <p class="text-muted-foreground mb-4 line-clamp-2">CAD & 3D modelling project showcase.</p>
+                    <div class="space-y-2 mb-4">
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Real-time tracking</div>
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Multiple vendors</div>
+                    </div>
+                    <div class="flex items-center text-primary group-hover:translate-x-1 transition-transform">
+                      <span class="text-sm font-medium">Open Project</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-1 h-4 w-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-12 h-12 bg-gradient-brush opacity-0 group-hover:opacity-30 transition-opacity duration-300 rounded-tl-full"></div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- ── Tile 6 (category 5) ── 
+              <a href="#" target="_blank" rel="noopener noreferrer" class="project-tile group block cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-xl animate-slide-up" aria-label="Open Demo 6" style="animation-delay:0.25s">
+                <div class="project rounded-lg border bg-card text-card-foreground shadow-sm glass-elevated hover:shadow-paint hover-tilt-3d transition-all duration-300 group-hover:scale-[1.02] overflow-hidden h-full" data-category="5">
+                  <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop" alt="Demo 6 project showcase" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"/>
+                    <div class="absolute inset-0 bg-gradient-brush opacity-0 group-hover:opacity-20 transition-opacity duration-300 brush-mask"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent"></div>
+                    <div class="absolute top-4 left-4">
+                      <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-background/80 backdrop-blur-sm text-white">Graphic Design</div>
+                    </div>
+                    <div class="absolute top-4 right-4 glass-elevated rounded-full p-2 group-hover:animate-sparkle">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users h-6 w-6"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <div class="flex flex-wrap gap-1">
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0s">Illustrator</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.1s">Photoshop</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.2s">Branding</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-6 relative">
+                    <h3 class="text-xl font-heading font-semibold mb-2 group-hover:gradient-text transition-all">Demo 6</h3>
+                    <p class="text-muted-foreground mb-4 line-clamp-2">Graphic design project showcase.</p>
+                    <div class="space-y-2 mb-4">
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Social networking</div>
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Content sharing</div>
+                    </div>
+                    <div class="flex items-center text-primary group-hover:translate-x-1 transition-transform">
+                      <span class="text-sm font-medium">Open Project</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-1 h-4 w-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-12 h-12 bg-gradient-brush opacity-0 group-hover:opacity-30 transition-opacity duration-300 rounded-tl-full"></div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- ── Tile 7 (category 6) ── 
+              <a href="#" target="_blank" rel="noopener noreferrer" class="project-tile group block cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-xl animate-slide-up" aria-label="Open Demo 7" style="animation-delay:0.3s">
+                <div class="project rounded-lg border bg-card text-card-foreground shadow-sm glass-elevated hover:shadow-paint hover-tilt-3d transition-all duration-300 group-hover:scale-[1.02] overflow-hidden h-full" data-category="6">
+                  <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&h=400&fit=crop" alt="Demo 7 project showcase" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"/>
+                    <div class="absolute inset-0 bg-gradient-brush opacity-0 group-hover:opacity-20 transition-opacity duration-300 brush-mask"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent"></div>
+                    <div class="absolute top-4 left-4">
+                      <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-background/80 backdrop-blur-sm text-white">Data Analysts</div>
+                    </div>
+                    <div class="absolute top-4 right-4 glass-elevated rounded-full p-2 group-hover:animate-sparkle">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart h-6 w-6"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                    </div>
+                    <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <div class="flex flex-wrap gap-1">
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0s">Python</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.1s">Power BI</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold text-foreground text-xs bg-background/90 backdrop-blur-sm animate-slide-up" style="animation-delay:0.2s">SQL</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-6 relative">
+                    <h3 class="text-xl font-heading font-semibold mb-2 group-hover:gradient-text transition-all">Demo 7</h3>
+                    <p class="text-muted-foreground mb-4 line-clamp-2">Data & business analytics project showcase.</p>
+                    <div class="space-y-2 mb-4">
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Data visualisation</div>
+                      <div class="flex items-center text-sm text-muted-foreground"><div class="w-1.5 h-1.5 bg-primary rounded-full mr-2 group-hover:bg-paint-warm transition-colors"></div>Business insights</div>
+                    </div>
+                    <div class="flex items-center text-primary group-hover:translate-x-1 transition-transform">
+                      <span class="text-sm font-medium">Open Project</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-1 h-4 w-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-12 h-12 bg-gradient-brush opacity-0 group-hover:opacity-30 transition-opacity duration-300 rounded-tl-full"></div>
+                  </div>
+                </div>
+              </a>
+
+            -->
+
+            </div><!-- /#projectContainer -->
+          </div>
+        </section>
+
+        <!-- ══ CTA ══ -->
+        <section class="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-primary/5 to-secondary/5">
+          <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="max-w-4xl mx-auto">
+              <h2 class="text-3xl sm:text-4xl md:text-5xl font-heading font-bold mb-4 sm:mb-6">
+                Ready to Create Your <span class="gradient-text">Success Story?</span>
+              </h2>
+              <p class="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
+                Let's discuss how we can help you build exceptional digital products that drive growth and delight your users.
+              </p>
+              <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                <a class="w-full sm:w-auto" href="contact.html">
+                  <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-gradient-primary text-background font-semibold hover:shadow-neon hover:scale-105 relative overflow-hidden neon-glow h-11 rounded-md w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 group" aria-label="Discuss your project with our team">
+                    Discuss Your Project
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </button>
+                </a>
+                <a class="w-full sm:w-auto" href="contact.html">
+                  <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 overflow-hidden border-2 border-neon-magenta bg-transparent text-neon-magenta hover:bg-neon-magenta hover:text-background hover:shadow-neon transition-all duration-300 h-11 rounded-md w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4" aria-label="Schedule a consultation call">
+                    Schedule a Call
+                  </button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div><!-- /.min-h-screen -->
+
+      <!-- ══ FOOTER ══ -->
+        <footer class="bg-surface border-t border-border/20">
+          <div
+            class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16"
+          >
+            <div
+              class="glass-elevated rounded-xl sm:rounded-2xl p-6 sm:p-8 mb-10 sm:mb-12 md:mb-16 text-center"
+            >
+              <h2
+                class="text-2xl sm:text-3xl font-heading font-bold mb-3 sm:mb-4"
+              >
+                Got a product idea?
+                <span class="gradient-text">Let's build it.</span>
+              </h2>
+              <p
+                class="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 max-w-2xl mx-auto px-4"
+              >
+                Transform your vision into reality with our expert development
+                team. From MVP to enterprise-scale solutions.
+              </p>
+              <a href="contact.html"
+                ><button
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 relative overflow-hidden text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8 w-full sm:w-auto bg-gradient-hero hover:shadow-glow transition-all duration-300 group"
+                >
+                  Request a Quote<svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-arrow-right ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform"
+                  >
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg></button
+              ></a>
+            </div>
+            <div
+              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-8 sm:mb-12"
+            >
+              <div class="lg:col-span-1">
+                <a class="flex items-center space-x-2 mb-6" href="/"
+                  ><div
+                    class="w-8 h-8 black rounded-lg flex items-center justify-center"
+                  >
+                    <image src="logo/white logo.png" alt="Divine Devs Logo" class="w-10 h-15" />
+                  </div>
+                  <span class="text-xl font-heading font-bold">Divine Devs</span>
+                </a>
+                <p class="text-muted-foreground mb-6">
+                  We are a creative startup delivering innovative digital and design solutions for modern businesses.
+                  We help transform ideas into powerful digital experiences that drive growth and 
+                  creativity.
+                </p>
+                <div class="space-y-3">
+                  <div class="flex items-center space-x-3 text-sm">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-mail h-4 w-4 text-primary"
+                    >
+                      <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                      <path
+                        d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"
+                      ></path></svg><span>divinedevs06@gmail.com</span>
+                  </div>
+                  <div class="flex items-center space-x-3 text-sm">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-phone h-4 w-4 text-primary"
+                    >
+                      <path
+                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                      ></path></svg><span>+91 9499943075</span>
+                  </div>
+                  <div class="flex items-center space-x-3 text-sm">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-map-pin h-4 w-4 text-primary">
+                      <path
+                        d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
+                      ></path>
+                      <circle cx="12" cy="10" r="3"></circle></svg><span>
+                      Iyyappanthangal, Chennai, Tamil Nadu, India - 600056  
+                      </span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h3 class="font-heading font-semibold mb-4">Services</h3>
+                <ul class="space-y-3">
+                  <li>
+                    <a
+                      class="text-muted-foreground hover:text-primary transition-colors duration-200"
+                      href="1. Web Development.html"
+                      >Web Development</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="text-muted-foreground hover:text-primary transition-colors duration-200"
+                      href="2. Digital Marketing.html"
+                      >Digital Marketing</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="text-muted-foreground hover:text-primary transition-colors duration-200"
+                      href="3. Projects.html"
+                      >Projects</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="text-muted-foreground hover:text-primary transition-colors duration-200"
+                      href="4. CAD Design & 3D Modelling.html"
+                      >CAD Design & 3D Modelling</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="text-muted-foreground hover:text-primary transition-colors duration-200"
+                      href="5. Graphic Design.html"
+                      >Graphic Design</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="text-muted-foreground hover:text-primary transition-colors duration-200"
+                      href="6. Data Analysts & Business Analysts.html"
+                      >Data Analysts & Business Analysts</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h3 class="font-heading font-semibold mb-4">Company</h3>
+                <ul class="space-y-3">
+                  <li>
+                    <a
+                      class="text-muted-foreground hover:text-primary transition-colors duration-200"
+                      href="about.html"
+                      >About Us</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="text-muted-foreground hover:text-primary transition-colors duration-200"
+                      href="careers.html"
+                      >Careers</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="text-muted-foreground hover:text-primary transition-colors duration-200"
+                      href="contact.html"
+                      >Contact</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h3 class="font-heading font-semibold mb-4">Legal</h3>
+                <ul class="space-y-3">
+                  <li>
+                    <a
+                      class="text-muted-foreground hover:text-primary transition-colors duration-200"
+                      href="privacy.html"
+                      >Privacy Policy</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="text-muted-foreground hover:text-primary transition-colors duration-200"
+                      href="terms.html"
+                      >Terms of Service</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div
+              class="border-t border-border/20 pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center gap-4"
+            >
+              <p
+                class="text-muted-foreground text-xs sm:text-sm text-center md:text-left"
+              >
+                © 2026 Divine Devs. All rights reserved.
+              </p>
+              <div class="flex space-x-4 sm:space-x-6">
+                <a
+                  class="text-muted-foreground hover:text-primary text-sm transition-colors"
+                  href="privacy.html"
+                  >Privacy Policy</a
+                ><a
+                  class="text-muted-foreground hover:text-primary text-sm transition-colors"
+                  href="terms.html"
+                  >Terms</a
+                >
+              </div>
+            </div>
+          </div>
+        </footer>
+
+          <!-- Floating Contact Buttons -->
+        <div style="position:fixed; bottom:20px; right:20px; display:flex; flex-direction:column; gap:10px; z-index:999;">
+
+          <!-- WhatsApp -->
+          <a href="https://wa.me/919499943075" target="_blank"
+            style="width:50px;height:50px;background:#25D366;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;">
+            <i class="fa-brands fa-whatsapp"></i>
+          </a>
+
+          <!-- Phone -->
+          <a href="tel:+919499943075"
+            style="width:50px;height:50px;background:#2563eb;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;">
+            <i class="fa-solid fa-phone"></i>
+          </a>
+
+          <!-- Scroll Top -->
+          <button onclick="scrollToTop()"
+            style="width:50px;height:50px;background:#333;color:white;border:none;border-radius:50%;cursor:pointer;">
+            <i class="fa-solid fa-arrow-up"></i>
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+        <script>
+        function scrollToTop(){
+        window.scrollTo({
+        top:0,
+        behavior:"smooth"
+        });
+        }
+        </script>
+
+    <!-- Starry Mouse Trail Effect -->
+    <script>
+      document.addEventListener("mousemove", e => {
+
+      let star = document.createElement("div");
+
+      star.style.position="fixed";
+      star.style.width="4px";
+      star.style.height="4px";
+      star.style.background="white";
+      star.style.borderRadius="50%";
+      star.style.pointerEvents="none";
+      star.style.boxShadow="0 0 10px cyan,0 0 20px purple";
+
+      star.style.left=e.clientX+"px";
+      star.style.top=e.clientY+"px";
+
+      document.body.appendChild(star);
+
+      setTimeout(()=>{
+      star.style.opacity="0";
+      star.style.transform="scale(2)";
+      star.style.transition="0.6s";
+      },10);
+
+      setTimeout(()=>{
+      star.remove();
+      },600);
+
+      });
+    </script>
+
+            <!-- Project Filtering Script -->
+        <script>
+        const buttons = document.querySelectorAll("[data-filter]");
+        const projects = document.querySelectorAll(".project");
+
+        // Show all projects on load
+        projects.forEach(project => {
+          project.closest('a') && (project.closest('a').style.display = "block");
+          project.style.display = "block";
+        });
+
+        buttons.forEach(button => {
+          button.addEventListener("click", () => {
+            const filter = button.dataset.filter;
+
+            projects.forEach(project => {
+              const tile = project.closest('a') || project;
+              if (filter === "all" || project.dataset.category === filter) {
+                tile.style.display = "block";
+              } else {
+                tile.style.display = "none";
+              }
+            });
+
+            // active button style
+            buttons.forEach(btn => btn.classList.remove("active"));
+            button.classList.add("active");
+          });
+        });        
+        </script>
+    <!-- Correct Vite Entry Point -->
+  </body>
+</html>
